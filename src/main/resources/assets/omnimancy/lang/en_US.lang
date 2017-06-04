@@ -1,0 +1,31 @@
+#English language file for Omnimancy
+
+#Creative tab
+itemGroup.Omnimancy=Omnimancy
+
+#Items
+item.infusion_stone_item.name=Infusion Stone
+item.chalk_default_item.name=Chalk
+item.paper_scrap_item.name=Paper Scrap
+
+#Blocks
+tile.tutorial_block.name=Red Thingy
+tile.chalk_base.name=Chalk Base
+
+#Dusts
+dust.dustStart.name=Start
+dust.dustConnector.name=Connector
+dust.dustChange.name=Change
+dust.dustDickbutt.name=DickButt
+dust.dustIn.name=Input
+dust.dustOut.name=Output
+dust.dustMath.name=Arithmetic
+dust.dustConstant=Constant
+dust.dustCompare=Comparator
+dust.dustName =Item Name
+dust.dustCombine.name =Control Combine
+
+#enchantments
+enchantment.omnienchant=Omni Enchant
+
+

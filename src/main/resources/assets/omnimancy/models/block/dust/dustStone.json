@@ -1,0 +1,7 @@
+{
+    "parent": "omnimancy:block/dust/dustDefault3",
+    "textures": {
+        "0": "omnimancy:block/dustStone",
+        "particle": "omnimancy:block/dustStone"
+    }
+}

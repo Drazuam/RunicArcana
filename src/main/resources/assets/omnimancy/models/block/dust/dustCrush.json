@@ -1,0 +1,7 @@
+{
+    "parent": "omnimancy:block/dust/dustDefault3",
+    "textures": {
+        "0": "omnimancy:block/dustCrush",
+        "particle": "omnimancy:block/dustCrush"
+    }
+}

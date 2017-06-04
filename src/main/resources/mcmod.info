@@ -1,0 +1,16 @@
+[
+{
+  "modid": "omnimancy",
+  "name": "Omnimancy",
+  "description": "Omnimancy - Custom enchantments, spells",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["drazuam"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
