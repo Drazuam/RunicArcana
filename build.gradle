@@ -12,8 +12,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "1.0"
-group= "com.drazuam.omnimancy" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "omnimancy"
+group= "com.drazuam.runicarcana" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "runicarcana"
 
 sourceCompatibility = targetCompatibility = "1.8" // Need this here so eclipse task generates correctly.
 compileJava {

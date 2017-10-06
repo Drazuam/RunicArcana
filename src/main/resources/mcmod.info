@@ -1,8 +1,8 @@
 [
 {
-  "modid": "omnimancy",
-  "name": "Omnimancy",
-  "description": "Omnimancy - Custom enchantments, spells",
+  "modid": "runicarcana",
+  "name": "Runic Arcana",
+  "description": "Runic Arcana - Custom enchantments, spells",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
