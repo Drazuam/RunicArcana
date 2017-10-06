@@ -1,5 +1,6 @@
-package com.drazuam.runicarcana.common.enchantment;
+package com.drazuam.runicarcana.api.enchantment;
 
+import com.drazuam.runicarcana.common.enchantment.*;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.client.Minecraft;
@@ -17,7 +18,7 @@ import java.util.LinkedList;
 /**
  * Created by Joel on 2/19/2017.
  */
-public class DefaultDustSymbol implements IDustSymbol,Serializable {
+public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
 
     public int x; //location on current chalk base - between 0 and 2

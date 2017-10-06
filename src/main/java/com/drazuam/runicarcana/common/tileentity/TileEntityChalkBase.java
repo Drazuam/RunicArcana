@@ -1,6 +1,6 @@
 package com.drazuam.runicarcana.common.tileentity;
 
-import com.drazuam.runicarcana.common.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

@@ -1,6 +1,6 @@
 package com.drazuam.runicarcana.client.enchantment;
 
-import com.drazuam.runicarcana.common.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.enchantment.DustIOSymbol;
 import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
 import com.drazuam.runicarcana.common.item.ModItems;

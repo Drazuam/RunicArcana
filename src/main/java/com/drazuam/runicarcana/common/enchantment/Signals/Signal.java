@@ -1,6 +1,6 @@
 package com.drazuam.runicarcana.common.enchantment.Signals;
 
-import com.drazuam.runicarcana.common.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 
 import java.io.Serializable;
 import java.util.function.Function;

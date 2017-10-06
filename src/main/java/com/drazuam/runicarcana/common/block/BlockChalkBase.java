@@ -1,6 +1,6 @@
 package com.drazuam.runicarcana.common.block;
 
-import com.drazuam.runicarcana.common.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.enchantment.DustIOSymbol;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
