@@ -1,4 +1,4 @@
-package com.drazuam.runicarcana.common.enchantment.Signals;
+package com.drazuam.runicarcana.api.enchantment.Signals;
 
 /**
  * Created by Joel on 2/23/2017.

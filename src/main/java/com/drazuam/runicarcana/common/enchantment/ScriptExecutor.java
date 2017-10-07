@@ -2,7 +2,7 @@ package com.drazuam.runicarcana.common.enchantment;
 
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.Signals.CompiledSymbol;
-import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
+import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

@@ -1,7 +1,7 @@
 package com.drazuam.runicarcana.common.enchantment;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
+import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 
 /**
  * Created by Joel on 2/23/2017.
