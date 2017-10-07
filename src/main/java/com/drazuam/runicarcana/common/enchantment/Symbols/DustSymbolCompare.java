@@ -55,11 +55,11 @@ public class DustSymbolCompare extends DefaultDustSymbol {
 
     public static Object compare(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -68,23 +68,23 @@ public class DustSymbolCompare extends DefaultDustSymbol {
         if(A==null||B==null)return false;
 
         if(A>B)
-            executer.resolveOutput((short)5,true);
+            executor.resolveOutput((short)5,true);
 
         if((A.intValue())==(B.intValue()))
-            executer.resolveOutput((short)4,true);
+            executor.resolveOutput((short)4,true);
         if(A<B)
-            executer.resolveOutput((short)2,true);
+            executor.resolveOutput((short)2,true);
 
         return true;
     }
 
     public static Object lessThan(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -96,11 +96,11 @@ public class DustSymbolCompare extends DefaultDustSymbol {
     }
 
     public static Object lessThanOrEqual(Object... args) {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -112,11 +112,11 @@ public class DustSymbolCompare extends DefaultDustSymbol {
     }
 
     public static Object Equal(Object... args) {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -128,11 +128,11 @@ public class DustSymbolCompare extends DefaultDustSymbol {
     }
 
     public static Object greaterThan(Object... args) {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -144,11 +144,11 @@ public class DustSymbolCompare extends DefaultDustSymbol {
     }
 
     public static Object greaterThanOrEqual(Object... args) {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {

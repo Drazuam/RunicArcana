@@ -64,74 +64,74 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public static Object stringVariable(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return executer.getVariable();
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return executor.getVariable();
     }
 
     public static Object numberVariable(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return ModDust.parseNumber(executer.getVariable());
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return ModDust.parseNumber(executor.getVariable());
     }
 
     public static Object setNumber(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        Double number = (Double)executer.resolveInput((short)1);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        Double number = (Double)executor.resolveInput((short)1);
 
         if(number!=null)
         {
-            executer.setVariable(number.toString());
-            executer.variablesChanged = true;
+            executor.setVariable(number.toString());
+            executor.variablesChanged = true;
         }
 
-        executer.resolveOutput((short)(3),true);
+        executor.resolveOutput((short)(3),true);
 
         return true;
     }
 
     public static Object setBlockPos(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        BlockPos pos = (BlockPos)executer.resolveInput((short)6);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        BlockPos pos = (BlockPos)executor.resolveInput((short)6);
 
         if(pos!=null)
         {
-            executer.setVariable(ModDust.BlockPosToString(pos));
-            executer.variablesChanged = true;
+            executor.setVariable(ModDust.BlockPosToString(pos));
+            executor.variablesChanged = true;
         }
 
-        executer.resolveOutput((short)(3),true);
+        executor.resolveOutput((short)(3),true);
 
         return true;
     }
 
     public static Object blockPosVariable(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return ModDust.parseBlockPos(executer.getVariable());
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return ModDust.parseBlockPos(executor.getVariable());
     }
 
     public static Object setVector(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        Vec3d vec = (Vec3d)executer.resolveInput((short)9);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        Vec3d vec = (Vec3d)executor.resolveInput((short)9);
 
         if(vec!=null)
         {
-            executer.setVariable(ModDust.VectorToString(vec));
-            executer.variablesChanged = true;
+            executor.setVariable(ModDust.VectorToString(vec));
+            executor.variablesChanged = true;
         }
 
-        executer.resolveOutput((short)(3),true);
+        executor.resolveOutput((short)(3),true);
 
         return true;
     }
 
     public static Object vectorVariable(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return ModDust.parseVector(executer.getVariable());
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return ModDust.parseVector(executor.getVariable());
     }
 
     @Override

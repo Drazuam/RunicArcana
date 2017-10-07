@@ -62,12 +62,12 @@ public class DustSymbolSight extends DefaultDustSymbol {
 
     public static Object rayBlock(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        Entity entity   = (Entity)executer.resolveInput((short)0);
-        Double dist     = (Double)ModDust.parseNumber(executer.resolveInput((short)2));
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        Entity entity   = (Entity)executor.resolveInput((short)0);
+        Double dist     = (Double)ModDust.parseNumber(executor.resolveInput((short)2));
         if(dist==null)dist=5.0D;
 
-        executer.addProcesses(3);
+        executor.addProcesses(3);
         if(entity==null)return null;
 
         return entity.rayTrace(dist,1.0F).getBlockPos();
@@ -75,28 +75,28 @@ public class DustSymbolSight extends DefaultDustSymbol {
 
     public static Object lookVector(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        Entity entity = (Entity)executer.resolveInput((short)0);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        Entity entity = (Entity)executor.resolveInput((short)0);
         if(entity==null)return new Vec3d(1,0,0);
         return entity.getLookVec();
     }
 
     public static Object lookAngle(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        Entity entity = (Entity)executer.resolveInput((short)0);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        Entity entity = (Entity)executor.resolveInput((short)0);
         if(entity==null)return new Vec3d(0,0,0);
         return new Vec3d(0,entity.rotationPitch, entity.rotationYaw);
     }
 
     public static Object rayEntity(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        Entity entity   = (Entity)executer.resolveInput((short)0);
-        Double dist     = (Double)ModDust.parseNumber(executer.resolveInput((short)2));
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        Entity entity   = (Entity)executor.resolveInput((short)0);
+        Double dist     = (Double)ModDust.parseNumber(executor.resolveInput((short)2));
         if(dist==null)dist=5.0D;
 
-        executer.addProcesses(3);
+        executor.addProcesses(3);
         if(entity==null)return null;
 
 

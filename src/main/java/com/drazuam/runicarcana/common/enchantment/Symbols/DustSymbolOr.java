@@ -50,8 +50,8 @@ public class DustSymbolOr extends DefaultDustSymbol {
 
     public static Object routeOutput(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        executer.resolveOutput((short)4,true);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        executor.resolveOutput((short)4,true);
         return true;
     }
     @Override

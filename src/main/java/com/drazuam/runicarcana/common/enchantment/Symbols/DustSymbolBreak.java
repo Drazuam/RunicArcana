@@ -60,13 +60,13 @@ public class DustSymbolBreak extends DefaultDustSymbol {
 
     public static Object BreakBlock(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos pos = ModDust.parseBlockPos(executer.resolveInput((short)1));
-        if(!executer.player.worldObj.isRemote) {
-            breakBreak(executer.RunicItem,executer.player.worldObj,executer.player,pos,executer.initBlockStrength);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos pos = ModDust.parseBlockPos(executor.resolveInput((short)1));
+        if(!executor.player.worldObj.isRemote) {
+            breakBreak(executor.RunicItem,executor.player.worldObj,executor.player,pos,executor.initBlockStrength);
         }
-        executer.addProcesses(5);
-        executer.resolveOutput((short)2,true);
+        executor.addProcesses(5);
+        executor.resolveOutput((short)2,true);
 
         //TODO: seperate mana costs for breaking a block vs right clicking
 

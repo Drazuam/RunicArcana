@@ -54,11 +54,11 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object addition(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -71,11 +71,11 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object multiplication(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -88,11 +88,11 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object subtraction(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -105,11 +105,11 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object division(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -123,11 +123,11 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object modulus(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
-            A = ModDust.parseNumber(executer.resolveInput((short) 0));
-            B = ModDust.parseNumber(executer.resolveInput((short) 1));
+            A = ModDust.parseNumber(executor.resolveInput((short) 0));
+            B = ModDust.parseNumber(executor.resolveInput((short) 1));
         }
         catch(NullPointerException e)
         {
@@ -140,15 +140,15 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object sneakRightClick(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        executer.resolveOutput((short)1,true);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        executor.resolveOutput((short)1,true);
         return true;
     }
 
     public static EntityPlayer playerEntity(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return executer.player;
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return executor.player;
     }
 
     @Override

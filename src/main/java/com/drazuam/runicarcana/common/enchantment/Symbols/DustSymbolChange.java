@@ -51,20 +51,20 @@ public class DustSymbolChange extends DefaultDustSymbol {
 
     public static Object ChangeBlockToAir(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
+        ScriptExecutor executor = (ScriptExecutor)args[0];
 
-        if(!executer.player.worldObj.isRemote) {
-            RayTraceResult ray = ((Entity)executer.resolveInput((short)1)).rayTrace(5,1.0F);
-            Double length = ((Double)executer.resolveInput((short)2));
+        if(!executor.player.worldObj.isRemote) {
+            RayTraceResult ray = ((Entity)executor.resolveInput((short)1)).rayTrace(5,1.0F);
+            Double length = ((Double)executor.resolveInput((short)2));
             if(length==null)length=1.0D;
             if(ray.typeOfHit== RayTraceResult.Type.BLOCK) {
                 for(int i=0; i<length; i++)
-                executer.player.worldObj.setBlockToAir(ray.getBlockPos().up(i));
+                executor.player.worldObj.setBlockToAir(ray.getBlockPos().up(i));
             }
 
         }
-        executer.addProcesses(5);
-        executer.resolveOutput((short)3,true);
+        executor.addProcesses(5);
+        executor.resolveOutput((short)3,true);
 
         return null;
     }

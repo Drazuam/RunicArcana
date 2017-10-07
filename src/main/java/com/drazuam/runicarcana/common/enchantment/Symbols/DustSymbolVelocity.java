@@ -52,11 +52,11 @@ public class DustSymbolVelocity extends DefaultDustSymbol {
 
     public static Object addVelocity(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
 
-        Vec3d velocity   = (Vec3d)executer.resolveInput((short)0);
-        Double magnitude = (Double)executer.resolveInput((short)1);
-        Entity entity    = (Entity)executer.resolveInput((short)2);
+        Vec3d velocity   = (Vec3d)executor.resolveInput((short)0);
+        Double magnitude = (Double)executor.resolveInput((short)1);
+        Entity entity    = (Entity)executor.resolveInput((short)2);
 
         if(velocity==null||entity==null)return false;
 
@@ -73,9 +73,9 @@ public class DustSymbolVelocity extends DefaultDustSymbol {
         if(velocity.yCoord>0)
             entity.fallDistance=0;
 
-        executer.addProcesses(8);
+        executor.addProcesses(8);
         //TODO: mana costs: should cost more if entity is a player.
-        executer.resolveOutput((short)4,true);
+        executor.resolveOutput((short)4,true);
         return true;
 
     }

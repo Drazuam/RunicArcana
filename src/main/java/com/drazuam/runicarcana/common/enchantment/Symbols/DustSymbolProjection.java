@@ -90,13 +90,13 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockDown(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
-        Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
-        Double length     = (Double)executer.resolveInput((short)2);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos refBlock = (BlockPos)executor.resolveInput((short)0);
+        Vec3d refAngle   = (Vec3d)executor.resolveInput((short)1);
+        Double length     = (Double)executor.resolveInput((short)2);
 
 
-        if(refBlock==null) refBlock=executer.player.getPosition();
+        if(refBlock==null) refBlock=executor.player.getPosition();
         if(refAngle==null) refAngle=new Vec3d(0,0,0);
         if(length==null||length==0) length = 1.0D;
         double yaw = refAngle.zCoord+90;
@@ -123,13 +123,13 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockLeft(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
-        Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
-        Double length     = (Double)executer.resolveInput((short)2);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos refBlock = (BlockPos)executor.resolveInput((short)0);
+        Vec3d refAngle   = (Vec3d)executor.resolveInput((short)1);
+        Double length     = (Double)executor.resolveInput((short)2);
 
 
-        if(refBlock==null) refBlock=executer.player.getPosition();
+        if(refBlock==null) refBlock=executor.player.getPosition();
         if(refAngle==null) refAngle=new Vec3d(0,0,0);
         if(length==null||length==0) length = 1.0D;
         double yaw = refAngle.zCoord+90;
@@ -151,13 +151,13 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockRight(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
-        Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
-        Double length     = (Double)executer.resolveInput((short)2);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos refBlock = (BlockPos)executor.resolveInput((short)0);
+        Vec3d refAngle   = (Vec3d)executor.resolveInput((short)1);
+        Double length     = (Double)executor.resolveInput((short)2);
 
 
-        if(refBlock==null) refBlock=executer.player.getPosition();
+        if(refBlock==null) refBlock=executor.player.getPosition();
         if(refAngle==null) refAngle=new Vec3d(0,0,0);
         if(length==null||length==0) length = 1.0D;
         double yaw = refAngle.zCoord+90;
@@ -178,13 +178,13 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockForward(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
-        Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
-        Double length     = (Double)executer.resolveInput((short)2);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos refBlock = (BlockPos)executor.resolveInput((short)0);
+        Vec3d refAngle   = (Vec3d)executor.resolveInput((short)1);
+        Double length     = (Double)executor.resolveInput((short)2);
 
 
-        if(refBlock==null) refBlock=executer.player.getPosition();
+        if(refBlock==null) refBlock=executor.player.getPosition();
         if(refAngle==null) refAngle=new Vec3d(0,0,0);
         if(length==null||length==0) length = 1.0D;
         double yaw = refAngle.zCoord+90;
@@ -203,13 +203,13 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockBack(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)args[0];
-        BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
-        Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
-        Double length     = (Double)executer.resolveInput((short)2);
+        ScriptExecutor executor = (ScriptExecutor)args[0];
+        BlockPos refBlock = (BlockPos)executor.resolveInput((short)0);
+        Vec3d refAngle   = (Vec3d)executor.resolveInput((short)1);
+        Double length     = (Double)executor.resolveInput((short)2);
 
 
-        if(refBlock==null) refBlock=executer.player.getPosition();
+        if(refBlock==null) refBlock=executor.player.getPosition();
         if(refAngle==null) refAngle=new Vec3d(0,0,0);
         if(length==null||length==0) length = 1.0D;
         double yaw = refAngle.zCoord+90;

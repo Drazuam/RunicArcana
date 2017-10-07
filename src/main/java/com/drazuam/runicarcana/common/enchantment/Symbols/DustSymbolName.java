@@ -60,15 +60,15 @@ public class DustSymbolName extends DefaultDustSymbol {
 
     public static Object setName(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        String name = (String)executer.resolveInput((short)1);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        String name = (String)executor.resolveInput((short)1);
 
         if(name!=null)
         {
-            executer.setVariable(name.toString());
-            executer.RunicItem.setStackDisplayName(TextFormatting.RESET+name);
-            //executer.player.replaceItemInInventory(executer.player.inventory.currentItem, executer.player.inventory.getCurrentItem());
-            if(executer.player.worldObj.isRemote)
+            executor.setVariable(name.toString());
+            executor.RunicItem.setStackDisplayName(TextFormatting.RESET+name);
+            //executor.player.replaceItemInInventory(executor.player.inventory.currentItem, executor.player.inventory.getCurrentItem());
+            if(executor.player.worldObj.isRemote)
             {
                 Object myObj = Minecraft.getMinecraft().ingameGUI;
                 Class myClass = myObj.getClass();
@@ -89,7 +89,7 @@ public class DustSymbolName extends DefaultDustSymbol {
 
         }
 
-        executer.resolveOutput((short)(0),true);
+        executor.resolveOutput((short)(0),true);
 
         return true;
     }

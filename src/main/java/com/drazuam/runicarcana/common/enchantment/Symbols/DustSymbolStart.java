@@ -59,36 +59,36 @@ public class DustSymbolStart extends DefaultDustSymbol {
 
     public static Object rightClick(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        executer.resolveOutput((short)0,true);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        executor.resolveOutput((short)0,true);
         return true;
     }
 
     public static Object sneakRightClick(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        executer.resolveOutput((short)1,true);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        executor.resolveOutput((short)1,true);
         return true;
     }
 
     public static Object blockBreak(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        executer.resolveOutput((short)3,true);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        executor.resolveOutput((short)3,true);
         return true;
     }
 
     public static EntityPlayer playerEntity(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
-        return executer.player;
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+        return executor.player;
     }
 
     public static Object initBlockPos(Object... args)
     {
-        ScriptExecutor executer = (ScriptExecutor)(args[0]);
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
 
-        return executer.initPos;
+        return executor.initPos;
     }
 
     @Override
