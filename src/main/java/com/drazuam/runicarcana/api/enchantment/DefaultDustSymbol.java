@@ -1,11 +1,13 @@
 package com.drazuam.runicarcana.api.enchantment;
 
+import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.*;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -20,11 +22,13 @@ import java.util.LinkedList;
  */
 public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
+    private ResourceLocation resourceLocation;
 
     public int x; //location on current chalk base - between 0 and 2
     public int z;
     public int f; //Facing Direction
-    public DustModelHandler.DustTypes dustType;
+    public short dustType;
+    public IBakedModel bakedModel;
     public int blockX;
     public int blockY;
     public int blockZ;
@@ -159,7 +163,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     }
 
-    public DefaultDustSymbol(int newX, int newZ, int newF, DustModelHandler.DustTypes newDustType, int newBlockX, int newBlockY, int newBlockZ, int newDim)
+    public DefaultDustSymbol(int newX, int newZ, int newF, short newDustType, int newBlockX, int newBlockY, int newBlockZ, int newDim)
     {
         //dustID = ModDust.getNextDustID();
         x = newX;
@@ -173,7 +177,21 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     }
 
-    public DefaultDustSymbol(int X, int Z, int F, TileEntityChalkBase newParent, DustModelHandler.DustTypes newDustType)
+    public DefaultDustSymbol(short newDustType)
+    {
+        //dustID = ModDust.getNextDustID();
+        x = 0;
+        z = 0;
+        blockX =0;
+        blockY = 0;
+        blockZ = 0;
+        dustType = newDustType;
+        dim = 0;
+
+
+    }
+
+    public DefaultDustSymbol(int X, int Z, int F, TileEntityChalkBase newParent, short newDustType)
     {
         //dustID = ModDust.getNextDustID();
         dustType = newDustType;
@@ -198,7 +216,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
         return new BlockPos(blockX,blockY,blockZ);
     }
 
-    public DefaultDustSymbol(int newX, int newZ, int newF, int dim, BlockPos newBlockPos, DustModelHandler.DustTypes newDustType) {
+    public DefaultDustSymbol(int newX, int newZ, int newF, int dim, BlockPos newBlockPos, short newDustType) {
         //dustID = ModDust.getNextDustID();
         x = newX;
         z = newZ;
@@ -240,8 +258,8 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     public boolean checkOccupied(int checkX, int checkZ)
     {
-        int xRadius = (dustType.getSize()-1)/2;
-        int zRadius = (dustType.getSize()-1)/2;
+        int xRadius = (getSize()-1)/2;
+        int zRadius = (getSize()-1)/2;
         if (Math.abs(checkX-x)<=xRadius&&Math.abs(checkZ-z)<=zRadius)
             return true;
         return false;
@@ -249,7 +267,21 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     public IBakedModel getBakedModel()
     {
-        return dustType.getBakedModel();
+        if (this==ModDust.getDustFromID(this.getDustID()))
+        {
+            if (this.bakedModel==null)
+            {
+                this.bakedModel = DustModelHandler.getBakedModel(getModelLocation());
+            }
+            return this.bakedModel;
+        }
+        else
+        {
+            return ModDust.getDustFromID(this.getDustID()).getBakedModel();
+
+        }
+
+
     }
 
     public boolean willAccept(ItemStack stack)
@@ -259,7 +291,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     @Override
     public ITextComponent getDisplayName(String name) {
-        return name==null ? new TextComponentTranslation("dust."+dustType.defaultName+".name") : new TextComponentTranslation("dust."+name+".name");
+        return name==null ? new TextComponentTranslation("dust."+"dustDefault"+".name") : new TextComponentTranslation("dust."+name+".name");
     }
 
     public ITextComponent getDisplayName()
@@ -274,11 +306,35 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
 
     @Override
     public short getDustID() {
-        return 0;
+        return dustType;
     }
 
     @Override
     public String getVariable() {
+        return null;
+    }
+
+    @Override
+    public ResourceLocation getResourceLocation() {
+        if(resourceLocation==null)
+        {
+            resourceLocation = new ResourceLocation(RunicArcana.MODID, getTexture());
+        }
+        return resourceLocation;
+    }
+
+    @Override
+    public int getSize() {
+        return 3;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return null;
+    }
+
+    @Override
+    public String getTexture() {
         return null;
     }
 }

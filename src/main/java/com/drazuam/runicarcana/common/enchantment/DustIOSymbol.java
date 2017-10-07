@@ -9,10 +9,10 @@ import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 public abstract class DustIOSymbol extends DefaultDustSymbol {
 
     public DefaultDustSymbol parent;
-    public DustModelHandler.DustTypes curDustType;
+    public short curDustType;
     private Signal signal = null;
 
-    public DustIOSymbol(int X, int Z, DefaultDustSymbol newParent, DustModelHandler.DustTypes newCurDustType) {
+    public DustIOSymbol(int X, int Z, DefaultDustSymbol newParent, short newCurDustType) {
         super(X, Z, 0, newParent.getParent(), newCurDustType);
         parent = newParent;
         curDustType = newCurDustType;
@@ -21,7 +21,7 @@ public abstract class DustIOSymbol extends DefaultDustSymbol {
 
     }
 
-    public DustIOSymbol(int X, int Z, DustModelHandler.DustTypes newCurDustType) {
+    public DustIOSymbol(int X, int Z, short newCurDustType) {
         super(X, Z, 0, null, newCurDustType);
         curDustType = newCurDustType;
         //if(parent.getNextSignal(this)==null)parent.ioDusts.remove(this);
@@ -49,12 +49,8 @@ public abstract class DustIOSymbol extends DefaultDustSymbol {
         }
     }
 
-//    public DustIOSymbol()
-//    {
-//        super(0,0,0,null,curDustType);
-//    }
-
-
-
-
+    @Override
+    public int getSize() {
+        return 1;
+    }
 }

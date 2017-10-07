@@ -10,21 +10,21 @@ public class LibResources {
 
     public static final String PREFIX_DUST_MODEL = "block/dust/";
 
-    public static final String MODEL_DUST_START = PREFIX_DUST_MODEL+"dustStart";
-    public static final String MODEL_DUST_CHANGE = PREFIX_DUST_MODEL+"dustChange";
-    public static final String MODEL_DUST_CONNECT = PREFIX_DUST_MODEL+"dustConnector";
-    public static final String MODEL_DUST_DICKBUTT = PREFIX_DUST_MODEL+"dustDickbutt";
-    public static final String MODEL_DUST_IN = PREFIX_DUST_MODEL+"dustIn";
-    public static final String MODEL_DUST_OUT = PREFIX_DUST_MODEL+"dustOut";
-    public static final String MODEL_DUST_MATH = PREFIX_DUST_MODEL+"dustMath";
-    public static final String MODEL_DUST_CONSTANT = PREFIX_DUST_MODEL+"dustConstant";
-    public static final String MODEL_DUST_COMPARE = PREFIX_DUST_MODEL+"dustCompare";
-    public static final String MODEL_DUST_NAME = PREFIX_DUST_MODEL+"dustName";
-    public static final String MODEL_DUST_COMBINE = PREFIX_DUST_MODEL+"dustCombine";
-    public static final String MODEL_DUST_BREAK = PREFIX_DUST_MODEL+"dustBreak";
-    public static final String MODEL_DUST_SIGHT = PREFIX_DUST_MODEL+"dustSight";
-    public static final String MODEL_DUST_PROJECTION = PREFIX_DUST_MODEL+"dustProjection";
-    public static final String MODEL_DUST_MOVE = PREFIX_DUST_MODEL+"dustMove";
+    public static final String MODEL_DUST_START = "block/dust/"+"dustStart";
+    public static final String MODEL_DUST_CHANGE = "block/dust/"+"dustChange";
+    public static final String MODEL_DUST_CONNECT = "block/dust/"+"dustConnector";
+    public static final String MODEL_DUST_DICKBUTT = "block/dust/"+"dustDickbutt";
+    public static final String MODEL_DUST_IN = "block/dust/"+"dustIn";
+    public static final String MODEL_DUST_OUT = "block/dust/"+"dustOut";
+    public static final String MODEL_DUST_MATH = "block/dust/"+"dustMath";
+    public static final String MODEL_DUST_CONSTANT = "block/dust/"+"dustConstant";
+    public static final String MODEL_DUST_COMPARE = "block/dust/"+"dustCompare";
+    public static final String MODEL_DUST_NAME = "block/dust/"+"dustName";
+    public static final String MODEL_DUST_COMBINE = "block/dust/"+"dustCombine";
+    public static final String MODEL_DUST_BREAK = "block/dust/"+"dustBreak";
+    public static final String MODEL_DUST_SIGHT = "block/dust/"+"dustSight";
+    public static final String MODEL_DUST_PROJECTION = "block/dust/"+"dustProjection";
+    public static final String MODEL_DUST_MOVE = "block/dust/"+"dustMove";
 
 
 

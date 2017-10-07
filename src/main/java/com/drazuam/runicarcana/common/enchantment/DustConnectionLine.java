@@ -1,5 +1,6 @@
 package com.drazuam.runicarcana.common.enchantment;
 
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;

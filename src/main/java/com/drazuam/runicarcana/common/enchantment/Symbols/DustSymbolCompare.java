@@ -1,38 +1,42 @@
 package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  * Created by Joel on 2/20/2017.
  */
 public class DustSymbolCompare extends DefaultDustSymbol {
 
-
-    public static final DustModelHandler.DustTypes curDustType = DustModelHandler.DustTypes.COMPARE;
+    public static final String MODEL_LOCATION = "block/dust/"+"dustCompare";
+    public static final String TEXTURE_LOCATION = "textures/block/dustCompare.png";
+    public static final String DEFAULT_NAME = "dustCompare";
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
 
     public DustSymbolCompare(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, curDustType);
+        super(X, Z, F,newParent, ModDust.compareSymbol.dustType);
         addSignals();
 
     }
 
     public DustSymbolCompare()
     {
-        super(0,0,0,null,curDustType);
+        super(0,0,0,null,ModDust.compareSymbol.dustType);
         addSignals();
 
     }
 
-    public static final short dustID = ModDust.getNextDustID();
-    @Override
-    public short getDustID() {
-        return dustID;
+    public DustSymbolCompare(short newDustType) {
+        super(newDustType);
+        addSignals();
     }
 
     private void addSignals()
@@ -153,6 +157,26 @@ public class DustSymbolCompare extends DefaultDustSymbol {
         if(A==null||B==null)return null;
 
         return (Boolean) (A.intValue() >= B.intValue());
+    }
+
+    @Override
+    public String getDefaultName() {
+        return DEFAULT_NAME;
+    }
+
+    @Override
+    public String getTexture() {
+        return TEXTURE_LOCATION;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return MODEL_LOCATION;
+    }
+
+    @Override
+    public ITextComponent getDisplayName(String name) {
+        return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
     }
 
 }

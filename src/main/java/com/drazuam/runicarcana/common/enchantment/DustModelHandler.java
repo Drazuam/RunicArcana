@@ -10,12 +10,16 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
+import java.util.LinkedList;
+
 import static com.drazuam.runicarcana.client.enchantment.lib.LibResources.*;
 
 /**
  * Created by Joel on 2/19/2017.
  */
 public class DustModelHandler {
+
+    LinkedList<IBakedModel> models = new LinkedList<IBakedModel>();
 
 
     //Dust type enumeration; add all new dust types here
@@ -57,7 +61,6 @@ public class DustModelHandler {
             texture =  "runicarcana:"+textureStr.substring(9,index);
         }
 
-        public void setBakedModel(IBakedModel newBakedModel){bakedModel = newBakedModel;}
         public IBakedModel getBakedModel(){
             if (bakedModel == null) {
                 IModel model;
@@ -80,6 +83,24 @@ public class DustModelHandler {
         public int getID(){return ID;}
 
     }
+
+    public static IBakedModel getBakedModel(String modelLocation){
+
+        IModel model;
+        try {
+            model = ModelLoaderRegistry.getModel(new ResourceLocation(RunicArcana.MODID, modelLocation));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        IBakedModel bakedModel = model.bake(TRSRTransformation.identity(), DefaultVertexFormats.BLOCK, DustModelHandler::textureGetter);
+
+        System.out.println("[Omnicraft] created model for " + modelLocation);
+
+        return bakedModel;
+    }
+
+
 
     public static TextureAtlasSprite textureGetter( ResourceLocation location)
     {

@@ -1,26 +1,31 @@
 package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  * Created by Joel on 2/20/2017.
  */
 public class DustSymbolConstant extends DefaultDustSymbol {
 
-
-    public static final DustModelHandler.DustTypes curDustType = DustModelHandler.DustTypes.CONSTANT;
+    public static final String MODEL_LOCATION = "block/dust/"+"dustConstant";
+    public static final String TEXTURE_LOCATION = "textures/block/dustConstant.png";
+    public static final String DEFAULT_NAME = "dustConstant";
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolConstant(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, curDustType);
+        super(X, Z, F,newParent, ModDust.constantSymbol.dustType);
 
         addSignals();
 
@@ -30,16 +35,15 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public DustSymbolConstant()
     {
-        super(0,0,0,null,curDustType);
+        super(0,0,0,null, ModDust.constantSymbol.dustType);
 
         addSignals();
 
     }
 
-    public static final short dustID = ModDust.getNextDustID();
-    @Override
-    public short getDustID() {
-        return dustID;
+    public DustSymbolConstant(short newDustType) {
+        super(newDustType);
+        addSignals();
     }
 
     private void addSignals()
@@ -144,6 +148,26 @@ public class DustSymbolConstant extends DefaultDustSymbol {
     @Override
     public boolean willAccept(ItemStack stack) {
         return stack.getItem()== ModItems.paperScrapItem;
+    }
+
+    @Override
+    public String getDefaultName() {
+        return DEFAULT_NAME;
+    }
+
+    @Override
+    public String getTexture() {
+        return TEXTURE_LOCATION;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return MODEL_LOCATION;
+    }
+
+    @Override
+    public ITextComponent getDisplayName(String name) {
+        return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
     }
 }
 

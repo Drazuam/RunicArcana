@@ -35,7 +35,7 @@ public class Signal implements ISignal,Serializable {
         BLOCKPOS(0x0000FF),
         VECTOR(0x00FF00),
         NUMBER(0x00FF00),
-        ENITITY(0xFF00FF),
+        ENTITY(0xFF00FF),
         STRING(0xFF8C00),
         ANGLE(0xFFD500);
 

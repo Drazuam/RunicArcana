@@ -1,6 +1,6 @@
 package com.drazuam.runicarcana.common.event;
 
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ModEnchantment;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.CompiledSymbol;

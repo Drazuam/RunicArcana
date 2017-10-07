@@ -1,8 +1,7 @@
 package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
@@ -18,6 +17,8 @@ import net.minecraft.network.play.server.SPacketBlockChange;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -28,24 +29,25 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class DustSymbolBreak extends DefaultDustSymbol {
 
 
-    public static final DustModelHandler.DustTypes curDustType = DustModelHandler.DustTypes.BREAK;
+    public static final String MODEL_LOCATION = "block/dust/"+"dustBreak";
+    public static final String TEXTURE_LOCATION = "textures/block/dustBreak.png";
+    public static final String DEFAULT_NAME = "dustBreak";
 
     public DustSymbolBreak(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, curDustType);
+        super(X, Z, F,newParent, ModDust.breakSymbol.dustType);
 
     }
 
     public DustSymbolBreak()
     {
-        super(0,0,0,null,curDustType);
+        super(0,0,0,null, ModDust.breakSymbol.dustType);
         addMethods();
 
     }
 
-    public static final short dustID = ModDust.getNextDustID();
-    @Override
-    public short getDustID() {
-        return dustID;
+    public DustSymbolBreak(short newDustType) {
+        super(newDustType);
+        addMethods();
     }
 
     private void addMethods()
@@ -169,6 +171,26 @@ public class DustSymbolBreak extends DefaultDustSymbol {
             Minecraft.getMinecraft().getConnection().sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, pos, Minecraft
                     .getMinecraft().objectMouseOver.sideHit));
         }
+    }
+
+    @Override
+    public String getDefaultName() {
+        return DEFAULT_NAME;
+    }
+
+    @Override
+    public String getTexture() {
+        return TEXTURE_LOCATION;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return MODEL_LOCATION;
+    }
+
+    @Override
+    public ITextComponent getDisplayName(String name) {
+        return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
     }
 }
 

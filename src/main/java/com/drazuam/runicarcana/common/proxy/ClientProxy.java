@@ -2,7 +2,7 @@ package com.drazuam.runicarcana.common.proxy;
 
 import com.drazuam.runicarcana.client.ModRendering;
 import com.drazuam.runicarcana.common.block.ModBlocks;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.event.ModEvents;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.keybind.ModKeybind;

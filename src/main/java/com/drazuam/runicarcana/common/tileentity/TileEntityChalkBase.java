@@ -118,10 +118,10 @@ public class TileEntityChalkBase extends TileEntity implements IInventory{
         DefaultDustSymbol dustMax = null;
         for(DefaultDustSymbol dust : dustList)
         {
-            if (dust.dustType.getSize()>maxSize)
+            if (dust.getSize()>maxSize)
             {
                 dustMax = dust;
-                maxSize = dust.dustType.getSize();
+                maxSize = dust.getSize();
             }
         }
 
@@ -370,7 +370,7 @@ public class TileEntityChalkBase extends TileEntity implements IInventory{
     {
         for(DefaultDustSymbol dust : dustList)
         {
-            int size = symbol.dustType.getSize();
+            int size = symbol.getSize();
             for(int i=X-(size-1)/2; i<=X+(size-1)/2;i++)
                 for(int j=Z-(size-1)/2; j<=Z+(size-1)/2;j++)
                     if(dust.checkOccupied(i,j))
@@ -386,7 +386,7 @@ public class TileEntityChalkBase extends TileEntity implements IInventory{
                 TileEntity te = this.getWorld().getTileEntity(this.pos.add(moveX,0,moveZ));
                 if (te instanceof TileEntityChalkBase) {
                     for (DefaultDustSymbol dust : ((TileEntityChalkBase) te).dustList) {
-                        int size = symbol.dustType.getSize();
+                        int size = symbol.getSize();
                         for (int i = newX - (size - 1) / 2; i <= newX + (size - 1) / 2; i++)
                             for (int j = newZ - (size - 1) / 2; j <= newZ + (size - 1) / 2; j++)
                                 if (dust.checkOccupied(i, j))

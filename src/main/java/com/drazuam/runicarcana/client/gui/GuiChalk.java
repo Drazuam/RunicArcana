@@ -1,8 +1,8 @@
 package com.drazuam.runicarcana.client.gui;
 
 import com.drazuam.runicarcana.common.RunicArcana;
-import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.common.enchantment.IDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.client.event.KeyEventHandler;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.keybind.ModKeybind;
@@ -51,9 +51,9 @@ public class GuiChalk extends GuiScreen {
             {
                 List<String> text = new ArrayList<String>();
 
-                for(LinkedList<DefaultDustSymbol> category : ModDust.dustRegistry)
+                for(LinkedList<IDustSymbol> category : ModDust.dustRegistry)
                 {
-                    for(DefaultDustSymbol dust : category)
+                    for(IDustSymbol dust : category)
                     {
                         if(dust.getDustID()==but.id)
                         {
@@ -87,9 +87,9 @@ public class GuiChalk extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
-        for(LinkedList<DefaultDustSymbol> category : ModDust.dustRegistry)
+        for(LinkedList<IDustSymbol> category : ModDust.dustRegistry)
         {
-            for(DefaultDustSymbol dust : category)
+            for(IDustSymbol dust : category)
             {
                 if(button.id==dust.getDustID())
                 {
@@ -160,9 +160,9 @@ public class GuiChalk extends GuiScreen {
         int x = xStart+xMargin;
         int y = yStart+yMargin;
 
-        for(DefaultDustSymbol dust : ModDust.dustRegistry.getFirst())
+        for(IDustSymbol dust : ModDust.dustRegistry.getFirst())
         {
-            SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.dustType.location,dust.dustType.getSize());
+        SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
             buttonList.add(newButt);
             x = x + xSpacing + buttonWidth;
             if(x>xEnd)

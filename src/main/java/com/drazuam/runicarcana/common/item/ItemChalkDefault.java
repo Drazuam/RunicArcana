@@ -1,6 +1,7 @@
 package com.drazuam.runicarcana.common.item;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.block.ModBlocks;
 import com.drazuam.runicarcana.common.enchantment.*;
@@ -60,9 +61,9 @@ public class ItemChalkDefault extends Item {
                 if(stack.getTagCompound()!=null&&stack.getTagCompound().hasKey("dustID")) {
                     int f = MathHelper.floor_double((double)(playerIn.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                     DefaultDustSymbol dust = null;
-                    for (LinkedList<DefaultDustSymbol> category : ModDust.dustRegistry) {
-                        for (DefaultDustSymbol regDust : category) {
-                            if(regDust.dustType.getID()==stack.getTagCompound().getInteger("dustID"))
+                    for (LinkedList<IDustSymbol> category : ModDust.dustRegistry) {
+                        for (IDustSymbol regDust : category) {
+                            if(regDust.getDustID()==stack.getTagCompound().getInteger("dustID"))
                             {
                                 try {
                                     dust = regDust.getClass().newInstance().setXZFB((int) (hitX * 3), (int) (hitZ * 3), f,(TileEntityChalkBase)te);
@@ -75,8 +76,8 @@ public class ItemChalkDefault extends Item {
                     }
 
 
-                    if (dust!=null&&dust.dustType!= DustModelHandler.DustTypes.IN&&
-                            dust.dustType!= DustModelHandler.DustTypes.OUT&&
+                    if (dust!=null&&dust.getDustID()!= ModDust.inSymbol.getDustID()&&
+                            dust.dustType!= ModDust.outSymbol.getDustID()&&
                             ((TileEntityChalkBase) te).addDust(hitX, hitZ, f, dust)) {
                         stack.damageItem(1, playerIn);
 
@@ -91,9 +92,9 @@ public class ItemChalkDefault extends Item {
             if(stack.getTagCompound()!=null&&stack.getTagCompound().hasKey("dustID")) {
                 int f = MathHelper.floor_double((double)(playerIn.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
                 DefaultDustSymbol dust = null;
-                for (LinkedList<DefaultDustSymbol> category : ModDust.dustRegistry) {
-                    for (DefaultDustSymbol regDust : category) {
-                        if(regDust.dustType.getID()==stack.getTagCompound().getInteger("dustID"))
+                for (LinkedList<IDustSymbol> category : ModDust.dustRegistry) {
+                    for (IDustSymbol regDust : category) {
+                        if(regDust.getDustID()==stack.getTagCompound().getInteger("dustID"))
                         {
                             try {
                                 dust = regDust.getClass().newInstance().setXZFB((int) (hitX * 3), (int) (hitZ * 3), f,(TileEntityChalkBase)te);
@@ -116,10 +117,10 @@ public class ItemChalkDefault extends Item {
                         if(stack.getTagCompound()!=null&&stack.getTagCompound().hasKey("linkedDust"))
                         {
                             //case for linking a stored connector
-                            if((getDustFromByteArray(stack.getTagCompound().getByteArray("linkedDust"))).dustType == DustModelHandler.DustTypes.CONNECT)
+                            if((getDustFromByteArray(stack.getTagCompound().getByteArray("linkedDust"))).dustType == ModDust.connectSymbol.getDustID())
                             {
                                 //case if liknking stored connector to new connector
-                                if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType == DustModelHandler.DustTypes.CONNECT) {
+                                if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType == ModDust.connectSymbol.getDustID()) {
                                     DefaultDustSymbol oldDust = (getDustFromByteArray(stack.getTagCompound().getByteArray("linkedDust")));
                                     oldDust = oldDust.getParent().getDustAt(oldDust.x / 3.0F, oldDust.z / 3.0F);
                                     if (oldDust.addConnectionLine((DustIOSymbol)((TileEntityChalkBase) te).getDustAt(hitX, hitZ), ModDust.ConnectionType.BOOLEAN)) {
@@ -142,7 +143,7 @@ public class ItemChalkDefault extends Item {
                             //only occurs when linking an old IO
                             else {
                                 //linking old IO to new connector
-                                if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType == DustModelHandler.DustTypes.CONNECT) {
+                                if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType == ModDust.connectSymbol.getDustID()) {
                                     DustIOSymbol oldDust = (DustIOSymbol) getDustFromByteArray(stack.getTagCompound().getByteArray("linkedDust"));
                                     TileEntityChalkBase oldChalk = oldDust.getParent();
                                     DefaultDustSymbol oldDustParent = oldChalk.getDustAt((float) oldDust.parent.x / 3.0F, (float) oldDust.parent.z / 3.0F);
@@ -198,14 +199,14 @@ public class ItemChalkDefault extends Item {
 
 
                     }
-                    else if(dust!=null&&dust.dustType== DustModelHandler.DustTypes.IN&&((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType!= DustModelHandler.DustTypes.CONNECT)
+                    else if(dust!=null&&dust.dustType== ModDust.inSymbol.getDustID()&&((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType!= ModDust.connectSymbol.getDustID())
                     {
                         if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).getIODust((int)(hitX*3),(int)(hitZ*3))==null) {
                             ((TileEntityChalkBase) te).getDustAt(hitX, hitZ).addIODust(true, (int) (hitX * 3), (int) (hitZ * 3));
                             return EnumActionResult.SUCCESS;
                         }
                     }
-                    else if(dust!=null&&dust.dustType== DustModelHandler.DustTypes.OUT&&((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType!= DustModelHandler.DustTypes.CONNECT)
+                    else if(dust!=null&&dust.dustType== ModDust.outSymbol.getDustID()&&((TileEntityChalkBase) te).getDustAt(hitX,hitZ).dustType!= ModDust.connectSymbol.getDustID())
                     {
                         if(((TileEntityChalkBase) te).getDustAt(hitX,hitZ).getIODust((int)(hitX*3),(int)(hitZ*3))==null) {
                             ((TileEntityChalkBase) te).getDustAt(hitX, hitZ).addIODust(false, (int) (hitX * 3), (int) (hitZ * 3));

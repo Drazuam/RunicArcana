@@ -1,46 +1,50 @@
 package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  * Created by Joel on 2/20/2017.
  */
 public class DustSymbolVelocity extends DefaultDustSymbol {
 
-
-    public static final DustModelHandler.DustTypes curDustType = DustModelHandler.DustTypes.MOVE;
+    public static final String MODEL_LOCATION = "block/dust/"+"dustMove";
+    public static final String TEXTURE_LOCATION = "textures/block/dustMove.png";
+    public static final String DEFAULT_NAME = "dustVelocity";
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolVelocity(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, curDustType);
+        super(X, Z, F,newParent, ModDust.velocitySymbol.dustType);
         //set up signals
         addSignals();
     }
 
     public DustSymbolVelocity()
     {
-        super(0,0,0,null,curDustType);
+        super(0,0,0,null,ModDust.velocitySymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public static final short dustID = ModDust.getNextDustID();
-    @Override
-    public short getDustID() {
-        return dustID;
+    public DustSymbolVelocity(short newDustType) {
+        super(newDustType);
+        addSignals();
     }
 
     private void addSignals()
     {
         addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.IN, "Velocity",  null, 0));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Magnitude", null, 1));
-        addSignal(new Signal(this, Signal.SignalType.ENITITY, Signal.SigFlow.IN, "Entity",    null, 2));
+        addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Entity",    null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Add Vel",  DustSymbolVelocity::addVelocity, 3));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",    null, 4));
 
@@ -76,7 +80,25 @@ public class DustSymbolVelocity extends DefaultDustSymbol {
 
     }
 
+    @Override
+    public String getDefaultName() {
+        return DEFAULT_NAME;
+    }
 
+    @Override
+    public String getTexture() {
+        return TEXTURE_LOCATION;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return MODEL_LOCATION;
+    }
+
+    @Override
+    public ITextComponent getDisplayName(String name) {
+        return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
+    }
 
 
 

@@ -1,7 +1,7 @@
-package com.drazuam.runicarcana.common.enchantment;
+package com.drazuam.runicarcana.api.enchantment;
 
-import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.common.enchantment.*;
 import com.drazuam.runicarcana.common.enchantment.Signals.CompiledSymbol;
 import com.drazuam.runicarcana.common.enchantment.Symbols.*;
 import gnu.trove.set.hash.THashSet;
@@ -23,25 +23,25 @@ import java.util.regex.Pattern;
  */
 public class ModDust {
 
-    public static LinkedList<LinkedList<DefaultDustSymbol>> dustRegistry = new LinkedList<LinkedList<DefaultDustSymbol>>();
+    public static LinkedList<LinkedList<IDustSymbol>> dustRegistry = new LinkedList<LinkedList<IDustSymbol>>();
 
     public static final Set<ScriptExecuter> runningScripts = new THashSet<ScriptExecuter>();
 
-    public static DefaultDustSymbol startSymbol     = new DustSymbolStart();
-    public static DefaultDustSymbol changeSymbol    = new DustSymbolChange();
-    public static DefaultDustSymbol connectSymbol   = new DustSymbolConnector();
-    public static DefaultDustSymbol dickbuttSymbol  = new DustSymbolDickButt();
-    public static DefaultDustSymbol inSymbol        = new DustInSymbol();
-    public static DefaultDustSymbol outSymbol       = new DustOutSymbol();
-    public static DefaultDustSymbol mathSymbol      = new DustSymbolMath();
-    public static DefaultDustSymbol constantSymbol  = new DustSymbolConstant();
-    public static DefaultDustSymbol compareSymbol   = new DustSymbolCompare();
-    public static DefaultDustSymbol nameSymbol      = new DustSymbolName();
-    public static DefaultDustSymbol orSymbol        = new DustSymbolOr();
-    public static DefaultDustSymbol breakSymbol     = new DustSymbolBreak();
-    public static DefaultDustSymbol sightSymbol     = new DustSymbolSeeing();
-    public static DefaultDustSymbol projectionSymbol = new DustSymbolProjection();
-    public static DefaultDustSymbol velocitySymbol  = new DustSymbolVelocity();
+    public static DefaultDustSymbol startSymbol     = new DustSymbolStart(getNextDustID());
+    public static DefaultDustSymbol changeSymbol    = new DustSymbolChange(getNextDustID());
+    public static DefaultDustSymbol connectSymbol   = new DustSymbolConnector(getNextDustID());
+    public static DefaultDustSymbol dickbuttSymbol  = new DustSymbolDickButt(getNextDustID());
+    public static DefaultDustSymbol inSymbol        = new DustInSymbol(getNextDustID());
+    public static DefaultDustSymbol outSymbol       = new DustOutSymbol(getNextDustID());
+    public static DefaultDustSymbol mathSymbol      = new DustSymbolMath(getNextDustID());
+    public static DefaultDustSymbol constantSymbol  = new DustSymbolConstant(getNextDustID());
+    public static DefaultDustSymbol compareSymbol   = new DustSymbolCompare(getNextDustID());
+    public static DefaultDustSymbol nameSymbol      = new DustSymbolName(getNextDustID());
+    public static DefaultDustSymbol orSymbol        = new DustSymbolOr(getNextDustID());
+    public static DefaultDustSymbol breakSymbol     = new DustSymbolBreak(getNextDustID());
+    public static DefaultDustSymbol sightSymbol     = new DustSymbolSight(getNextDustID());
+    public static DefaultDustSymbol projectionSymbol = new DustSymbolProjection(getNextDustID());
+    public static DefaultDustSymbol velocitySymbol  = new DustSymbolVelocity(getNextDustID());
 
 
 
@@ -77,13 +77,13 @@ public class ModDust {
     {
         if(dustRegistry==null)
         {
-            dustRegistry = new LinkedList<LinkedList<DefaultDustSymbol>>();
+            dustRegistry = new LinkedList<LinkedList<IDustSymbol>>();
         }
         while(dustRegistry.size()<=category)
         {
-            dustRegistry.add(new LinkedList<DefaultDustSymbol>());
+            dustRegistry.add(new LinkedList<IDustSymbol>());
         }
-
+        dust.dustType = getNextDustID();
         dustRegistry.get(category).add(dust);
     }
 
@@ -203,11 +203,12 @@ public class ModDust {
         return 0;
     }
 
-    public static DefaultDustSymbol getDustFromID(short ID)
+
+    public static IDustSymbol getDustFromID(short ID)
     {
-        for (LinkedList<DefaultDustSymbol> category : ModDust.dustRegistry)
+        for (LinkedList<IDustSymbol> category : ModDust.dustRegistry)
         {
-            for(DefaultDustSymbol dust : category)
+            for(IDustSymbol dust : category)
             {
                 if(dust.getDustID()==ID)
                     return dust;
@@ -320,6 +321,11 @@ public class ModDust {
         return null;
     }
 
+    public static String BlockPosToString(BlockPos pos)
+    {
+        return ""+pos.getX()+","+pos.getY()+","+pos.getZ();
+    }
+
     public static String VectorToString(Vec3d vec)
     {
         return ""+vec.xCoord+","+vec.yCoord+","+vec.zCoord;
@@ -351,10 +357,6 @@ public class ModDust {
         return null;
     }
 
-    public static String BlockPosToString(BlockPos pos)
-    {
-        return ""+pos.getX()+","+pos.getY()+","+pos.getZ();
-    }
 
 
 }

@@ -1,8 +1,8 @@
 package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
-import com.drazuam.runicarcana.common.enchantment.ModDust;
+import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
@@ -10,9 +10,12 @@ import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,38 +23,39 @@ import java.util.List;
 /**
  * Created by Joel on 2/20/2017.
  */
-public class DustSymbolSeeing extends DefaultDustSymbol {
+public class DustSymbolSight extends DefaultDustSymbol {
 
+    public static final String MODEL_LOCATION = "block/dust/"+"dustSight";
+    public static final String TEXTURE_LOCATION = "textures/block/dustSight.png";
+    public static final String DEFAULT_NAME = "dustSight";
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
-    public static final DustModelHandler.DustTypes curDustType = DustModelHandler.DustTypes.SIGHT;
-
-    public DustSymbolSeeing(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, curDustType);
+    public DustSymbolSight(int X, int Z, int F, TileEntityChalkBase newParent) {
+        super(X, Z, F,newParent, ModDust.sightSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public DustSymbolSeeing()
+    public DustSymbolSight()
     {
-        super(0,0,0,null,curDustType);
+        super(0,0,0,null,ModDust.sightSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public static final short dustID = ModDust.getNextDustID();
-    @Override
-    public short getDustID() {
-        return dustID;
+    public DustSymbolSight(short newDustType) {
+        super(newDustType);
+        addSignals();
     }
 
     private void addSignals()
     {
-        addSignal(new Signal(this, Signal.SignalType.ENITITY, Signal.SigFlow.IN, "Entity",null,0));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Raytraced Block",DustSymbolSeeing::rayBlock,1));
+        addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Entity",null,0));
+        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Raytraced Block", DustSymbolSight::rayBlock,1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Ray Dist",null,2));
-        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Look Vector", DustSymbolSeeing::lookVector, 3));
-        addSignal(new Signal(this, Signal.SignalType.ANGLE, Signal.SigFlow.OUT, "Look Angle", DustSymbolSeeing::lookAngle, 4));
-        addSignal(new Signal(this, Signal.SignalType.ENITITY, Signal.SigFlow.OUT, "Raytraced Entity", DustSymbolSeeing::rayEntity, 5));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Look Vector", DustSymbolSight::lookVector, 3));
+        addSignal(new Signal(this, Signal.SignalType.ANGLE, Signal.SigFlow.OUT, "Look Angle", DustSymbolSight::lookAngle, 4));
+        addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.OUT, "Raytraced Entity", DustSymbolSight::rayEntity, 5));
 
     }
 
@@ -158,6 +162,24 @@ public class DustSymbolSeeing extends DefaultDustSymbol {
 
 
     }
+    @Override
+    public String getDefaultName() {
+        return DEFAULT_NAME;
+    }
 
+    @Override
+    public String getTexture() {
+        return TEXTURE_LOCATION;
+    }
+
+    @Override
+    public String getModelLocation() {
+        return MODEL_LOCATION;
+    }
+
+    @Override
+    public ITextComponent getDisplayName(String name) {
+        return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
+    }
 }
 

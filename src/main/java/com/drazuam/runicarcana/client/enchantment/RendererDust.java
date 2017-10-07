@@ -2,7 +2,7 @@ package com.drazuam.runicarcana.client.enchantment;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.enchantment.DustIOSymbol;
-import com.drazuam.runicarcana.common.enchantment.DustModelHandler;
+import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.client.Minecraft;
@@ -53,7 +53,7 @@ public class RendererDust extends TileEntitySpecialRenderer<TileEntityChalkBase>
             GlStateManager.translate(0.5, 0, 0.5);
             GlStateManager.translate((float)(dust.x - 1)*(1.0F/3), 0, (float)(dust.z - 1)*(1.0F/3));
             GlStateManager.rotate((float)(180-dust.f*90),0,1,0);
-            if (dust.dustType == DustModelHandler.DustTypes.START && te.hasItem()) {
+            if (dust.getDustID() == ModDust.startSymbol.getDustID() && te.hasItem()) {
                 long angle = (System.currentTimeMillis() / 60) % 360;
                 //GlStateManager.translate(0, 0.07 * Math.sin(Math.PI * angle / 180), 0);
                 GlStateManager.rotate(angle, 0, 1, 0);

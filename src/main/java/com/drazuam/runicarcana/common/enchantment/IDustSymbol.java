@@ -1,7 +1,12 @@
 package com.drazuam.runicarcana.common.enchantment;
 
+import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
+import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
@@ -11,7 +16,6 @@ import net.minecraft.util.text.ITextComponent;
  */
 public interface IDustSymbol {
 
-
     public boolean checkOccupied(int checkX, int checkY);
     public IBakedModel getBakedModel();
     public boolean willAccept(ItemStack stack);
@@ -20,5 +24,13 @@ public interface IDustSymbol {
     public void renderConnections(double x, double y, double z);
     public short getDustID();
     public String getVariable();
+    public DefaultDustSymbol setXZFB(int newX, int newZ, int newF, TileEntityChalkBase newParent);
+    public Signal getSignal(int index);
+    public ITextComponent getDisplayName();
+    public ResourceLocation getResourceLocation();
+    public int getSize();
+    public String getModelLocation();
+    public String getTexture();
+    public String getDefaultName();
 
 }
