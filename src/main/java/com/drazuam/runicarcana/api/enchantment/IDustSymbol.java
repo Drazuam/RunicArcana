@@ -1,7 +1,5 @@
-package com.drazuam.runicarcana.common.enchantment;
+package com.drazuam.runicarcana.api.enchantment;
 
-import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
-import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.client.renderer.block.model.IBakedModel;

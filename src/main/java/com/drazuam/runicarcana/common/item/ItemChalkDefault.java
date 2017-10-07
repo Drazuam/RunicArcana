@@ -1,6 +1,7 @@
 package com.drazuam.runicarcana.common.item;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
+import com.drazuam.runicarcana.api.enchantment.IDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.block.ModBlocks;

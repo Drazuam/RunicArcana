@@ -1,4 +1,4 @@
-package com.drazuam.runicarcana.common.enchantment;
+package com.drazuam.runicarcana.api.enchantment;
 
 import com.drazuam.runicarcana.common.RunicArcana;
 import net.minecraft.client.Minecraft;
@@ -10,16 +10,12 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.TRSRTransformation;
 
-import java.util.LinkedList;
-
 import static com.drazuam.runicarcana.client.enchantment.lib.LibResources.*;
 
 /**
  * Created by Joel on 2/19/2017.
  */
 public class DustModelHandler {
-
-    LinkedList<IBakedModel> models = new LinkedList<IBakedModel>();
 
 
     //Dust type enumeration; add all new dust types here
