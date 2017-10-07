@@ -182,10 +182,6 @@ public class ItemChalkDefault extends Item {
                             }
                         }
 
-
-
-
-
                     }
                     else if(!playerIn.isSneaking()&((TileEntityChalkBase) te).getDustAt(hitX,hitZ)!=null &&
                             ((TileEntityChalkBase) te).getDustAt(hitX,hitZ).getIODust((int) (hitX * 3), (int) (hitZ * 3))!=null)

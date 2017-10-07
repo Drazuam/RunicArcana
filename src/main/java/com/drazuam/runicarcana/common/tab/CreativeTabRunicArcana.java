@@ -1,5 +1,6 @@
 package com.drazuam.runicarcana.common.tab;
 
+import com.drazuam.runicarcana.common.item.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -15,6 +16,6 @@ public class CreativeTabRunicArcana extends CreativeTabs
 
     @Override
     public Item getTabIconItem() {
-        return Items.BOOK;
+        return ModItems.infusionItem;
     }
 }
