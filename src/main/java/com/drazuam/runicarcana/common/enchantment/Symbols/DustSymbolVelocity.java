@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.entity.Entity;
@@ -17,9 +17,9 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class DustSymbolVelocity extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustMove";
+    public static final String MODEL_LOCATION   = "block/dust/"+"dustMove";
     public static final String TEXTURE_LOCATION = "textures/block/dustMove.png";
-    public static final String DEFAULT_NAME = "dustVelocity";
+    public static final String DEFAULT_NAME     = "dustVelocity";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolVelocity(int X, int Z, int F, TileEntityChalkBase newParent) {
@@ -52,7 +52,7 @@ public class DustSymbolVelocity extends DefaultDustSymbol {
 
     public static Object addVelocity(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
 
         Vec3d velocity   = (Vec3d)executer.resolveInput((short)0);
         Double magnitude = (Double)executer.resolveInput((short)1);

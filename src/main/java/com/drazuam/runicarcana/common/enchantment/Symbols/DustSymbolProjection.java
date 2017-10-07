@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.util.ResourceLocation;
@@ -57,7 +57,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockUp(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);
@@ -90,7 +90,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockDown(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);
@@ -123,7 +123,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockLeft(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);
@@ -151,7 +151,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockRight(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);
@@ -178,7 +178,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockForward(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);
@@ -203,7 +203,7 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     public static Object blockBack(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos refBlock = (BlockPos)executer.resolveInput((short)0);
         Vec3d refAngle   = (Vec3d)executer.resolveInput((short)1);
         Double length     = (Double)executer.resolveInput((short)2);

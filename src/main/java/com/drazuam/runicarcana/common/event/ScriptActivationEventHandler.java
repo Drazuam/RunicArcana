@@ -2,7 +2,7 @@ package com.drazuam.runicarcana.common.event;
 
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ModEnchantment;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.CompiledSymbol;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,9 +32,9 @@ public class ScriptActivationEventHandler implements IEventHandler {
         if(script==null)return;
 
         if(player.isSneaking())
-            new ScriptExecuter(script, player, RunicItem, ScriptExecuter.StartPoint.SNEAK_RIGHT);
+            new ScriptExecutor(script, player, RunicItem, ScriptExecutor.StartPoint.SNEAK_RIGHT);
         else
-            new ScriptExecuter(script, player, RunicItem, ScriptExecuter.StartPoint.RIGHT_CLICK);
+            new ScriptExecutor(script, player, RunicItem, ScriptExecutor.StartPoint.RIGHT_CLICK);
 
     }
 
@@ -52,7 +52,7 @@ public class ScriptActivationEventHandler implements IEventHandler {
         CompiledSymbol[] script = ModDust.getScriptFromItem(OmniItem);
         if(script==null)return;
 
-        new ScriptExecuter(script, player, OmniItem, ScriptExecuter.StartPoint.BLOCK_BREAK, event.getPos());
+        new ScriptExecutor(script, player, OmniItem, ScriptExecutor.StartPoint.BLOCK_BREAK, event.getPos());
     }
 
 

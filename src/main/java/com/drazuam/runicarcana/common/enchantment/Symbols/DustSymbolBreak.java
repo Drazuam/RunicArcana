@@ -2,7 +2,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.block.Block;
@@ -60,7 +60,7 @@ public class DustSymbolBreak extends DefaultDustSymbol {
 
     public static Object BreakBlock(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)args[0];
+        ScriptExecutor executer = (ScriptExecutor)args[0];
         BlockPos pos = ModDust.parseBlockPos(executer.resolveInput((short)1));
         if(!executer.player.worldObj.isRemote) {
             breakBreak(executer.RunicItem,executer.player.worldObj,executer.player,pos,executer.initBlockStrength);

@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -54,7 +54,7 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object addition(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
             A = ModDust.parseNumber(executer.resolveInput((short) 0));
@@ -71,7 +71,7 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object multiplication(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
             A = ModDust.parseNumber(executer.resolveInput((short) 0));
@@ -88,7 +88,7 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object subtraction(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
             A = ModDust.parseNumber(executer.resolveInput((short) 0));
@@ -105,7 +105,7 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object division(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
             A = ModDust.parseNumber(executer.resolveInput((short) 0));
@@ -123,7 +123,7 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object modulus(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double A,B;
         try {
             A = ModDust.parseNumber(executer.resolveInput((short) 0));
@@ -140,14 +140,14 @@ public class DustSymbolMath extends DefaultDustSymbol {
 
     public static Object sneakRightClick(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         executer.resolveOutput((short)1,true);
         return true;
     }
 
     public static EntityPlayer playerEntity(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return executer.player;
     }
 

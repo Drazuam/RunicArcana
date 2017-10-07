@@ -22,8 +22,11 @@ dust.dustOut.name=Output
 dust.dustMath.name=Arithmetic
 dust.dustConstant=Constant
 dust.dustCompare=Comparator
-dust.dustName =Item Name
-dust.dustCombine.name =Control Combine
+dust.dustName=Item Name
+dust.dustCombine.name=Control Combine
+dust.dustVelocity=Velocity
+
+
 
 #enchantments
 enchantment.runicenchant=Runic Enchantment

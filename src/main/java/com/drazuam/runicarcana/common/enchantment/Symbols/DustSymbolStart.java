@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,34 +59,34 @@ public class DustSymbolStart extends DefaultDustSymbol {
 
     public static Object rightClick(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         executer.resolveOutput((short)0,true);
         return true;
     }
 
     public static Object sneakRightClick(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         executer.resolveOutput((short)1,true);
         return true;
     }
 
     public static Object blockBreak(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         executer.resolveOutput((short)3,true);
         return true;
     }
 
     public static EntityPlayer playerEntity(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return executer.player;
     }
 
     public static Object initBlockPos(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
 
         return executer.initPos;
     }

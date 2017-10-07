@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
@@ -64,19 +64,19 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public static Object stringVariable(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return executer.getVariable();
     }
 
     public static Object numberVariable(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return ModDust.parseNumber(executer.getVariable());
     }
 
     public static Object setNumber(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Double number = (Double)executer.resolveInput((short)1);
 
         if(number!=null)
@@ -92,7 +92,7 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public static Object setBlockPos(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         BlockPos pos = (BlockPos)executer.resolveInput((short)6);
 
         if(pos!=null)
@@ -108,13 +108,13 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public static Object blockPosVariable(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return ModDust.parseBlockPos(executer.getVariable());
     }
 
     public static Object setVector(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         Vec3d vec = (Vec3d)executer.resolveInput((short)9);
 
         if(vec!=null)
@@ -130,7 +130,7 @@ public class DustSymbolConstant extends DefaultDustSymbol {
 
     public static Object vectorVariable(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         return ModDust.parseVector(executer.getVariable());
     }
 

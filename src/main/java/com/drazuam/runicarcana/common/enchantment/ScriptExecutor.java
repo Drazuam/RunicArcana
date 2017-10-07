@@ -20,7 +20,7 @@ import java.util.Queue;
 /**
  * Created by Joel on 2/27/2017.
  */
-public class ScriptExecuter {
+public class ScriptExecutor {
 
     private CompiledSymbol[] compiledSymbols;
     public final EntityPlayer player;
@@ -42,7 +42,7 @@ public class ScriptExecuter {
     public final BlockPos initPos;
 
 
-    public ScriptExecuter(CompiledSymbol[] newSymbols, EntityPlayer newPlayer, ItemStack enchantedItem, StartPoint newStartPoint)
+    public ScriptExecutor(CompiledSymbol[] newSymbols, EntityPlayer newPlayer, ItemStack enchantedItem, StartPoint newStartPoint)
     {
 
         compiledSymbols = newSymbols.clone();
@@ -87,7 +87,7 @@ public class ScriptExecuter {
 
     }
 
-    public ScriptExecuter(CompiledSymbol[] newSymbols, EntityPlayer newPlayer, ItemStack enchantedItem, StartPoint newStartPoint, BlockPos newPos)
+    public ScriptExecutor(CompiledSymbol[] newSymbols, EntityPlayer newPlayer, ItemStack enchantedItem, StartPoint newStartPoint, BlockPos newPos)
     {
 
         compiledSymbols = newSymbols.clone();
@@ -360,7 +360,7 @@ public class ScriptExecuter {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ScriptExecuter executer = (ScriptExecuter) o;
+        ScriptExecutor executer = (ScriptExecutor) o;
 
         if (!RunicItem.equals(executer.RunicItem)) return false;
         return startPoint == executer.startPoint;

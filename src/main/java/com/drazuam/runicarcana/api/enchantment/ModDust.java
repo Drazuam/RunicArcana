@@ -25,7 +25,7 @@ public class ModDust {
 
     public static LinkedList<LinkedList<IDustSymbol>> dustRegistry = new LinkedList<LinkedList<IDustSymbol>>();
 
-    public static final Set<ScriptExecuter> runningScripts = new THashSet<ScriptExecuter>();
+    public static final Set<ScriptExecutor> runningScripts = new THashSet<ScriptExecutor>();
 
     public static DefaultDustSymbol startSymbol     = new DustSymbolStart(getNextDustID());
     public static DefaultDustSymbol changeSymbol    = new DustSymbolChange(getNextDustID());

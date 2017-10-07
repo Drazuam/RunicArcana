@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
-import com.drazuam.runicarcana.common.enchantment.ScriptExecuter;
+import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
@@ -60,7 +60,7 @@ public class DustSymbolName extends DefaultDustSymbol {
 
     public static Object setName(Object... args)
     {
-        ScriptExecuter executer = (ScriptExecuter)(args[0]);
+        ScriptExecutor executer = (ScriptExecutor)(args[0]);
         String name = (String)executer.resolveInput((short)1);
 
         if(name!=null)
