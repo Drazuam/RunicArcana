@@ -28,7 +28,6 @@ public class ScriptExecutor {
     public final ItemStack RunicItem;
     public boolean variablesChanged;
     public final StartPoint startPoint;
-    private LeftOffPoint leftOffPoint;
     public static final int processesPerTick = 30;
     private int processesThisTick;
     private final Queue<Object> actionQueue = Lists.newLinkedList();
@@ -132,20 +131,6 @@ public class ScriptExecutor {
 
     }
 
-//    public void rightClick()
-//    {
-//        if(!player.isSneaking()) {
-//            ModDust.dustRegistry.getFirst().getFirst().getSignal(0).doFunction(this);
-//            startPoint = StartPoint.RIGHT_CLICK;
-//        }
-//        else {
-//            ModDust.dustRegistry.getFirst().getFirst().getSignal(1).doFunction(this);
-//            startPoint = StartPoint.SNEAK_RIGHT;
-//        }
-//        if(variablesChanged)
-//            ModDust.loadScriptToItem(compiledSymbols, RunicItem);
-//    }
-
     @SubscribeEvent
     public void doNextTick(TickEvent.WorldTickEvent event)
     {
@@ -161,10 +146,6 @@ public class ScriptExecutor {
             done();
             return;
         }
-
-
-
-
 
         this.processesThisTick=0;
         variablesChanged=false;
@@ -379,12 +360,5 @@ public class ScriptExecutor {
         SNEAK_RIGHT,
         BLOCK_BREAK,
         ARMOR_HIT;
-}
-
-enum LeftOffPoint{
-    RESOLVING_INPUT,
-    RESOLVING_OUTPUT;
-}
-
-
+    }
 }

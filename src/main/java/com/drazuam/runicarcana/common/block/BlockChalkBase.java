@@ -44,7 +44,6 @@ public class BlockChalkBase extends Block implements ITileEntityProvider{
     @Override
     public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
         if(!worldIn.isRemote) {
-            System.out.println("left clicked");
             TileEntityChalkBase te = (TileEntityChalkBase)worldIn.getTileEntity(pos);
             RayTraceResult rt = playerIn.rayTrace(9.0F,1.0F);
 
@@ -54,7 +53,6 @@ public class BlockChalkBase extends Block implements ITileEntityProvider{
             double hitZ = rt.hitVec.zCoord-rt.getBlockPos().getZ();
 
             //get the dust the player clicked. If there isn't one, exit function
-            //((TileEntityChalkBase) te).getDustAt(hitX,hitZ).getIODust((int) (hitX * 3), (int) (hitZ * 3))!=null)
             DefaultDustSymbol dust = te.getDustAt(hitX,hitZ);
             if(dust==null){
                 te.updateRendering();

@@ -47,7 +47,18 @@ public class DustSymbolVelocity extends DefaultDustSymbol {
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Entity",    null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Add Vel",  DustSymbolVelocity::addVelocity, 3));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",    null, 4));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Velocity", DustSymbolVelocity::getVelocity, 5));
 
+    }
+
+    public static Object getVelocity(Object... args)
+    {
+        ScriptExecutor executor = (ScriptExecutor)(args[0]);
+
+        Entity entity = (Entity)executor.resolveInput((short)2);
+        if(entity==null)return null;
+
+        return new Vec3d(entity.motionX, entity.motionY, entity.motionZ);
     }
 
     public static Object addVelocity(Object... args)
