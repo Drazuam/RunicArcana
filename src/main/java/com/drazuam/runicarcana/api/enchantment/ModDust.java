@@ -44,6 +44,7 @@ public class ModDust {
     public static DefaultDustSymbol velocitySymbol  = new DustSymbolVelocity(getNextDustID());
     public static DefaultDustSymbol repeatSymbol    = new DustSymbolRepeat(getNextDustID());
     public static DefaultDustSymbol swapSymbol      = new DustSymbolSwap(getNextDustID());
+    public static DefaultDustSymbol fireballSymbol  = new DustSymbolFireball(getNextDustID());
 
 
 
@@ -69,6 +70,7 @@ public class ModDust {
         registerDust(0,velocitySymbol);
         registerDust(0,repeatSymbol);
         registerDust(0,swapSymbol);
+        registerDust(0,fireballSymbol);
     }
 
     public static short getNextDustID()
