@@ -82,7 +82,7 @@ public class DustSymbolConstant extends DefaultDustSymbol {
         if(number!=null)
         {
             executor.setVariable(number.toString());
-            executor.variablesChanged = true;
+
         }
 
         executor.resolveOutput((short)(3),true);
@@ -98,7 +98,7 @@ public class DustSymbolConstant extends DefaultDustSymbol {
         if(pos!=null)
         {
             executor.setVariable(ModDust.BlockPosToString(pos));
-            executor.variablesChanged = true;
+
         }
 
         executor.resolveOutput((short)(3),true);
@@ -120,7 +120,7 @@ public class DustSymbolConstant extends DefaultDustSymbol {
         if(vec!=null)
         {
             executor.setVariable(ModDust.VectorToString(vec));
-            executor.variablesChanged = true;
+
         }
 
         executor.resolveOutput((short)(3),true);

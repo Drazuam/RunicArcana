@@ -309,6 +309,7 @@ public class ScriptExecutor {
     public void setVariable(String var)
     {
         compiledSymbols[currentSymbol].variable=var;
+        this.variablesChanged=true;
     }
 
 
