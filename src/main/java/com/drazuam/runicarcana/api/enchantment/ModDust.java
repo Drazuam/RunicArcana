@@ -308,7 +308,7 @@ public class ModDust {
         }
         else if(o instanceof String)
         {
-            Pattern p = Pattern.compile("^(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
+            Pattern p = Pattern.compile("(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
             Matcher m = p.matcher((String)o);
             try {
                 m.find();
@@ -344,7 +344,7 @@ public class ModDust {
         }
         else if(o instanceof String)
         {
-            Pattern p = Pattern.compile("^(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
+            Pattern p = Pattern.compile("(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
             Matcher m = p.matcher((String)o);
             try {
                 m.find();
