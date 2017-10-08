@@ -43,7 +43,15 @@ public class ItemChalkDefault extends Item {
         return true;
     }
 
+    @Override
+    public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 
+        if(stack.getTagCompound()==null){stack.setTagCompound(new NBTTagCompound());}
+        stack.getTagCompound().setInteger("catID",0);
+        stack.getTagCompound().setInteger("dustID",ModDust.startSymbol.dustType);
+
+        super.onCreated(stack, worldIn, playerIn);
+    }
 
     //This doesn't get called very often, so I'm going to do a lot of checks in it.
     //This shouldn't affect performance, even though the whole process seems quite lengthy.

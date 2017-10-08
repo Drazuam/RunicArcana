@@ -8,6 +8,7 @@ import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.keybind.ModKeybind;
 import com.drazuam.runicarcana.common.network.PacketHandler;
 import com.drazuam.runicarcana.common.network.PacketSendDust;
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
+import sun.awt.image.ImageWatched;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class GuiChalk extends GuiScreen {
     private final int guiHeight = 140;
     private final int guiWidth  = 200;
     private boolean shifting = false;
-
+    private int categorySelected = 0;
 
 
     @Override
@@ -87,20 +89,44 @@ public class GuiChalk extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
+
+        if(button.id<0)
+        {
+            categorySelected = -(button.id+1);
+            addButtons();
+
+            EntityPlayerSP playerEntity = Minecraft.getMinecraft().thePlayer;
+            if(playerEntity.getHeldItem(EnumHand.MAIN_HAND)!=null&&playerEntity.getHeldItem(EnumHand.MAIN_HAND).getItem()== ModItems.defaultChalkItem)
+            {
+                ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
+                if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
+                chalk.getTagCompound().setInteger("catID",button.id);
+                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), categorySelected));
+
+            }
+            else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
+            {
+                ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
+                if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
+                chalk.getTagCompound().setInteger("catID",button.id);
+                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), categorySelected));
+            }
+        }
+
         for(LinkedList<IDustSymbol> category : ModDust.dustRegistry)
         {
             for(IDustSymbol dust : category)
             {
                 if(button.id==dust.getDustID())
                 {
-                    //System.out.println("Selected "+dust.getDisplayName().getUnformattedText());
+
                     EntityPlayerSP playerEntity = Minecraft.getMinecraft().thePlayer;
                     if(playerEntity.getHeldItem(EnumHand.MAIN_HAND)!=null&&playerEntity.getHeldItem(EnumHand.MAIN_HAND).getItem()== ModItems.defaultChalkItem)
                     {
                         ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
                         if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                         chalk.getTagCompound().setInteger("dustID",button.id);
-                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id));
+                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, chalk.getTagCompound().getInteger("catID")));
 
                     }
                     else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
@@ -108,7 +134,7 @@ public class GuiChalk extends GuiScreen {
                         ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
                         if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                         chalk.getTagCompound().setInteger("dustID",button.id);
-                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id));
+                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, chalk.getTagCompound().getInteger("catID")));
                     }
 
 
@@ -143,8 +169,12 @@ public class GuiChalk extends GuiScreen {
 
 
 
+
+
     public void addButtons()
     {
+        buttonList.clear();
+
         int buttonWidth = (guiWidth/8);
         int buttonHeight = buttonWidth;
         int xStart  = (width-guiWidth)/30;
@@ -152,7 +182,7 @@ public class GuiChalk extends GuiScreen {
         int xEnd    = (xStart+guiWidth)-buttonWidth;
         int yEnd    = (yStart+guiHeight);
         int xMargin = (guiWidth/20);
-        int yMargin = (guiHeight/4);
+        int yMargin = (guiHeight/46);
         int xSpacing = (guiWidth/30);
         int ySpacing = (guiHeight/30);
 
@@ -160,9 +190,23 @@ public class GuiChalk extends GuiScreen {
         int x = xStart+xMargin;
         int y = yStart+yMargin;
 
-        for(IDustSymbol dust : ModDust.dustRegistry.getFirst())
+
+        //add the category buttons at the top of the gui
+        for(LinkedList<IDustSymbol> cat : ModDust.dustRegistry)
         {
-        SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
+            IDustSymbol dust = cat.getFirst();
+            SymbolButton newButt = new SymbolButton(-ModDust.dustRegistry.indexOf(cat)-1,x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
+            buttonList.add(newButt);
+            x = x + xSpacing + buttonWidth;
+        }
+
+        x = xStart+xMargin;
+        y = y+ySpacing+buttonHeight+yMargin;
+
+        //fill the category with the buttons in it
+        for(IDustSymbol dust : ModDust.dustRegistry.get(categorySelected))
+        {
+            SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
             buttonList.add(newButt);
             x = x + xSpacing + buttonWidth;
             if(x>xEnd)

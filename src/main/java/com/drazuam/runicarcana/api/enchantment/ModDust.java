@@ -59,18 +59,18 @@ public class ModDust {
         registerDust(0,dickbuttSymbol);
         registerDust(0,inSymbol);
         registerDust(0,outSymbol);
-        registerDust(0,mathSymbol);
-        registerDust(0,constantSymbol);
-        registerDust(0,compareSymbol);
-        registerDust(0,nameSymbol);
-        registerDust(0,orSymbol);
-        registerDust(0,breakSymbol);
-        registerDust(0,sightSymbol);
-        registerDust(0,projectionSymbol);
-        registerDust(0,velocitySymbol);
-        registerDust(0,repeatSymbol);
-        registerDust(0,swapSymbol);
-        registerDust(0,fireballSymbol);
+        registerDust(1,mathSymbol);
+        registerDust(1,constantSymbol);
+        registerDust(1,compareSymbol);
+        registerDust(4,breakSymbol);
+        registerDust(4,nameSymbol);
+        registerDust(1,orSymbol);
+        registerDust(3,sightSymbol);
+        registerDust(1,projectionSymbol);
+        registerDust(3,velocitySymbol);
+        registerDust(1,repeatSymbol);
+        registerDust(3,swapSymbol);
+        registerDust(2,fireballSymbol);
     }
 
     public static short getNextDustID()

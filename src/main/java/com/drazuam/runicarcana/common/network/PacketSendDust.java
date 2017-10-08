@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
  */
 public class PacketSendDust implements IMessage {
     private int dustID=-1;
-
+    private int catID =-1;
 
     @Override
     public void fromBytes(ByteBuf buf) {
@@ -32,9 +32,10 @@ public class PacketSendDust implements IMessage {
 
     }
 
-    public PacketSendDust(int newDustID) {
+    public PacketSendDust(int newDustID, int newCatID) {
 
         dustID = newDustID;
+        catID = newCatID;
     }
 
     public static class Handler implements IMessageHandler<PacketSendDust, IMessage> {
@@ -57,6 +58,7 @@ public class PacketSendDust implements IMessage {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
                 if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                 chalk.getTagCompound().setInteger("dustID",message.dustID);
+                chalk.getTagCompound().setInteger("catID",message.catID);
 
             }
             else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
@@ -64,6 +66,7 @@ public class PacketSendDust implements IMessage {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
                 if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                 chalk.getTagCompound().setInteger("dustID",message.dustID);
+                chalk.getTagCompound().setInteger("catID",message.catID);
             }
         }
     }

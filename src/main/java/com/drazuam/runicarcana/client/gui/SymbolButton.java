@@ -52,11 +52,15 @@ public class SymbolButton extends GuiButton {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
                 if(chalk.getTagCompound()!=null&&chalk.getTagCompound().getInteger("dustID")==this.id)
                     selected=true;
+                if(chalk.getTagCompound()!=null&&chalk.getTagCompound().getInteger("catID")==(this.id))
+                    selected=true;
 
             }
             else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem) {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
                 if(chalk.getTagCompound()!=null&&chalk.getTagCompound().getInteger("dustID")==this.id)
+                    selected=true;
+                if(chalk.getTagCompound()!=null&&chalk.getTagCompound().getInteger("catID")==(this.id))
                     selected=true;
             }
             float red = 1F;
