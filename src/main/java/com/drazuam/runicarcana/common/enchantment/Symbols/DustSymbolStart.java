@@ -53,7 +53,7 @@ public class DustSymbolStart extends DefaultDustSymbol {
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Sneak Right Clicked",DustSymbolStart::sneakRightClick,1));
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.OUT, "Player Entity",DustSymbolStart::playerEntity,2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Block Break",DustSymbolStart::blockBreak,3));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Init Block",DustSymbolStart::initBlockPos,4));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Init Block",DustSymbolStart::initBlockPos,4));
     }
 
 
