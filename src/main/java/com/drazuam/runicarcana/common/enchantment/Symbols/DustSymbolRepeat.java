@@ -55,7 +55,7 @@ public class DustSymbolRepeat extends DefaultDustSymbol
         Integer repetitions = 0;
 
         executor.setVariable(repetitions.toString());
-        executor.variablesChanged = true;
+
 
         executor.resolveOutput((short)2, true);
 
@@ -76,7 +76,7 @@ public class DustSymbolRepeat extends DefaultDustSymbol
         if(cycles < (int)(double)((Double)executor.resolveInput((short)1)))
         {
             executor.setVariable(""+cycles);
-            executor.variablesChanged = true;
+
             executor.resolveOutput((short)2, true);
         }
         else
