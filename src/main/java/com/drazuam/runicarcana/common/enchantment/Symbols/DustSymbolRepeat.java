@@ -44,30 +44,50 @@ public class DustSymbolRepeat extends DefaultDustSymbol
     {
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Repeat", DustSymbolRepeat::Repeat, 0));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Repetitions", null, 1));
-        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "LoopIn", null,2));
-        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "LoopOut", null, 3));
+        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "LoopOut", null,2));
+        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "LoopIn", DustSymbolRepeat::LoopIn, 3));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done", null, 4));
+        addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.OUT, "Cycle", DustSymbolRepeat::getCycles, 5));
     }
 
     public static Object Repeat(Object... args)
     {
         ScriptExecutor executor = (ScriptExecutor)args[0];
-        Double repetitions = (Double)executor.resolveInput((short)1);
+        Integer repetitions = 0;
 
-        for (Double i = 0.0 ;i < Math.abs(repetitions); i++)
-        {
-            executor.resolveInput((short)2);
-            System.out.println("Repeat: " + i);
+        executor.setVariable(repetitions.toString());
+        executor.variablesChanged = true;
 
-            executor.resolveOutput((short)3, true);
+        executor.resolveOutput((short)2, true);
 
-
-        }
-
-        executor.resolveOutput((short)3, true);
-
-        return null;
+        return true;
     }
+
+
+    public static Object getCycles(Object... args) {
+        ScriptExecutor executor = (ScriptExecutor) args[0];
+        return Integer.parseInt(executor.getVariable());
+    }
+
+    public static Object LoopIn(Object... args){
+        ScriptExecutor executor = (ScriptExecutor) args[0];
+        String var = executor.getVariable();
+        int cycles = Integer.parseInt(var);
+        cycles++;
+        if(cycles < (int)(double)((Double)executor.resolveInput((short)1)))
+        {
+            executor.setVariable(""+cycles);
+            executor.variablesChanged = true;
+            executor.resolveOutput((short)2, true);
+        }
+        else
+            executor.resolveOutput((short)4, true);
+
+
+        return true;
+    }
+
+
 
     @Override
     public String getDefaultName() {
