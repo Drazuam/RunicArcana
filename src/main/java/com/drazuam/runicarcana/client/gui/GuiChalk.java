@@ -36,7 +36,7 @@ public class GuiChalk extends GuiScreen {
     private final int guiHeight = 140;
     private final int guiWidth  = 200;
     private boolean shifting = false;
-    private int categorySelected = 0;
+    private int categorySelected;
 
 
     @Override
@@ -83,6 +83,33 @@ public class GuiChalk extends GuiScreen {
     @Override
     public void initGui(){
         buttonList.clear();
+        EntityPlayerSP playerEntity = Minecraft.getMinecraft().thePlayer;
+        if(playerEntity.getHeldItem(EnumHand.MAIN_HAND)!=null&&playerEntity.getHeldItem(EnumHand.MAIN_HAND).getItem()== ModItems.defaultChalkItem)
+        {
+            ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
+
+            if(chalk.getTagCompound()==null) {
+                chalk.setTagCompound(new NBTTagCompound());
+                chalk.getTagCompound().setInteger("catID", -1);
+                chalk.getTagCompound().setInteger("dustID", ModDust.startSymbol.dustType);
+            }
+
+            categorySelected = -(chalk.getTagCompound().getInteger("catID")+1);
+
+
+        }
+        else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
+        {
+            ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
+
+            if(chalk.getTagCompound()==null) {
+                chalk.setTagCompound(new NBTTagCompound());
+                chalk.getTagCompound().setInteger("catID", -1);
+                chalk.getTagCompound().setInteger("dustID", ModDust.startSymbol.dustType);
+            }
+
+            categorySelected = -(chalk.getTagCompound().getInteger("catID")+1);
+        }
         addButtons();
         super.initGui();
     }
@@ -93,7 +120,7 @@ public class GuiChalk extends GuiScreen {
         if(button.id<0)
         {
             categorySelected = -(button.id+1);
-            addButtons();
+
 
             EntityPlayerSP playerEntity = Minecraft.getMinecraft().thePlayer;
             if(playerEntity.getHeldItem(EnumHand.MAIN_HAND)!=null&&playerEntity.getHeldItem(EnumHand.MAIN_HAND).getItem()== ModItems.defaultChalkItem)
@@ -101,7 +128,7 @@ public class GuiChalk extends GuiScreen {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
                 if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                 chalk.getTagCompound().setInteger("catID",button.id);
-                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), categorySelected));
+                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), button.id));
 
             }
             else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
@@ -109,8 +136,11 @@ public class GuiChalk extends GuiScreen {
                 ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
                 if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                 chalk.getTagCompound().setInteger("catID",button.id);
-                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), categorySelected));
+                PacketHandler.INSTANCE.sendToServer(new PacketSendDust(chalk.getTagCompound().getInteger("dustID"), button.id));
             }
+
+            addButtons();
+            return;
         }
 
         for(LinkedList<IDustSymbol> category : ModDust.dustRegistry)
@@ -126,15 +156,18 @@ public class GuiChalk extends GuiScreen {
                         ItemStack chalk = playerEntity.getHeldItem(EnumHand.MAIN_HAND);
                         if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                         chalk.getTagCompound().setInteger("dustID",button.id);
-                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, chalk.getTagCompound().getInteger("catID")));
-
+                        int catID = chalk.getTagCompound().getInteger("catID");
+                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, catID));
+                        chalk.getTagCompound().setInteger("catID",catID);
                     }
                     else if(playerEntity.getHeldItem(EnumHand.OFF_HAND)!=null&&playerEntity.getHeldItem(EnumHand.OFF_HAND).getItem()== ModItems.defaultChalkItem)
                     {
                         ItemStack chalk = playerEntity.getHeldItem(EnumHand.OFF_HAND);
                         if(chalk.getTagCompound()==null){chalk.setTagCompound(new NBTTagCompound());}
                         chalk.getTagCompound().setInteger("dustID",button.id);
-                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, chalk.getTagCompound().getInteger("catID")));
+                        int catID = chalk.getTagCompound().getInteger("catID");
+                        PacketHandler.INSTANCE.sendToServer(new PacketSendDust(button.id, catID));
+                        chalk.getTagCompound().setInteger("catID",catID);
                     }
 
 

@@ -21,11 +21,13 @@ public class PacketSendDust implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
         dustID = buf.readInt();
+        catID  = buf.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeInt(dustID);
+        buf.writeInt(catID);
     }
 
     public PacketSendDust(){
