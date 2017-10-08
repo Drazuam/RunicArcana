@@ -12,7 +12,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 /**
  * created by Matt on 10/7/2017
- * (WIP)
  */
 
 public class DustSymbolRepeat extends DefaultDustSymbol

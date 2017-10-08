@@ -43,6 +43,7 @@ public class ModDust {
     public static DefaultDustSymbol projectionSymbol = new DustSymbolProjection(getNextDustID());
     public static DefaultDustSymbol velocitySymbol  = new DustSymbolVelocity(getNextDustID());
     public static DefaultDustSymbol repeatSymbol    = new DustSymbolRepeat(getNextDustID());
+    public static DefaultDustSymbol swapSymbol      = new DustSymbolSwap(getNextDustID());
 
 
 
@@ -67,6 +68,7 @@ public class ModDust {
         registerDust(0,projectionSymbol);
         registerDust(0,velocitySymbol);
         registerDust(0,repeatSymbol);
+        registerDust(0,swapSymbol);
     }
 
     public static short getNextDustID()
