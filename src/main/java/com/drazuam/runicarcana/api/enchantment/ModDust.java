@@ -11,10 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.ListIterator;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,12 +43,18 @@ public class ModDust {
     public static DefaultDustSymbol swapSymbol      = new DustSymbolSwap(getNextDustID());
     public static DefaultDustSymbol fireballSymbol  = new DustSymbolFireball(getNextDustID());
 
-
+    public static List CategoryNames = new LinkedList<String>();
 
     public static short currDustID=0;
 
     public static void registerDustsToGui()
     {
+        CategoryNames.add("Basic");
+        CategoryNames.add("Signals");
+        CategoryNames.add("Elemental");
+        CategoryNames.add("Ethereal");
+        CategoryNames.add("Utility");
+
         //GuiChalk.registerDust(0,DefaultDustSymbol.class);
         registerDust(0,startSymbol);
         registerDust(0,changeSymbol);

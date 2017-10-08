@@ -53,16 +53,18 @@ public class GuiChalk extends GuiScreen {
             {
                 List<String> text = new ArrayList<String>();
 
-                for(LinkedList<IDustSymbol> category : ModDust.dustRegistry)
+                if(but.id<0)
                 {
-                    for(IDustSymbol dust : category)
-                    {
-                        if(dust.getDustID()==but.id)
-                        {
-                            text.add(dust.getDisplayName().getUnformattedText());
-                            if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
-                            {
-                                //TODO: symbol descriptions
+                    text.add((String)ModDust.CategoryNames.get(-(but.id+1)));
+                }
+                else {
+                    for (LinkedList<IDustSymbol> category : ModDust.dustRegistry) {
+                        for (IDustSymbol dust : category) {
+                            if (dust.getDustID() == but.id) {
+                                text.add(dust.getDisplayName().getUnformattedText());
+                                if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                                    //TODO: symbol descriptions
+                                }
                             }
                         }
                     }
@@ -215,7 +217,7 @@ public class GuiChalk extends GuiScreen {
         int xEnd    = (xStart+guiWidth)-buttonWidth;
         int yEnd    = (yStart+guiHeight);
         int xMargin = (guiWidth/20);
-        int yMargin = (guiHeight/46);
+        int yMargin = (guiHeight/48);
         int xSpacing = (guiWidth/30);
         int ySpacing = (guiHeight/30);
 
