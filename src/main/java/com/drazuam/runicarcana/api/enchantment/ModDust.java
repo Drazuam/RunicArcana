@@ -42,6 +42,8 @@ public class ModDust {
     public static DefaultDustSymbol sightSymbol     = new DustSymbolSight(getNextDustID());
     public static DefaultDustSymbol projectionSymbol = new DustSymbolProjection(getNextDustID());
     public static DefaultDustSymbol velocitySymbol  = new DustSymbolVelocity(getNextDustID());
+    public static DefaultDustSymbol repeatSymbol    = new DustSymbolRepeat(getNextDustID());
+    public static DefaultDustSymbol sequentialSymbol = new DustSymbolSequential(getNextDustID());
 
 
 
@@ -65,6 +67,8 @@ public class ModDust {
         registerDust(0,sightSymbol);
         registerDust(0,projectionSymbol);
         registerDust(0,velocitySymbol);
+        //registerDust(0,repeatSymbol); ---> WIP, not looping properly
+        registerDust(0,sequentialSymbol);
     }
 
     public static short getNextDustID()
@@ -130,6 +134,7 @@ public class ModDust {
             }
         }
 
+
         //declare empty array to store our serializable script in.
         CompiledSymbol[] script = new CompiledSymbol[formationList.size()];
         int index = 0;
@@ -152,7 +157,7 @@ public class ModDust {
                 for(DustConnectionLine line : ioDust.connectionLines)
                 {
                     //if the io dust is an input, the other end is an output and vice versa.  Because of this, there must be different
-                    //locig for the two different classes
+                    //logic for the two different classes
                     if(ioDust instanceof DustOutSymbol)
                         currSym.addAction((byte)ioDust.getSignal().ID,(byte)line.child.getSignal().ID,getIDFromDust(line.child.parent, formationList),dustInd++);
                     else if(ioDust instanceof DustInSymbol)

@@ -25,6 +25,8 @@ dust.dustCompare=Comparator
 dust.dustName=Item Name
 dust.dustCombine.name=Control Combine
 dust.dustVelocity=Velocity
+dust.dustRepeat=Repeat
+dust.dustSequential=Sequential
 
 
 

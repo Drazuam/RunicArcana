@@ -42,7 +42,7 @@ public class GuiPaperScrap extends GuiScreen {
         int yStart = (int)((height-(int)(guiHeight*scale))*0.4);
         drawTexturedModalRect((int)(xStart/scale),(int)(yStart/scale),0,0,(guiWidth),(guiHeight));
 
-        this.drawCenteredString(this.fontRendererObj, this.text, (int)(width/2/scale),(int)(height*0.4/scale), 0xFFFFFF);
+        this.drawCenteredString(this.fontRendererObj, this.text + '_', (int)(width/2/scale),(int)(height*0.4/scale), 0xFFFFFF);
 
         GlStateManager.scale(1/scale,1/scale,1/scale);
 

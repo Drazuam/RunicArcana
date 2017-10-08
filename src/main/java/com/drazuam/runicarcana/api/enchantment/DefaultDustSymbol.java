@@ -62,7 +62,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
                 while (signals.get(i) != currentSig && i < signals.size()) i = i + 1;
             //save this location
             int curSigInd = i;
-            //keep going until we've looped back to this position, or we have found an appropirate signal
+            //keep going until we've looped back to this position, or we have found an appropriate signal
             while ((i - curSigInd) < signals.size()) {
                 if (signals.get(i % signals.size()) != currentSig && signals.get(i % signals.size()).flow == Signal.SigFlow.OUT&& !isSignalInUse(signals.get(i % signals.size()))) {
                     ioDust.setSignal(signals.get(i % signals.size()));
@@ -80,7 +80,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
                 while (signals.get(i) != currentSig && i < signals.size()) i = i + 1;
             //save this location
             int curSigInd = i;
-            //keep going until we've looped back to this position, or we have found an appropirate signal
+            //keep going until we've looped back to this position, or we have found an appropriate signal
             while ((i - curSigInd) < signals.size()) {
                 if (signals.get(i % signals.size()) != currentSig && signals.get(i % signals.size()).flow == Signal.SigFlow.IN && !isSignalInUse(signals.get(i % signals.size()))) {
                     ioDust.setSignal(signals.get(i % signals.size()));
@@ -133,7 +133,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
         else {
             if(this.connectionLines.getFirst().parent.getSignal().type!=destination.getSignal().type)return false;
             System.out.println("adding connection");
-            DustConnectionLine line = new DustConnectionLine((DustIOSymbol) this, (DustIOSymbol) destination, conType);
+            DustConnectionLine line = new DustConnectionLine((DustIOSymbol) this, destination, conType);
             connectionLines.add(line);
             destination.connectionLines.add(line);
             destination.getParent().updateRendering();
