@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
+
 /**
  * Created by Joel on 2/21/2017.
  */
@@ -17,11 +19,13 @@ public class SymbolButton extends GuiButton {
 
     private ResourceLocation texture;
     private int textureSize;
+    private float[]colors = new float[3];
 
-    public SymbolButton(int buttonId, int x, int y, int widthIn, int heightIn, ResourceLocation textureLocation, int size) {
+    public SymbolButton(int buttonId, int x, int y, int widthIn, int heightIn, ResourceLocation textureLocation, int size, Color color) {
         super(buttonId, x, y, widthIn, heightIn, "");
         texture = textureLocation;
         textureSize = size*32;
+        color.getColorComponents(colors);
     }
 
     @Override
@@ -63,13 +67,14 @@ public class SymbolButton extends GuiButton {
                 if(chalk.getTagCompound()!=null&&chalk.getTagCompound().getInteger("catID")==(this.id))
                     selected=true;
             }
-            float red = 1F;
-            float green = 1F;
-            float blue = 1F;
+
+
+
+
             if(selected)
-                GlStateManager.color(red,green,blue,1.0F);
+                GlStateManager.color(colors[0], colors[1], colors[2],1.0F);
             else
-                GlStateManager.color(red,green,blue,0.5F);
+                GlStateManager.color(colors[0], colors[1], colors[2],0.5F);
 
             this.drawTexturedModalRect((float)this.xPosition/scaleFactor, (float)this.yPosition/scaleFactor, 0, 0, (int)(width/scaleFactor), (int)(width/scaleFactor));
             //this.drawTexturedModalRect(this.xPosition, this.yPosition, 0, 46 + i * 20, this.width / 2, this.height);

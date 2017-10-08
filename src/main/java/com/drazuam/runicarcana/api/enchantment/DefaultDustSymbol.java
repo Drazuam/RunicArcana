@@ -13,6 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.DimensionManager;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -336,5 +337,10 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
     @Override
     public String getTexture() {
         return null;
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.WHITE;
     }
 }

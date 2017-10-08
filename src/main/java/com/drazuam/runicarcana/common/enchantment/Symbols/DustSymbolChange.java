@@ -12,6 +12,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import java.awt.*;
+
 /**
  * Created by Joel on 2/20/2017.
  */
@@ -88,6 +90,11 @@ public class DustSymbolChange extends DefaultDustSymbol {
     @Override
     public ITextComponent getDisplayName(String name) {
         return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.BLUE;
     }
 }
 

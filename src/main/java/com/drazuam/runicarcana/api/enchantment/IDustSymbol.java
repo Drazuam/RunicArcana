@@ -8,6 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 
+import java.awt.*;
+
 
 /**
  * Created by Joel on 2/19/2017.
@@ -30,5 +32,6 @@ public interface IDustSymbol {
     public String getModelLocation();
     public String getTexture();
     public String getDefaultName();
+    public Color getColor();
 
 }

@@ -80,7 +80,10 @@ public class RendererDust extends TileEntitySpecialRenderer<TileEntityChalkBase>
             IBakedModel bakedModel = dust.getBakedModel();
             mc.getBlockRendererDispatcher().getBlockModelRenderer().renderModel(world, bakedModel, world.getBlockState(te.getPos()), te.getPos(), Tessellator.getInstance().getBuffer(), false, Double.doubleToLongBits(Math.random()));
             //CHANGING COLORS
-            //tessellator.getBuffer().putColorRGB_F4(255, 80, 255);
+            float[]colors = new float[3];
+            dust.getColor().getColorComponents(colors);
+            tessellator.getBuffer().putColorRGB_F4(colors[0], colors[1], colors[2]);
+
             tessellator.draw();
 
             //GL11.glDisable(GL11.GL_BLEND);

@@ -20,13 +20,19 @@ dust.dustDickbutt.name=DickButt
 dust.dustIn.name=Input
 dust.dustOut.name=Output
 dust.dustMath.name=Arithmetic
-dust.dustConstant.name=Constant
+dust.dustConstantString.name=String Constant
+dust.dustConstantVector.name=Vector Constant
+dust.dustConstantNumber.name=Number Constant
 dust.dustCompare.name=Comparator
 dust.dustName.name=Item Name
 dust.dustCombine.name=Control Combine
 dust.dustVelocity.name=Velocity
 dust.dustRepeat.name=Repeat
 dust.dustSwap.name=Swap
+dust.dustProjection.name=Projection
+dust.dustFireball.name=Fireball
+dust.dustSight.name=Sight
+dust.dustBreak.name=Block Break
 
 #enchantments
 enchantment.omnienchant=Runic Enchantment

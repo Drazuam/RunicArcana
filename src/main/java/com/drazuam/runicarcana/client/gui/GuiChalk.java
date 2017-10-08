@@ -230,7 +230,7 @@ public class GuiChalk extends GuiScreen {
         for(LinkedList<IDustSymbol> cat : ModDust.dustRegistry)
         {
             IDustSymbol dust = cat.getFirst();
-            SymbolButton newButt = new SymbolButton(-ModDust.dustRegistry.indexOf(cat)-1,x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
+            SymbolButton newButt = new SymbolButton(-ModDust.dustRegistry.indexOf(cat)-1,x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize(), dust.getColor());
             buttonList.add(newButt);
             x = x + xSpacing + buttonWidth;
         }
@@ -241,7 +241,7 @@ public class GuiChalk extends GuiScreen {
         //fill the category with the buttons in it
         for(IDustSymbol dust : ModDust.dustRegistry.get(categorySelected))
         {
-            SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize());
+            SymbolButton newButt = new SymbolButton(dust.getDustID(),x,y,buttonHeight,buttonWidth,dust.getResourceLocation(), dust.getSize(), dust.getColor());
             buttonList.add(newButt);
             x = x + xSpacing + buttonWidth;
             if(x>xEnd)
