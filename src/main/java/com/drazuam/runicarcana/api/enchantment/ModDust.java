@@ -306,6 +306,10 @@ public class ModDust {
         {
             return (BlockPos)o;
         }
+        else if(o instanceof Vec3d)
+        {
+            return new BlockPos(((Vec3d) o).xCoord, ((Vec3d) o).yCoord, ((Vec3d) o).zCoord);
+        }
         else if(o instanceof String)
         {
             Pattern p = Pattern.compile("(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
@@ -342,6 +346,10 @@ public class ModDust {
         {
             return (Vec3d)o;
         }
+        else if(o instanceof BlockPos)
+        {
+            return new Vec3d(((BlockPos) o).getX(), ((BlockPos) o).getY(), ((BlockPos) o).getZ());
+        }
         else if(o instanceof String)
         {
             Pattern p = Pattern.compile("(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)[ ,]+(-?\\d+(\\.\\d)?)");
@@ -362,6 +370,9 @@ public class ModDust {
         return null;
     }
 
-
+    public static Vec3d toVec3d(BlockPos bp)
+    {
+        return new Vec3d(bp.getX(), bp.getY(), bp.getZ());
+    }
 
 }

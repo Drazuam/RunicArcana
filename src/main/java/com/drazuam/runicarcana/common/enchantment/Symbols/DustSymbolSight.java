@@ -51,7 +51,7 @@ public class DustSymbolSight extends DefaultDustSymbol {
     private void addSignals()
     {
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Entity",null,0));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Raytraced Block", DustSymbolSight::rayBlock,1));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Raytraced Block", DustSymbolSight::rayBlock,1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Ray Dist",null,2));
         addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Look Vector", DustSymbolSight::lookVector, 3));
         addSignal(new Signal(this, Signal.SignalType.ANGLE, Signal.SigFlow.OUT, "Look Angle", DustSymbolSight::lookAngle, 4));

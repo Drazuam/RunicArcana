@@ -53,7 +53,7 @@ public class DustSymbolBreak extends DefaultDustSymbol {
     private void addMethods()
     {
         addSignal(new Signal(this, Signal.SignalType.CONTROL,  Signal.SigFlow.IN, "Break", DustSymbolBreak::BreakBlock ,0));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.IN, "Block Position",null,1));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.IN, "Block Position",null,1));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",null,2));
 
     }

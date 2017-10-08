@@ -32,8 +32,7 @@ public class Signal implements ISignal,Serializable {
     public enum SignalType
     {
         CONTROL(0xFFFFFF),
-        BLOCKPOS(0x0000FF),
-        VECTOR(0x00FF00),
+        VECTOR(0x0000FF),
         NUMBER(0x00FF00),
         ENTITY(0xFF00FF),
         STRING(0xFF8C00),

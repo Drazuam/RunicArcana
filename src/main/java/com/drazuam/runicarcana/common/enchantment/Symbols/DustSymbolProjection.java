@@ -43,15 +43,15 @@ public class DustSymbolProjection extends DefaultDustSymbol {
 
     private void addSignals()
     {
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.IN,  "Reference Pos",null,0));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.IN,  "Reference Pos",null,0));
         addSignal(new Signal(this, Signal.SignalType.ANGLE, Signal.SigFlow.IN,    "Reference Angle",null,1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN,    "Length",null,2));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Up"  ,DustSymbolProjection::blockUp,3));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Down",DustSymbolProjection::blockDown,4));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Left",DustSymbolProjection::blockLeft,5));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Right",DustSymbolProjection::blockRight,6));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Forward",DustSymbolProjection::blockForward,7));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT, "Back",DustSymbolProjection::blockBack,8));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Up"  ,DustSymbolProjection::blockUp,3));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Down",DustSymbolProjection::blockDown,4));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Left",DustSymbolProjection::blockLeft,5));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Right",DustSymbolProjection::blockRight,6));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Forward",DustSymbolProjection::blockForward,7));
+        addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT, "Back",DustSymbolProjection::blockBack,8));
     }
 
 

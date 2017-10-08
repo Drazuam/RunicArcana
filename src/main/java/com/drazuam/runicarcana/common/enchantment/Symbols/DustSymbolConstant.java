@@ -53,9 +53,6 @@ public class DustSymbolConstant extends DefaultDustSymbol {
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN,   "Set Number", DustSymbolConstant::setNumber,2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT,  "Done", null,3));
         addSignal(new Signal(this, Signal.SignalType.STRING, Signal.SigFlow.OUT,   "String", DustSymbolConstant::stringVariable,4));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.OUT,   "Block Pos", DustSymbolConstant::blockPosVariable,5));
-        addSignal(new Signal(this, Signal.SignalType.BLOCKPOS, Signal.SigFlow.IN,    "Block Pos", null,6));
-        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN,   "Set Block Pos", DustSymbolConstant::setBlockPos,7));
         addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.OUT,   "Vector", DustSymbolConstant::vectorVariable,8));
         addSignal(new Signal(this, Signal.SignalType.VECTOR, Signal.SigFlow.IN,    "Vector", null,9));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN,   "Set Vector", DustSymbolConstant::setVector,10));
@@ -88,28 +85,6 @@ public class DustSymbolConstant extends DefaultDustSymbol {
         executor.resolveOutput((short)(3),true);
 
         return true;
-    }
-
-    public static Object setBlockPos(Object... args)
-    {
-        ScriptExecutor executor = (ScriptExecutor)(args[0]);
-        BlockPos pos = (BlockPos)executor.resolveInput((short)6);
-
-        if(pos!=null)
-        {
-            executor.setVariable(ModDust.BlockPosToString(pos));
-
-        }
-
-        executor.resolveOutput((short)(3),true);
-
-        return true;
-    }
-
-    public static Object blockPosVariable(Object... args)
-    {
-        ScriptExecutor executor = (ScriptExecutor)(args[0]);
-        return ModDust.parseBlockPos(executor.getVariable());
     }
 
     public static Object setVector(Object... args)
