@@ -26,14 +26,14 @@ public class DustSymbolConstantVector extends DefaultDustSymbol {
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolConstantVector(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, ModDust.constantSymbol.dustType);
+        super(X, Z, F,newParent, ModDust.vectorConstantSymbol.dustType);
         addSignals();
 
     }
 
     public DustSymbolConstantVector()
     {
-        super(0,0,0,null, ModDust.constantSymbol.dustType);
+        super(0,0,0,null, ModDust.vectorConstantSymbol.dustType);
 
         addSignals();
 

@@ -26,7 +26,7 @@ public class DustSymbolConstantNumber extends DefaultDustSymbol {
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolConstantNumber(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, ModDust.constantSymbol.dustType);
+        super(X, Z, F,newParent, ModDust.numberConstantSymbol.dustType);
 
         addSignals();
 
@@ -36,7 +36,7 @@ public class DustSymbolConstantNumber extends DefaultDustSymbol {
 
     public DustSymbolConstantNumber()
     {
-        super(0,0,0,null, ModDust.constantSymbol.dustType);
+        super(0,0,0,null, ModDust.numberConstantSymbol.dustType);
 
         addSignals();
 

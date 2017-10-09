@@ -25,7 +25,7 @@ public class DustSymbolConstantString extends DefaultDustSymbol {
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
 
     public DustSymbolConstantString(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, ModDust.constantSymbol.dustType);
+        super(X, Z, F,newParent, ModDust.stringConstantSymbol.dustType);
 
         addSignals();
 
@@ -35,7 +35,7 @@ public class DustSymbolConstantString extends DefaultDustSymbol {
 
     public DustSymbolConstantString()
     {
-        super(0,0,0,null, ModDust.constantSymbol.dustType);
+        super(0,0,0,null, ModDust.stringConstantSymbol.dustType);
 
         addSignals();
 

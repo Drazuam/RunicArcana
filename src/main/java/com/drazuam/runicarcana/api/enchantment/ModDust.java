@@ -24,6 +24,7 @@ public class ModDust {
 
     public static final Set<ScriptExecutor> runningScripts = new THashSet<ScriptExecutor>();
 
+
     public static DefaultDustSymbol startSymbol     = new DustSymbolStart(getNextDustID());
     public static DefaultDustSymbol changeSymbol    = new DustSymbolChange(getNextDustID());
     public static DefaultDustSymbol connectSymbol   = new DustSymbolConnector(getNextDustID());
@@ -31,11 +32,10 @@ public class ModDust {
     public static DefaultDustSymbol inSymbol        = new DustInSymbol(getNextDustID());
     public static DefaultDustSymbol outSymbol       = new DustOutSymbol(getNextDustID());
     public static DefaultDustSymbol mathSymbol      = new DustSymbolMath(getNextDustID());
-    public static DefaultDustSymbol constantSymbol  = new DustSymbolConstant(getNextDustID());
+    //public static DefaultDustSymbol constantSymbol  = new DustSymbolConstant(getNextDustID());
     public static DefaultDustSymbol stringConstantSymbol  = new DustSymbolConstantString(getNextDustID());
     public static DefaultDustSymbol numberConstantSymbol  = new DustSymbolConstantNumber(getNextDustID());
     public static DefaultDustSymbol vectorConstantSymbol  = new DustSymbolConstantVector(getNextDustID());
-
     public static DefaultDustSymbol compareSymbol   = new DustSymbolCompare(getNextDustID());
     public static DefaultDustSymbol nameSymbol      = new DustSymbolName(getNextDustID());
     public static DefaultDustSymbol orSymbol        = new DustSymbolOr(getNextDustID());
@@ -69,9 +69,9 @@ public class ModDust {
         registerDust(1,orSymbol);
         registerDust(1,mathSymbol);
         //registerDust(1,constantSymbol); --> Broken into sub constants
+        registerDust(1,stringConstantSymbol);
         registerDust(1,numberConstantSymbol);
         registerDust(1,vectorConstantSymbol);
-        registerDust(1,stringConstantSymbol);
         registerDust(1,compareSymbol);
         registerDust(4,breakSymbol);
         registerDust(4,nameSymbol);
