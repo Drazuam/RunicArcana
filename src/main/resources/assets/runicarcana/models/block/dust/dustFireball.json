@@ -3,5 +3,5 @@
     "textures": {
         "0": "runicarcana:block/dustFireball",
         "particle": "runicarcana:block/dustFireball"
-  }
+    }
 }

@@ -33,6 +33,7 @@ dust.dustProjection.name=Projection
 dust.dustFireball.name=Fireball
 dust.dustSight.name=Sight
 dust.dustBreak.name=Block Break
+dust.dustLightning.name=Lightning
 
 #enchantments
 enchantment.omnienchant=Runic Enchantment
