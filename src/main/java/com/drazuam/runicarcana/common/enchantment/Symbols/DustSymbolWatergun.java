@@ -6,8 +6,7 @@ import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleSnowShovel;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.Entity;
@@ -50,29 +49,30 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
 
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Water Gun", DustSymbolWatergun::Watergun, 0));
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Target", null, 1));
-        addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 2));
+        addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
     }
 
-    public static Object Watergun(Object... args) {
+    public static Object Watergun(Object... args)
+    {
 
         ScriptExecutor executor = (ScriptExecutor)args[0];
 
         Random rand = new Random();
 
         Entity target = (Entity)executor.resolveInput((short)1);
-        Double speed = (Double)executor.resolveInput((short)2);
+        Float damage = (float)(double)executor.resolveInput((short)2);
         Vec3d look = executor.player.getLookVec();
 
-        if (speed == null) {
-            speed = 2.0D;
+        if (damage == null)
+        {
+            damage = 1.0F;
         }
 
-        if (target == null) {
+        if (target == null)
+        {
             return null;
         }
-
-        look = look.scale(speed);
 
         //Totally not recycled code taken from EntityGuardian...
 
@@ -87,31 +87,22 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         double d4 = rand.nextDouble();
         //int[] params = {-255, -255, 255};
 
-        while (d4 < d3) {
+        while (d4 < d3)
+        {
             d4 += 1.8D - d5 + rand.nextDouble() * (1.7D - d5);
-            ((WorldServer)(executor.player.worldObj)).spawnParticle(EnumParticleTypes.SPELL_MOB,
+            ((WorldServer)(executor.player.worldObj)).spawnParticle(EnumParticleTypes.WATER_WAKE,
                                                                     false,
                                                                     executor.player.posX + d0 * d4,
                                                                     executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight(),
                                                                     executor.player.posZ + d2 * d4,
-                                                                    3,
+                                                                    5,
                                                                     0.0D,
                                                                     0.0D,
                                                                     0.0D,
                                                                     0.0D,
                                                                     new int[0]);
-    /*
-            executor.player.worldObj.spawnParticle(EnumParticleTypes.SNOW_SHOVEL,
-                                        true,
-                                            executor.player.posX + d0 * d4,
-                                            executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight(),
-                                            executor.player.posZ + d2 * d4,
-                                            0.0D,
-                                            0.0D,
-                                            0.0D,
 
-                                                    new int[0]);
-    */
+            target.attackEntityFrom(DamageSource.magic, damage);
         }
 
         executor.resolveOutput((short)3, true);
