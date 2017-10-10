@@ -94,7 +94,7 @@ public class DustSymbolSight extends DefaultDustSymbol {
         ScriptExecutor executor = (ScriptExecutor)args[0];
         Entity entity   = (Entity)executor.resolveInput((short)0);
         Double dist     = (Double)ModDust.parseNumber(executor.resolveInput((short)2));
-        if(dist==null)dist=5.0D;
+        if(dist==null)dist=32.0D;
 
         executor.addProcesses(3);
         if(entity==null)return null;

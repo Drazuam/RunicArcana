@@ -77,8 +77,9 @@ public class DustSymbolFireball extends DefaultDustSymbol {
         look = look.scale(speed);
 
         EntityLargeFireball fireball = new EntityLargeSettableFireball(executor.player.worldObj, initPos.xCoord,
-                initPos.yCoord, initPos.zCoord, look.xCoord, look.yCoord,
-                look.zCoord);
+                                                                        initPos.yCoord, initPos.zCoord,
+                                                                        look.xCoord, look.yCoord,
+                                                                        look.zCoord);
 
         executor.player.worldObj.spawnEntityInWorld(fireball);
 

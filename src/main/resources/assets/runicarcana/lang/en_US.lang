@@ -34,6 +34,7 @@ dust.dustFireball.name=Fireball
 dust.dustSight.name=Sight
 dust.dustBreak.name=Block Break
 dust.dustLightning.name=Lightning
+dust.dustWatergun.name=Water Gun
 
 #enchantments
 enchantment.omnienchant=Runic Enchantment
