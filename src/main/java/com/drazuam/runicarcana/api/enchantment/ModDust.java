@@ -48,6 +48,7 @@ public class ModDust {
     public static DefaultDustSymbol fireballSymbol  = new DustSymbolFireball(getNextDustID());
     public static DefaultDustSymbol lightningSymbol = new DustSymbolLightning(getNextDustID());
     public static DefaultDustSymbol watergunSymbol  = new DustSymbolWatergun(getNextDustID());
+    public static DefaultDustSymbol earthStrikeSymbol   = new DustSymbolEarthStrike(getNextDustID());
 
     public static List CategoryNames = new LinkedList<String>();
 
@@ -85,6 +86,7 @@ public class ModDust {
         registerDust(2,fireballSymbol);
         registerDust(2,lightningSymbol);
         registerDust(2,watergunSymbol);
+        registerDust(2,earthStrikeSymbol);
     }
 
     public static short getNextDustID()
