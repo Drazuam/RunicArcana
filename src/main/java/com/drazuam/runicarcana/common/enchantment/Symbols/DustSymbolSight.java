@@ -6,6 +6,7 @@ import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import net.minecraft.entity.Entity;
@@ -25,10 +26,10 @@ import java.util.List;
  */
 public class DustSymbolSight extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustSight";
-    public static final String TEXTURE_LOCATION = "textures/block/dustSight.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustSight";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustSight.png";
     public static final String DEFAULT_NAME = "dustSight";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolSight(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.sightSymbol.dustType);

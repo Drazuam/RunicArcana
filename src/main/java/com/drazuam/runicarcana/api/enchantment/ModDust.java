@@ -117,9 +117,9 @@ public class ModDust {
         ConnectionType(String newLocation)
         {
             if(newLocation==null)
-                texture = new ResourceLocation(RunicArcana.MODID,"textures/block/dustConnectLineDefault.png");
+                texture = new ResourceLocation(RunicArcana.MOD_ID,"textures/block/dustConnectLineDefault.png");
             else
-                texture = new ResourceLocation(RunicArcana.MODID, newLocation);
+                texture = new ResourceLocation(RunicArcana.MOD_ID, newLocation);
         }
     }
 

@@ -3,6 +3,7 @@ package com.drazuam.runicarcana.common.enchantment;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.RunicArcana;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -13,12 +14,12 @@ import net.minecraft.util.text.TextComponentTranslation;
 public class DustInSymbol extends DustIOSymbol {
 
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustIn";
-    public static final String TEXTURE_LOCATION = "textures/block/dustIn.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustIn";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustIn.png";
     public static final String DEFAULT_NAME = "dustIn";
     public static final int DUST_SIZE = 1;
 
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DefaultDustSymbol parent;
 

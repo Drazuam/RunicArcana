@@ -8,7 +8,6 @@ import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.keybind.ModKeybind;
 import com.drazuam.runicarcana.common.network.PacketHandler;
 import com.drazuam.runicarcana.common.network.PacketSendDust;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
@@ -19,7 +18,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
-import sun.awt.image.ImageWatched;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ import java.util.List;
 public class GuiChalk extends GuiScreen {
 
 
-    private final ResourceLocation texture = new ResourceLocation(RunicArcana.MODID, "textures/gui/chalkGui.png");
+    private final ResourceLocation texture = new ResourceLocation(RunicArcana.MOD_ID, "textures/gui/chalkGui.png");
     private final int guiHeight = 140;
     private final int guiWidth  = 200;
     private boolean shifting = false;

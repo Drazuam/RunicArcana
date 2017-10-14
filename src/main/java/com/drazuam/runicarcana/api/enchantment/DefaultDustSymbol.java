@@ -319,7 +319,7 @@ public abstract class DefaultDustSymbol implements IDustSymbol,Serializable {
     public ResourceLocation getResourceLocation() {
         if(resourceLocation==null)
         {
-            resourceLocation = new ResourceLocation(RunicArcana.MODID, getTexture());
+            resourceLocation = new ResourceLocation(RunicArcana.MOD_ID, getTexture());
         }
         return resourceLocation;
     }

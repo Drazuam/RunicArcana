@@ -28,9 +28,9 @@ public class ModItems {
 
     public static void registerItems()
     {
-        GameRegistry.register(infusionItem, new ResourceLocation(RunicArcana.MODID, "infusion_stone_item"));
-        GameRegistry.register(defaultChalkItem, new ResourceLocation(RunicArcana.MODID, "chalk_default_item"));
-        GameRegistry.register(paperScrapItem, new ResourceLocation(RunicArcana.MODID, "paper_scrap_item"));
+        GameRegistry.register(infusionItem, new ResourceLocation(RunicArcana.MOD_ID, "infusion_stone_item"));
+        GameRegistry.register(defaultChalkItem, new ResourceLocation(RunicArcana.MOD_ID, "chalk_default_item"));
+        GameRegistry.register(paperScrapItem, new ResourceLocation(RunicArcana.MOD_ID, "paper_scrap_item"));
     }
 
     public static void registerRenders()
@@ -42,6 +42,6 @@ public class ModItems {
 
     public static void registerRender(Item item)
     {
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0 , new ModelResourceLocation(RunicArcana.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0 , new ModelResourceLocation(RunicArcana.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
     }
 }

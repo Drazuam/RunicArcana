@@ -19,7 +19,7 @@ import java.io.IOException;
 public class GuiPaperScrap extends GuiScreen {
 
 
-    private final ResourceLocation texture = new ResourceLocation(RunicArcana.MODID, "textures/gui/paperScrapGui.png");
+    private final ResourceLocation texture = new ResourceLocation(RunicArcana.MOD_ID, "textures/gui/paperScrapGui.png");
     private final int guiHeight = 50;
     private final int guiWidth  = 115;
     private final double scale = 1.5;

@@ -17,7 +17,7 @@ public class ModEnchantment {
     {
         runicenchantment = new EnchantmentOmni(Enchantment.Rarity.RARE, EntityEquipmentSlot.MAINHAND, EntityEquipmentSlot.OFFHAND);
 
-        GameRegistry.register(runicenchantment, new ResourceLocation(RunicArcana.MODID, runicenchantment.getName()));
+        GameRegistry.register(runicenchantment, new ResourceLocation(RunicArcana.MOD_ID, runicenchantment.getName()));
 
     }
 

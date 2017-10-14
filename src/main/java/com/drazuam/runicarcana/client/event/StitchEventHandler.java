@@ -32,8 +32,8 @@ public class StitchEventHandler implements IEventHandler {
                 }
 
             }
-
-
         }
+
+        event.getMap().registerSprite(new ResourceLocation("runicarcana:particles/WatergunFX"));
     }
 }

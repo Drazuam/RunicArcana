@@ -6,6 +6,7 @@ import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.ResourceLocation;
@@ -18,10 +19,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class DustSymbolLightning extends DefaultDustSymbol{
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustLightning";
-    public static final String TEXTURE_LOCATION = "textures/block/dustLightning.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustLightning";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustLightning.png";
     public static final String DEFAULT_NAME = "dustLightning";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolLightning(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.lightningSymbol.dustType);

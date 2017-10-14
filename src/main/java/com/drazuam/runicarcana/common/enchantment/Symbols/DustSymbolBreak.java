@@ -5,6 +5,7 @@ import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -29,8 +30,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class DustSymbolBreak extends DefaultDustSymbol {
 
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustBreak";
-    public static final String TEXTURE_LOCATION = "textures/block/dustBreak.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location +"dustBreak";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustBreak.png";
     public static final String DEFAULT_NAME = "dustBreak";
 
     public DustSymbolBreak(int X, int Z, int F, TileEntityChalkBase newParent) {

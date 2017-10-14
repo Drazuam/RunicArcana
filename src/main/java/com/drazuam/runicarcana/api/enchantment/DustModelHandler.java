@@ -20,7 +20,7 @@ public class DustModelHandler {
 
         IModel model;
         try {
-            model = ModelLoaderRegistry.getModel(new ResourceLocation(RunicArcana.MODID, modelLocation));
+            model = ModelLoaderRegistry.getModel(new ResourceLocation(RunicArcana.MOD_ID, modelLocation));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

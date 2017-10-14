@@ -31,8 +31,8 @@ public class ModBlocks {
 
     public static void registerBlock(Block block, String name)
     {
-        GameRegistry.register(block, new ResourceLocation(RunicArcana.MODID, name));
-        GameRegistry.register(new ItemBlock(block), new ResourceLocation(RunicArcana.MODID,name));
+        GameRegistry.register(block, new ResourceLocation(RunicArcana.MOD_ID, name));
+        GameRegistry.register(new ItemBlock(block), new ResourceLocation(RunicArcana.MOD_ID,name));
     }
 
     public static void registerRenders()
@@ -44,7 +44,7 @@ public class ModBlocks {
     public static void registerRender(Block block)
     {
         Item item = Item.getItemFromBlock(block);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0 , new ModelResourceLocation(RunicArcana.MODID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0 , new ModelResourceLocation(RunicArcana.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
 
     }
 

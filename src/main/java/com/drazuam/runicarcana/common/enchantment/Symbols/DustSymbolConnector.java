@@ -4,6 +4,7 @@ import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -13,10 +14,10 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class DustSymbolConnector extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustConnector";
-    public static final String TEXTURE_LOCATION = "textures/block/dustConnector.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustConnector";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustConnector.png";
     public static final String DEFAULT_NAME = "dustConnector";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolConnector(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.inSymbol.dustType);

@@ -3,9 +3,12 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
+import com.drazuam.runicarcana.client.Particle.WatergunFX;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -23,10 +26,10 @@ import java.util.Random;
 
 public class DustSymbolWatergun extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustWatergun";
-    public static final String TEXTURE_LOCATION = "textures/block/dustWatergun.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustWatergun";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustWatergun.png";
     public static final String DEFAULT_NAME = "dustWatergun";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolWatergun(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.watergunSymbol.dustType);
@@ -51,6 +54,7 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Target", null, 1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
+        addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
     }
 
     public static Object Watergun(Object... args)
@@ -63,10 +67,16 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         Entity target = (Entity)executor.resolveInput((short)1);
         Float damage = (float)(double)executor.resolveInput((short)2);
         Vec3d look = executor.player.getLookVec();
+        Double speed = (Double)executor.resolveInput((short)4);
 
         if (damage == null)
         {
             damage = 1.0F;
+        }
+
+        if (speed == null)
+        {
+            speed = 1.0D;
         }
 
         if (target == null)
@@ -74,7 +84,9 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
             return null;
         }
 
-        //Totally not recycled code taken from EntityGuardian...
+        look.scale(speed);
+
+        //based on code from entityGuardian
 
         double d5 = 0.5F;
         double d0 = target.posX - executor.player.posX;
@@ -85,25 +97,19 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         d1 = d1 / d3;
         d2 = d2 / d3;
         double d4 = rand.nextDouble();
-        //int[] params = {-255, -255, 255};
 
-        while (d4 < d3)
-        {
-            d4 += 1.8D - d5 + rand.nextDouble() * (1.7D - d5);
-            ((WorldServer)(executor.player.worldObj)).spawnParticle(EnumParticleTypes.WATER_WAKE,
-                                                                    false,
-                                                                    executor.player.posX + d0 * d4,
-                                                                    executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight(),
-                                                                    executor.player.posZ + d2 * d4,
-                                                                    5,
-                                                                    0.0D,
-                                                                    0.0D,
-                                                                    0.0D,
-                                                                    0.0D,
-                                                                    new int[0]);
+        look = look.rotatePitch((float)((rand.nextDouble() - 0.5D) * 15.0D * Math.PI / 180.0D));
+        look = look.rotateYaw((float)((rand.nextDouble() - 0.5D) * 15.0D * Math.PI / 180.0D));
 
-            target.attackEntityFrom(DamageSource.magic, damage);
-        }
+        Minecraft.getMinecraft().effectRenderer.addEffect(new WatergunFX(executor.player.worldObj,
+                                                                executor.player.posX + d0 * d4,
+                                                                executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
+                                                                executor.player.posZ + d2 * d4,
+                                                                 look.xCoord,
+                                                                 look.yCoord,
+                                                                 look.zCoord,
+                                                                 damage,
+                                                                 target));
 
         executor.resolveOutput((short)3, true);
         return true;

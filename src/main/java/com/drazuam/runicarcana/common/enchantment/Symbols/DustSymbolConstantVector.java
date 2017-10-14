@@ -7,6 +7,7 @@ import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.item.ModItems;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -20,10 +21,10 @@ import java.awt.*;
  */
 public class DustSymbolConstantVector extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustConstant";
-    public static final String TEXTURE_LOCATION = "textures/block/dustConstant.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustConstant";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustConstant.png";
     public static final String DEFAULT_NAME = "dustConstantVector";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolConstantVector(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.vectorConstantSymbol.dustType);

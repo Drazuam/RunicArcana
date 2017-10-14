@@ -6,8 +6,8 @@ import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -24,10 +24,10 @@ import java.util.Random;
 public class DustSymbolEarthStrike extends DefaultDustSymbol
 {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustEarthStrike";
-    public static final String TEXTURE_LOCATION = "textures/block/dustEarthStrike.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustEarthStrike";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustEarthStrike.png";
     public static final String DEFAULT_NAME = "dustEarthStrike";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
     public DustSymbolEarthStrike(int X, int Z, int F, TileEntityChalkBase newParent) {
         super(X, Z, F,newParent, ModDust.earthStrikeSymbol.dustType);
@@ -52,6 +52,7 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Target", null, 1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
+        addSignal(new Signal( this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
     }
 
     public static Object EarthStrike(Object... args)
@@ -64,10 +65,16 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         Entity target = (Entity)executor.resolveInput((short)1);
         Float damage = (float)(double)executor.resolveInput((short)2);
         Vec3d look = executor.player.getLookVec();
+        Double speed = (Double)executor.resolveInput((short)4);
 
         if (damage == null)
         {
             damage = 1.0F;
+        }
+
+        if (speed == null)
+        {
+            speed = 0.05D;
         }
 
         if (target == null)
@@ -86,24 +93,23 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         d1 = d1 / d3;
         d2 = d2 / d3;
         double d4 = rand.nextDouble();
-        //int[] params = {-255, -255, 255};
 
         while (d4 < d3)
         {
             d4 += 1.8D - d5 + rand.nextDouble() * (1.7D - d5);
             ((WorldServer)(executor.player.worldObj)).spawnParticle(EnumParticleTypes.VILLAGER_HAPPY,
-                    false,
-                    executor.player.posX + d0 * d4,
-                    executor.player.posY + d1 * d4 + target.getEyeHeight(),
-                    executor.player.posZ + d2 * d4,
-                    5,
-                    0.0D,
-                    0.0D,
-                    0.0D,
-                    0.0D,
-                    new int[0]);
+                                                                    false,
+                                                                    executor.player.posX + d0 * d4,
+                                                                    executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight(),
+                                                                    executor.player.posZ + d2 * d4,
+                                                                    5,
+                                                                    0.0D,
+                                                                    0.0D,
+                                                                    0.0D,
+                                                                    speed,
+                                                                    new int[0]);
 
-            target.attackEntityFrom(DamageSource.magic, damage);
+            //target.attackEntityFrom(DamageSource.magic, damage);
         }
 
         executor.resolveOutput((short)3, true);

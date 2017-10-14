@@ -18,7 +18,7 @@ public class ModTileEntities {
 
     public static void registerTileEntities()
     {
-        GameRegistry.registerTileEntity(TileEntityChalkBase.class, RunicArcana.MODID+":"+"TileEntityChalkBase");
+        GameRegistry.registerTileEntity(TileEntityChalkBase.class, RunicArcana.MOD_ID +":"+"TileEntityChalkBase");
 
 
     }

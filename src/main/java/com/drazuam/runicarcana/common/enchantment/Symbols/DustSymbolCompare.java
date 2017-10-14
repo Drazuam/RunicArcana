@@ -6,6 +6,7 @@ import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -15,10 +16,10 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class DustSymbolCompare extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = "block/dust/"+"dustCompare";
-    public static final String TEXTURE_LOCATION = "textures/block/dustCompare.png";
+    public static final String MODEL_LOCATION = Reference.Model_Location + "dustCompare";
+    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustCompare.png";
     public static final String DEFAULT_NAME = "dustCompare";
-    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MODID, TEXTURE_LOCATION);
+    public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
 
     public DustSymbolCompare(int X, int Z, int F, TileEntityChalkBase newParent) {
