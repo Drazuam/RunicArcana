@@ -35,5 +35,6 @@ public class StitchEventHandler implements IEventHandler {
         }
 
         event.getMap().registerSprite(new ResourceLocation("runicarcana:particles/WatergunFX"));
+        event.getMap().registerSprite(new ResourceLocation("runicarcana:particles/EarthStrikeFX"));
     }
 }

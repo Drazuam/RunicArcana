@@ -51,7 +51,6 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
     private void addSignals() {
 
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Water Gun", DustSymbolWatergun::Watergun, 0));
-        addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Target", null, 1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
@@ -64,36 +63,23 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
 
         Random rand = new Random();
 
-        Entity target = (Entity)executor.resolveInput((short)1);
         Float damage = new Float((Double)executor.resolveInput((short)2));
-
-
-
-        Vec3d look = executor.player.getLookVec();
         Double speed = (Double)executor.resolveInput((short)4);
+
+
+        Vec3d look = executor.player.getLookVec().scale(speed == null ? 1.1D : speed);
+
 
         if (damage == null)
         {
             damage = 1.0F;
         }
 
-        if (speed == null)
-        {
-            speed = 1.0D;
-        }
-
-        if (target == null)
-        {
-            return null;
-        }
-
-        look.scale(speed);
-
         //based on code from entityGuardian
 
-        double d0 = target.posX - executor.player.posX;
-        double d1 = target.posY + (double)(target.height * 0.5F) - (executor.player.posY + (double)executor.player.getEyeHeight());
-        double d2 = target.posZ - executor.player.posZ;
+        double d0 = look.xCoord - executor.player.posX;
+        double d1 = look.yCoord - (executor.player.posY + (double)executor.player.getEyeHeight());
+        double d2 = look.zCoord - executor.player.posZ;
         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         d0 = d0 / d3;
         d1 = d1 / d3;
@@ -106,14 +92,14 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
 
 
         Minecraft.getMinecraft().effectRenderer.addEffect(new WatergunFX(executor.player.worldObj,
-                                                                executor.player.posX + d0 * d4,
-                                                                executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
-                                                                executor.player.posZ + d2 * d4,
-                                                                 look.xCoord,
-                                                                 look.yCoord,
-                                                                 look.zCoord,
-                                                                 damage,
-                                                                 executor.player));
+                                                                         executor.player.posX + d0 * d4,
+                                                                         executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
+                                                                         executor.player.posZ + d2 * d4,
+                                                                         look.xCoord,
+                                                                         look.yCoord,
+                                                                         look.zCoord,
+                                                                         damage,
+                                                                         executor.player));
 
         executor.resolveOutput((short)3, true);
         return true;

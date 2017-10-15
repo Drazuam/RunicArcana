@@ -3,17 +3,18 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
+import com.drazuam.runicarcana.client.Particle.EarthStrikeFX;
+import com.drazuam.runicarcana.client.Particle.WatergunFX;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import com.drazuam.runicarcana.reference.Reference;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.WorldServer;
 
 import java.util.Random;
 
@@ -49,7 +50,6 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
     private void addSignals() {
 
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Earth Strike", DustSymbolEarthStrike::EarthStrike, 0));
-        addSignal(new Signal(this, Signal.SignalType.ENTITY, Signal.SigFlow.IN, "Target", null, 1));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
         addSignal(new Signal( this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
@@ -62,55 +62,42 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
 
         Random rand = new Random();
 
-        Entity target = (Entity)executor.resolveInput((short)1);
-        Float damage = (float)(double)executor.resolveInput((short)2);
-        Vec3d look = executor.player.getLookVec();
+        Float damage = new Float((Double)executor.resolveInput((short)2));
         Double speed = (Double)executor.resolveInput((short)4);
+
+        Vec3d look = executor.player.getLookVec().scale(speed == null ? 1.1D : speed);
 
         if (damage == null)
         {
             damage = 1.0F;
         }
 
-        if (speed == null)
-        {
-            speed = 0.05D;
-        }
+        //based on code from entityGuardian
 
-        if (target == null)
-        {
-            return null;
-        }
-
-        //Totally not recycled code taken from EntityGuardian...
-
-        double d5 = 0.5F;
-        double d0 = target.posX - executor.player.posX;
-        double d1 = target.posY + (double)(target.height * 0.5F) - (executor.player.posY + (double)executor.player.getEyeHeight());
-        double d2 = target.posZ - executor.player.posZ;
+        double d0 = look.xCoord - executor.player.posX;
+        double d1 = look.yCoord - (executor.player.posY + (double)executor.player.getEyeHeight());
+        double d2 = look.zCoord - executor.player.posZ;
         double d3 = Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
         d0 = d0 / d3;
         d1 = d1 / d3;
         d2 = d2 / d3;
         double d4 = rand.nextDouble();
 
-        while (d4 < d3)
-        {
-            d4 += 1.8D - d5 + rand.nextDouble() * (1.7D - d5);
-            ((WorldServer)(executor.player.worldObj)).spawnParticle(EnumParticleTypes.VILLAGER_HAPPY,
-                                                                    false,
-                                                                    executor.player.posX + d0 * d4,
-                                                                    executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight(),
-                                                                    executor.player.posZ + d2 * d4,
-                                                                    5,
-                                                                    0.0D,
-                                                                    0.0D,
-                                                                    0.0D,
-                                                                    speed,
-                                                                    new int[0]);
 
-            //target.attackEntityFrom(DamageSource.magic, damage);
-        }
+        look = look.rotateYaw((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
+        look = look.rotatePitch((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
+
+
+        Minecraft.getMinecraft().effectRenderer.addEffect(new EarthStrikeFX(executor.player.worldObj,
+                                                                            executor.player.posX + d0 * d4,
+                                                                            executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
+                                                                            executor.player.posZ + d2 * d4,
+                                                                            look.xCoord,
+                                                                            look.yCoord,
+                                                                            look.zCoord,
+                                                                            damage,
+                                                                            executor.player));
+
 
         executor.resolveOutput((short)3, true);
         return true;
