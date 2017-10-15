@@ -65,7 +65,10 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         Random rand = new Random();
 
         Entity target = (Entity)executor.resolveInput((short)1);
-        Float damage = (Float)executor.resolveInput((short)2);
+        Float damage = new Float((Double)executor.resolveInput((short)2));
+
+
+
         Vec3d look = executor.player.getLookVec();
         Double speed = (Double)executor.resolveInput((short)4);
 
@@ -98,8 +101,10 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         d2 = d2 / d3;
         double d4 = rand.nextDouble();
 
-        look = look.rotatePitch((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
+
         look = look.rotateYaw((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
+        look = look.rotatePitch((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
+
 
         Minecraft.getMinecraft().effectRenderer.addEffect(new WatergunFX(executor.player.worldObj,
                                                                 executor.player.posX + d0 * d4,
