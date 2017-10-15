@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -22,10 +22,10 @@ import java.util.Random;
 public class WatergunFX extends Particle
 {
     private final ResourceLocation WatergunFX = new ResourceLocation("runicarcana:particles/WatergunFX");
-    private float damage;
-    private Entity target;
+    private final float damage;
+    private final EntityPlayer caster;
 
-    public WatergunFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, Entity target)
+    public WatergunFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, EntityPlayer caster)
     {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
 
@@ -40,7 +40,7 @@ public class WatergunFX extends Particle
         this.motionZ = zSpeedIn;
 
         this.damage = damage;
-        this.target = target;
+        this.caster = caster;
 
         this.multipleParticleScaleBy((float)(new Random().nextDouble()*2.0D));
 
@@ -74,27 +74,20 @@ public class WatergunFX extends Particle
 
         moveEntity(motionX, motionY, motionZ);
 
-        if ((posX >= target.posX - target.width/2.0D && posX <= target.posX + target.width/2.0D) &&
-                (posY >= target.posY && posY <= target.posY + target.height) &&
-                (posZ >= target.posZ - target.width/2.0D && posZ <= target.posZ + target.width/2.0D)) {
+        AxisAlignedBB range = new AxisAlignedBB(posX - 0.5, posY, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5);
+        List<EntityLivingBase> mobsInRange = worldObj.getEntitiesWithinAABB(EntityLivingBase.class, range);
 
-            target.attackEntityFrom(DamageSource.magic, damage);
-            this.setExpired();
+        for (EntityLivingBase target : mobsInRange)
+        {
+            if (target != caster)
+            {
+                target.attackEntityFrom(DamageSource.magic, damage);
+                this.isCollided = true;
+                break;
+            }
         }
 
-
         if (isCollided) {
-
-            /*
-            AxisAlignedBB range = new AxisAlignedBB(posX - 0.5, posY, posZ - 0.5, posX + 0.5, posY + 0.5, posZ + 0.5);
-            List<EntityLivingBase> mobsInRange = worldObj.getEntitiesWithinAABB(EntityMob.class, range);
-
-            for (EntityLivingBase target : mobsInRange) {
-
-                target.attackEntityFrom(DamageSource.magic, damage);
-            }
-            */
-
             this.setExpired();
         }
 

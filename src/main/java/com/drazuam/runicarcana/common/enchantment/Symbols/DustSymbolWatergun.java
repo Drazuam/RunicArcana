@@ -91,7 +91,6 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
 
         //based on code from entityGuardian
 
-        double d5 = 0.5F;
         double d0 = target.posX - executor.player.posX;
         double d1 = target.posY + (double)(target.height * 0.5F) - (executor.player.posY + (double)executor.player.getEyeHeight());
         double d2 = target.posZ - executor.player.posZ;
@@ -114,7 +113,7 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
                                                                  look.yCoord,
                                                                  look.zCoord,
                                                                  damage,
-                                                                 target));
+                                                                 executor.player));
 
         executor.resolveOutput((short)3, true);
         return true;
