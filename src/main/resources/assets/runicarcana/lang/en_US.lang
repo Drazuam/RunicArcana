@@ -35,7 +35,7 @@ dust.dustSight.name=Sight
 dust.dustBreak.name=Block Break
 dust.dustLightning.name=Lightning
 dust.dustWatergun.name=Water Gun
-dust.dustEarth.name=Earth Strike
+dust.dustEarthStrike.name=Earth Strike
 
 #enchantments
 enchantment.omnienchant=Runic Enchantment
