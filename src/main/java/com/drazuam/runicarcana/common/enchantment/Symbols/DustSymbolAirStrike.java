@@ -3,7 +3,7 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
-import com.drazuam.runicarcana.client.Particle.EarthStrikeFX;
+import com.drazuam.runicarcana.client.Particle.AirStrikeFX;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
@@ -17,43 +17,42 @@ import net.minecraft.util.text.TextComponentTranslation;
 import java.util.Random;
 
 /**
- * Created on 10/10/2017 by Matt
+ * Created on 10/17/2017 by Matt
  */
 
-public class DustSymbolEarthStrike extends DefaultDustSymbol
+public class DustSymbolAirStrike extends DefaultDustSymbol
 {
-
-    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustEarthStrike";
-    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustEarthStrike.png";
-    public static final String DEFAULT_NAME = "dustEarthStrike";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustAirStrike";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustAirStrike.png";
+    public static final String DEFAULT_NAME = "dustAirStrike";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
-    public DustSymbolEarthStrike(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, ModDust.earthStrikeSymbol.dustType);
+    public DustSymbolAirStrike(int X, int Z, int F, TileEntityChalkBase newParent) {
+        super(X, Z, F,newParent, ModDust.airStrikeSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public DustSymbolEarthStrike() {
-        super(0,0,0,null,ModDust.earthStrikeSymbol.dustType);
+    public DustSymbolAirStrike() {
+        super(0,0,0,null,ModDust.airStrikeSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public DustSymbolEarthStrike(short newDustType) {
+    public DustSymbolAirStrike(short newDustType) {
         super(newDustType);
         addSignals();
     }
 
     private void addSignals() {
 
-        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Earth Strike", DustSymbolEarthStrike::EarthStrike, 0));
+        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Water Gun", DustSymbolAirStrike::AirStrike, 0));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
-        addSignal(new Signal( this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
+        addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
     }
 
-    public static Object EarthStrike(Object... args)
+    public static Object AirStrike(Object... args)
     {
 
         ScriptExecutor executor = (ScriptExecutor)args[0];
@@ -63,7 +62,9 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         Float damage = new Float((Double)executor.resolveInput((short)2));
         Double speed = (Double)executor.resolveInput((short)4);
 
+
         Vec3d look = executor.player.getLookVec().scale(speed == null ? 1.1D : speed);
+
 
         if (damage == null)
         {
@@ -86,16 +87,15 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         look = look.rotatePitch((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
 
 
-        Minecraft.getMinecraft().effectRenderer.addEffect(new EarthStrikeFX(executor.player.worldObj,
-                                                                            executor.player.posX + d0 * d4,
-                                                                            executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
-                                                                            executor.player.posZ + d2 * d4,
-                                                                            look.xCoord,
-                                                                            look.yCoord,
-                                                                            look.zCoord,
-                                                                            damage,
-                                                                            executor.player));
-
+        Minecraft.getMinecraft().effectRenderer.addEffect(new AirStrikeFX(executor.player.worldObj,
+                                                                 executor.player.posX + d0 * d4,
+                                                                 executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
+                                                                 executor.player.posZ + d2 * d4,
+                                                                 look.xCoord,
+                                                                 look.yCoord,
+                                                                 look.zCoord,
+                                                                 damage,
+                                                                 executor.player));
 
         executor.resolveOutput((short)3, true);
         return true;
@@ -122,3 +122,4 @@ public class DustSymbolEarthStrike extends DefaultDustSymbol
         return name==null ? new TextComponentTranslation("dust."+DEFAULT_NAME+".name") : new TextComponentTranslation("dust."+name+".name");
     }
 }
+

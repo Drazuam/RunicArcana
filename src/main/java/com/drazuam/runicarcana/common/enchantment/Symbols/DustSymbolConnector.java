@@ -14,8 +14,8 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class DustSymbolConnector extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustConnector";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustConnector.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustConnector";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustConnector.png";
     public static final String DEFAULT_NAME = "dustConnector";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

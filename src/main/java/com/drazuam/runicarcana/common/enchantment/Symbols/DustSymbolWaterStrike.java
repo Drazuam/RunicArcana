@@ -3,20 +3,16 @@ package com.drazuam.runicarcana.common.enchantment.Symbols;
 import com.drazuam.runicarcana.api.enchantment.DefaultDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.api.enchantment.Signals.Signal;
-import com.drazuam.runicarcana.client.Particle.WatergunFX;
+import com.drazuam.runicarcana.client.Particle.WaterStrikeFX;
 import com.drazuam.runicarcana.common.RunicArcana;
 import com.drazuam.runicarcana.common.enchantment.ScriptExecutor;
 import com.drazuam.runicarcana.common.tileentity.TileEntityChalkBase;
 import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.WorldServer;
 
 import java.util.Random;
 
@@ -24,39 +20,39 @@ import java.util.Random;
  * Created on 10/9/2017 by Matt
  */
 
-public class DustSymbolWatergun extends DefaultDustSymbol {
+public class DustSymbolWaterStrike extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustWatergun";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustWatergun.png";
-    public static final String DEFAULT_NAME = "dustWatergun";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustWaterStrike";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustWaterStrike.png";
+    public static final String DEFAULT_NAME = "dustWaterStrike";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
-    public DustSymbolWatergun(int X, int Z, int F, TileEntityChalkBase newParent) {
-        super(X, Z, F,newParent, ModDust.watergunSymbol.dustType);
+    public DustSymbolWaterStrike(int X, int Z, int F, TileEntityChalkBase newParent) {
+        super(X, Z, F,newParent, ModDust.waterStrikeSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public DustSymbolWatergun() {
-        super(0,0,0,null,ModDust.watergunSymbol.dustType);
+    public DustSymbolWaterStrike() {
+        super(0,0,0,null,ModDust.waterStrikeSymbol.dustType);
         //set up signals
         addSignals();
     }
 
-    public DustSymbolWatergun(short newDustType) {
+    public DustSymbolWaterStrike(short newDustType) {
         super(newDustType);
         addSignals();
     }
 
     private void addSignals() {
 
-        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Water Gun", DustSymbolWatergun::Watergun, 0));
+        addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.IN, "Water Gun", DustSymbolWaterStrike::WaterStrike, 0));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Damage", null, 2));
         addSignal(new Signal(this, Signal.SignalType.CONTROL, Signal.SigFlow.OUT, "Done",  null, 3));
         addSignal(new Signal(this, Signal.SignalType.NUMBER, Signal.SigFlow.IN, "Speed", null, 4));
     }
 
-    public static Object Watergun(Object... args)
+    public static Object WaterStrike(Object... args)
     {
 
         ScriptExecutor executor = (ScriptExecutor)args[0];
@@ -91,7 +87,7 @@ public class DustSymbolWatergun extends DefaultDustSymbol {
         look = look.rotatePitch((float)((rand.nextGaussian()) * 4.0D * Math.PI / 180.0D));
 
 
-        Minecraft.getMinecraft().effectRenderer.addEffect(new WatergunFX(executor.player.worldObj,
+        Minecraft.getMinecraft().effectRenderer.addEffect(new WaterStrikeFX(executor.player.worldObj,
                                                                          executor.player.posX + d0 * d4,
                                                                          executor.player.posY + d1 * d4 + (double)executor.player.getEyeHeight()*0.5F,
                                                                          executor.player.posZ + d2 * d4,

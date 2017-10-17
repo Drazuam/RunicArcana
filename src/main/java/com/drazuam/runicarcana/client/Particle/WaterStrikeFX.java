@@ -3,30 +3,30 @@ package com.drazuam.runicarcana.client.Particle;
 import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.entity.Entity;
 
 import java.util.List;
 import java.util.Random;
 
 /**
- * Created on 10/15/2017 by Matt
+ * Created on 10/13/2017 by Matt
  */
 
-public class EarthStrikeFX extends Particle
+public class WaterStrikeFX extends Particle
 {
-    private final ResourceLocation EarthStrikeFX = new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "EarthStrikeFX");
+    private final ResourceLocation WaterStrikeFX = new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "WaterStrikeFX");
     private final float damage;
     private final EntityPlayer caster;
 
-    public EarthStrikeFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, EntityPlayer caster)
+    public WaterStrikeFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, EntityPlayer caster)
     {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
 
@@ -43,28 +43,25 @@ public class EarthStrikeFX extends Particle
         this.damage = damage;
         this.caster = caster;
 
-        this.multipleParticleScaleBy((float) (new Random().nextDouble() * 2.0D));
+        this.multipleParticleScaleBy((float)(new Random().nextDouble()*2.0D));
 
-        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(EarthStrikeFX.toString());
+        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(WaterStrikeFX.toString());
         setParticleTexture(sprite);
     }
 
     @Override
-    public int getFXLayer()
-    {
+    public int getFXLayer(){
         return 1;
     }
 
     @Override
-    public boolean isTransparent()
-    {
+    public boolean isTransparent(){
 
         return false;
     }
 
     @Override
-    public int getBrightnessForRender(float p_189214_1_)
-    {
+    public int getBrightnessForRender(float p_189214_1_){
         final int FULL_BRIGHTNESS_VALUE = 0xf000f0;
         return FULL_BRIGHTNESS_VALUE;
     }
@@ -91,18 +88,15 @@ public class EarthStrikeFX extends Particle
             }
         }
 
-        if (isCollided)
-        {
+        if (isCollided) {
             this.setExpired();
         }
 
-        if (prevPosY == posY && motionY > 0)
-        {
+        if (prevPosY == posY && motionY > 0) {
             this.setExpired();
         }
 
-        if (this.particleMaxAge-- <= 0)
-        {
+        if (this.particleMaxAge-- <= 0) {
             this.setExpired();
         }
     }
@@ -128,10 +122,11 @@ public class EarthStrikeFX extends Particle
         int skyLightTimes16 = combinedBrightness >> 16 & 65535;
         int blockLightTimes16 = combinedBrightness & 65535;
 
-        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD, y - edgeUDdirectionY * scaleUD, z - edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(maxU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD, y + edgeUDdirectionY * scaleUD, z - edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(maxU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD, y + edgeUDdirectionY * scaleUD, z + edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(minU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD, y - edgeUDdirectionY * scaleUD, z + edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD,y - edgeUDdirectionY * scaleUD,z - edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(maxU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD,y + edgeUDdirectionY * scaleUD,z - edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(maxU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD,y + edgeUDdirectionY * scaleUD,z + edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(minU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD,y - edgeUDdirectionY * scaleUD,z + edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
 
     }
+
 }

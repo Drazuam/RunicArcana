@@ -19,8 +19,8 @@ import net.minecraft.entity.Entity;
 
 public class DustSymbolSwap extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustSwap";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustSwap.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustSwap";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustSwap.png";
     public static final String DEFAULT_NAME = "dustSwap";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

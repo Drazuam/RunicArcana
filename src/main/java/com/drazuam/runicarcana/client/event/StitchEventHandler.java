@@ -3,6 +3,7 @@ package com.drazuam.runicarcana.client.event;
 import com.drazuam.runicarcana.api.enchantment.IDustSymbol;
 import com.drazuam.runicarcana.api.enchantment.ModDust;
 import com.drazuam.runicarcana.common.event.IEventHandler;
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -34,7 +35,9 @@ public class StitchEventHandler implements IEventHandler {
             }
         }
 
-        event.getMap().registerSprite(new ResourceLocation("runicarcana:particles/WatergunFX"));
-        event.getMap().registerSprite(new ResourceLocation("runicarcana:particles/EarthStrikeFX"));
+        event.getMap().registerSprite(new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "WaterStrikeFX"));
+        event.getMap().registerSprite(new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "EarthStrikeFX"));
+        event.getMap().registerSprite(new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "AirStrikeFX"));
+
     }
 }

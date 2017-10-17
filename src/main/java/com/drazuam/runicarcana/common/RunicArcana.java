@@ -26,7 +26,7 @@ public class RunicArcana
     public static final String VERSION = "0.1";
     public static final String NAME = "Runic Arcana";
 
-    @SidedProxy(serverSide = Reference.ServerProxyClass, clientSide = Reference.ClientProxyClass)
+    @SidedProxy(serverSide = Reference.SERVER_PROXY_CLASS, clientSide = Reference.CLIENT_PROXY_CLASS)
     public static IProxy proxy;
 
     @Mod.Instance

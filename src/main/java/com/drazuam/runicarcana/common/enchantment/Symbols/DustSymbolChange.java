@@ -21,8 +21,8 @@ import java.awt.*;
 public class DustSymbolChange extends DefaultDustSymbol {
 
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustChange";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustChange.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustChange";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustChange.png";
     public static final String DEFAULT_NAME = "dustChange";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

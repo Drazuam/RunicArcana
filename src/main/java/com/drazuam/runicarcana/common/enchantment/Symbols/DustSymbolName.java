@@ -23,8 +23,8 @@ import java.lang.reflect.Field;
 public class DustSymbolName extends DefaultDustSymbol {
 
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustName";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustName.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustName";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustName.png";
     public static final String DEFAULT_NAME = "dustName";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

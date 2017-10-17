@@ -30,8 +30,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 public class DustSymbolBreak extends DefaultDustSymbol {
 
 
-    public static final String MODEL_LOCATION = Reference.Model_Location +"dustBreak";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustBreak.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION +"dustBreak";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustBreak.png";
     public static final String DEFAULT_NAME = "dustBreak";
 
     public DustSymbolBreak(int X, int Z, int F, TileEntityChalkBase newParent) {

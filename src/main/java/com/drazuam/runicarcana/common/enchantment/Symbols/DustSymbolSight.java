@@ -26,8 +26,8 @@ import java.util.List;
  */
 public class DustSymbolSight extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustSight";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustSight.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustSight";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustSight.png";
     public static final String DEFAULT_NAME = "dustSight";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

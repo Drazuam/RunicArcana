@@ -20,8 +20,8 @@ import net.minecraft.util.text.TextComponentTranslation;
  */
 public class DustSymbolStart extends DefaultDustSymbol {
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustStart";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustStart.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustStart";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustStart.png";
     public static final String DEFAULT_NAME = "dustStart";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 

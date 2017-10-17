@@ -14,8 +14,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 public class DustInSymbol extends DustIOSymbol {
 
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustIn";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustIn.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustIn";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustIn.png";
     public static final String DEFAULT_NAME = "dustIn";
     public static final int DUST_SIZE = 1;
 

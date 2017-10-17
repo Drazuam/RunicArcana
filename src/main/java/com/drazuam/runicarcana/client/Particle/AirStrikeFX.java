@@ -1,31 +1,32 @@
 package com.drazuam.runicarcana.client.Particle;
 
+import com.drazuam.runicarcana.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.entity.Entity;
 
 import java.util.List;
 import java.util.Random;
 
 /**
- * Created on 10/13/2017 by Matt
+ * Created on 10/17/2017 by Matt
  */
 
-public class WatergunFX extends Particle
+public class AirStrikeFX extends Particle
 {
-    private final ResourceLocation WatergunFX = new ResourceLocation("runicarcana:particles/WatergunFX");
+    private final ResourceLocation AirStrikeFX = new ResourceLocation(Reference.PARTICLE_RESOURCE_LOCATION + "AirStrikeFX");
     private final float damage;
     private final EntityPlayer caster;
 
-    public WatergunFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, EntityPlayer caster)
+    public AirStrikeFX(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, float damage, EntityPlayer caster)
     {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0.0D, 0.0D, 0.0D);
 
@@ -42,25 +43,28 @@ public class WatergunFX extends Particle
         this.damage = damage;
         this.caster = caster;
 
-        this.multipleParticleScaleBy((float)(new Random().nextDouble()*2.0D));
+        this.multipleParticleScaleBy((float) (new Random().nextDouble() * 8.0D));
 
-        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(WatergunFX.toString());
+        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(AirStrikeFX.toString());
         setParticleTexture(sprite);
     }
 
     @Override
-    public int getFXLayer(){
+    public int getFXLayer()
+    {
         return 1;
     }
 
     @Override
-    public boolean isTransparent(){
+    public boolean isTransparent()
+    {
 
         return false;
     }
 
     @Override
-    public int getBrightnessForRender(float p_189214_1_){
+    public int getBrightnessForRender(float p_189214_1_)
+    {
         final int FULL_BRIGHTNESS_VALUE = 0xf000f0;
         return FULL_BRIGHTNESS_VALUE;
     }
@@ -87,15 +91,18 @@ public class WatergunFX extends Particle
             }
         }
 
-        if (isCollided) {
+        if (isCollided)
+        {
             this.setExpired();
         }
 
-        if (prevPosY == posY && motionY > 0) {
+        if (prevPosY == posY && motionY > 0)
+        {
             this.setExpired();
         }
 
-        if (this.particleMaxAge-- <= 0) {
+        if (this.particleMaxAge-- <= 0)
+        {
             this.setExpired();
         }
     }
@@ -121,11 +128,10 @@ public class WatergunFX extends Particle
         int skyLightTimes16 = combinedBrightness >> 16 & 65535;
         int blockLightTimes16 = combinedBrightness & 65535;
 
-        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD,y - edgeUDdirectionY * scaleUD,z - edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(maxU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD,y + edgeUDdirectionY * scaleUD,z - edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(maxU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD,y + edgeUDdirectionY * scaleUD,z + edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(minU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
-        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD,y - edgeUDdirectionY * scaleUD,z + edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD, y - edgeUDdirectionY * scaleUD, z - edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(maxU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x - edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD, y + edgeUDdirectionY * scaleUD, z - edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(maxU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR + edgeUDdirectionX * scaleUD, y + edgeUDdirectionY * scaleUD, z + edgeLRdirectionZ * scaleLR + edgeUDdirectionZ * scaleUD).tex(minU, minV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
+        vertexBuffer.pos(x + edgeLRdirectionX * scaleLR - edgeUDdirectionX * scaleUD, y - edgeUDdirectionY * scaleUD, z + edgeLRdirectionZ * scaleLR - edgeUDdirectionZ * scaleUD).tex(minU, maxV).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(skyLightTimes16, blockLightTimes16).endVertex();
 
     }
-
 }

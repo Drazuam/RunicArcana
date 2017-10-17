@@ -19,8 +19,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class DustSymbolLightning extends DefaultDustSymbol{
 
-    public static final String MODEL_LOCATION = Reference.Model_Location + "dustLightning";
-    public static final String TEXTURE_LOCATION = Reference.Texture_Location + "dustLightning.png";
+    public static final String MODEL_LOCATION = Reference.MODEL_LOCATION + "dustLightning";
+    public static final String TEXTURE_LOCATION = Reference.TEXTURE_LOCATION + "dustLightning.png";
     public static final String DEFAULT_NAME = "dustLightning";
     public static final ResourceLocation RESOURCE_LOCATION = new ResourceLocation(RunicArcana.MOD_ID, TEXTURE_LOCATION);
 
