@@ -1,7 +1,0 @@
-{
-    "parent": "runicarcana:block/dust/dustDefault3",
-    "textures": {
-        "0": "runicarcana:block/dustLightning",
-        "particle": "runicarcana:block/dustLightning"
-    }
-}
