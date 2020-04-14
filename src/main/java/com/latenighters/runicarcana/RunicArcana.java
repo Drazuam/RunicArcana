@@ -1,8 +1,12 @@
 package com.latenighters.runicarcana;
 
+import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
+import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +26,10 @@ public class RunicArcana
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "runicarcana";
 
+    //Capability Registration
+    @CapabilityInject(ISymbolHandler.class)
+    public static Capability<ISymbolHandler> SYMBOL_CAP = null;
+
     public RunicArcana() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -34,6 +42,7 @@ public class RunicArcana
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
         Registration.init();
     }
 
