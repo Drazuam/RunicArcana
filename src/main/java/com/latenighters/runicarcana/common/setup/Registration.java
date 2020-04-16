@@ -1,18 +1,9 @@
 package com.latenighters.runicarcana.common.setup;
 
-import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandlerStorage;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.INBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,8 +31,6 @@ public class Registration {
 //        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
 //        ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 //        DIMENSIONS.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        CapabilityManager.INSTANCE.register(ISymbolHandler.class, new SymbolHandlerStorage(),new SymbolHandler.SymbolHandlerFactory());
 
     }
 

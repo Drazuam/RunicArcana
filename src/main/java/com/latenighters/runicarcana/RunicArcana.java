@@ -1,12 +1,18 @@
 package com.latenighters.runicarcana;
 
+import com.latenighters.runicarcana.client.ClientEventHandler;
 import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
+import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
+import com.latenighters.runicarcana.common.capabilities.SymbolHandlerStorage;
 import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
+import com.latenighters.runicarcana.common.symbols.SymbolRegistration;
+import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,11 +45,15 @@ public class RunicArcana
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(SymbolRegistryHandler::onCreateRegistryEvent);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(SymbolRegistration::registerSymbols);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         Registration.init();
+        //SymbolRegistration.init();
     }
 
     private void setup(final FMLCommonSetupEvent event)
@@ -51,6 +61,10 @@ public class RunicArcana
         // some preinit code
 //        LOGGER.info("HELLO FROM PREINIT");
 //        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+
+        SymbolHandlerStorage storage = new SymbolHandlerStorage();
+        SymbolHandler.SymbolHandlerFactory factory = new SymbolHandler.SymbolHandlerFactory();
+        CapabilityManager.INSTANCE.register(ISymbolHandler.class, storage, factory);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
