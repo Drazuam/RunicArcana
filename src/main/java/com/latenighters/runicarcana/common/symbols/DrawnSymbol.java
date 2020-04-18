@@ -2,10 +2,12 @@ package com.latenighters.runicarcana.common.symbols;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.registries.RegistryManager;
 
 import java.rmi.registry.Registry;
 
@@ -31,6 +33,10 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
         return blockFace;
     }
 
+    public ResourceLocation getTexture() {
+        return this.symbol.texture;
+    }
+
     public DrawnSymbol(Symbol symbol, BlockPos drawnOn, Direction blockFace) {
         this.symbol = symbol;
         this.drawnOn = drawnOn;
@@ -51,7 +57,21 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     @Override
     public void deserializeNBT(CompoundNBT nbt) {
         drawnOn = NBTUtil.readBlockPos(nbt);
-        symbol = SymbolRegistryHandler.SYMBOLS.getValue(new ResourceLocation(nbt.getString("symbol")));
+        symbol = RegistryManager.ACTIVE.getRegistry(Symbol.class).getValue(new ResourceLocation(nbt.getString("symbol")));
         blockFace = Direction.byIndex(nbt.getInt("face"));
+    }
+
+    public void encode(final PacketBuffer buf) {
+        this.symbol.encode(this,buf);
+    }
+
+    public void decode(final PacketBuffer buf) {
+        this.symbol.decode(this,buf);
+    }
+
+    //generate a new Drawn Symbol from a packetBuffer
+    public DrawnSymbol(final PacketBuffer buf, final Symbol symbol) {
+        this.symbol = symbol;
+        this.decode(buf);
     }
 }

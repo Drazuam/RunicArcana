@@ -4,10 +4,12 @@ import com.latenighters.runicarcana.client.ClientEventHandler;
 import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
 import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
 import com.latenighters.runicarcana.common.capabilities.SymbolHandlerStorage;
+import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
 import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistration;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
+import com.latenighters.runicarcana.common.symbols.SymbolTextures;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -24,6 +26,8 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static com.latenighters.runicarcana.common.capabilities.SymbolSyncer.registerPackets;
 
 @Mod("runicarcana")
 public class RunicArcana
@@ -52,6 +56,7 @@ public class RunicArcana
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+        MinecraftForge.EVENT_BUS.register(new SymbolSyncer());
         Registration.init();
         //SymbolRegistration.init();
     }
@@ -65,6 +70,9 @@ public class RunicArcana
         SymbolHandlerStorage storage = new SymbolHandlerStorage();
         SymbolHandler.SymbolHandlerFactory factory = new SymbolHandler.SymbolHandlerFactory();
         CapabilityManager.INSTANCE.register(ISymbolHandler.class, storage, factory);
+
+        //TODO: register packets somewhere reasonable
+        registerPackets();
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

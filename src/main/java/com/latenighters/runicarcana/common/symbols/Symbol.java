@@ -1,13 +1,21 @@
 package com.latenighters.runicarcana.common.symbols;
 
+import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
-public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Symbol>{
+public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Symbol> {
 
     protected String name;
     protected ResourceLocation texture;
+    protected int id = -1;
 
     public Symbol(String name, ResourceLocation texture) {
         this.name = name;
@@ -25,9 +33,36 @@ public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Sym
         return name;
     }
 
+    public ResourceLocation getTexture() {
+        return texture;
+    }
+
     public static class DummySymbol extends Symbol{
         public DummySymbol(String name) {
             super(name);
         }
     }
+
+    public int getId() {
+        return id;
+    }
+
+    //put DrawnSymbol data into contents of packet buffer
+    public void encode(final DrawnSymbol symbol, final PacketBuffer buf)
+    {
+        buf.writeInt(symbol.blockFace.getIndex());
+        buf.writeInt(symbol.drawnOn.getX());
+        buf.writeInt(symbol.drawnOn.getY());
+        buf.writeInt(symbol.drawnOn.getZ());
+    }
+
+    //take contents of packet buffer and put into DrawnSymbol
+    public void decode(final DrawnSymbol symbol, final PacketBuffer buf)
+    {
+        symbol.blockFace = Direction.byIndex(buf.readInt());
+        symbol.drawnOn = new BlockPos(buf.readInt(),buf.readInt(),buf.readInt());
+    }
+
+
+
 }

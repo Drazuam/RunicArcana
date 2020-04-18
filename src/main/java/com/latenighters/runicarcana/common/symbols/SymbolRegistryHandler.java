@@ -15,6 +15,7 @@ import static com.latenighters.runicarcana.RunicArcana.MODID;
 
 public class SymbolRegistryHandler {
 
+    public static final IForgeRegistry<Symbol> SYMBOLS = RegistryManager.ACTIVE.getRegistry(Symbol.class);
     public static final ResourceLocation SYMBOLS_RL = new ResourceLocation(MODID, "symbols");
 
     public static void onCreateRegistryEvent(final RegistryEvent.NewRegistry evt)
@@ -23,7 +24,8 @@ public class SymbolRegistryHandler {
         symbolRegistryBuilder.add(new IForgeRegistry.AddCallback<Symbol>() {
             @Override
             public void onAdd(IForgeRegistryInternal<Symbol> owner, RegistryManager stage, int id, Symbol obj, @Nullable Symbol oldObj) {
-                Log.info("Registering " + obj.getRegistryName());
+                Log.debug("Registering " + obj.getRegistryName() + "with index " + Integer.toString(id));
+                obj.id = id;
             }
         });
 
@@ -49,5 +51,5 @@ public class SymbolRegistryHandler {
 
     }
 
-    public static final IForgeRegistry<Symbol> SYMBOLS = RegistryManager.ACTIVE.getRegistry(Symbol.class);
+
 }

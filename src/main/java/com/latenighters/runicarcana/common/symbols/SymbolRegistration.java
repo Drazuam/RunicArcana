@@ -17,7 +17,10 @@ public class SymbolRegistration {
     {
         if(!evt.getRegistry().getRegistrySuperType().equals(Symbol.class))
             return;
+
         evt.getRegistry().register(new DebugSymbol());
+
+        SymbolTextures.consolidateTextures(evt);
     }
 
 //    public static void init() {
