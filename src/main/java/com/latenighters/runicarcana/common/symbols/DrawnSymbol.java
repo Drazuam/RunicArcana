@@ -1,5 +1,8 @@
 package com.latenighters.runicarcana.common.symbols;
 
+import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.PacketBuffer;
@@ -7,8 +10,10 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryManager;
 
 import java.rmi.registry.Registry;
@@ -19,6 +24,14 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     protected BlockPos drawnOn;
     protected Direction blockFace;
     protected int tickCounter = 0;
+    protected int workDone = 0;
+    protected float workVelocity = 0;
+    protected int workShown = 0;
+
+    private static final int SEND_WORK_RANGE = 4;
+    private static final float mass              = 50f;
+    private static final float constant_drag     = 0.005f;
+    private static final float proportional_drag = 0.005f;
 
     public DrawnSymbol(CompoundNBT lnbt) {
         this.deserializeNBT(lnbt);
@@ -78,10 +91,43 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
         this.decode(buf);
     }
 
-    public void tick(World world, IChunk chunk)
+    public void tick(World world, Chunk chunk)
     {
         this.tickCounter++;
         this.getSymbol().onTick(this, world, chunk, this.getDrawnOn(), this.getBlockFace());
+
+        //TODO do this stuff based on render ticks, not game ticks
+        workVelocity += ((float)workDone)/mass - proportional_drag*workVelocity;
+        if(workVelocity>0)
+            workVelocity -= constant_drag;
+        if(workVelocity<0)
+            workVelocity = 0;
+        workShown += workVelocity;
+
+        workDone = 0;
+    }
+
+    public void applyWork(int work)
+    {
+        workDone += work;
+    }
+
+    public void applyServerWork(int work, Chunk chunk)
+    {
+        for(PlayerEntity player : chunk.getWorld().getPlayers())
+        {
+            if(player.chunkCoordX > chunk.getPos().x - SEND_WORK_RANGE && player.chunkCoordX < chunk.getPos().x + SEND_WORK_RANGE &&
+                    player.chunkCoordZ > chunk.getPos().z - SEND_WORK_RANGE && player.chunkCoordZ < chunk.getPos().z + SEND_WORK_RANGE)
+            {
+                SymbolSyncer.AddWorkMessage msg = new SymbolSyncer.AddWorkMessage(work, this, chunk.getPos());
+                SymbolSyncer.INSTANCE.sendTo( msg, ((ServerPlayerEntity)(player)).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+            }
+        }
+    }
+
+    public int getWork()
+    {
+        return workShown;
     }
 
     public int getTicksAlive() {

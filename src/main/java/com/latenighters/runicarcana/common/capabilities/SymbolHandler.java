@@ -5,6 +5,8 @@ import com.latenighters.runicarcana.common.event.ClientChunks;
 import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
 import com.latenighters.runicarcana.common.symbols.Symbol;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -20,6 +22,7 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.server.ServerChunkProvider;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
@@ -28,9 +31,11 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -38,6 +43,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
 @Mod.EventBusSubscriber
@@ -49,6 +57,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     private boolean remote;
     private int ticks_since_last_request = REQUEST_COOLDOWN;
     private static final int REQUEST_COOLDOWN = 20;
+    private static final int DIRTY_RANGE = 15;
 
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo)
     {
@@ -64,6 +73,65 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         return false;
     }
 
+    public void synchronizeSymbols(ArrayList<DrawnSymbol> symbols)
+    {
+        //first try adding all the symbols in
+        for(DrawnSymbol symbol : symbols)
+        {
+            this.addSymbol(symbol);
+        }
+
+        //if we're at the same size, then we're good.  we dont need to remove anything
+        if(symbols.size()==this.symbols.size())return;
+
+        //otherwise we need to trim down
+        this.symbols.removeIf(symbol ->
+        {
+            boolean found = false;
+            for(DrawnSymbol sym :symbols)
+            {
+                if(sym.getBlockFace()==symbol.getBlockFace() && sym.getDrawnOn().equals(symbol.getDrawnOn()))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            return  !found;
+        });
+
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreakEvent(BlockEvent.BreakEvent event)
+    {
+        if(!event.getWorld().isRemote()) {
+            ChunkPos chunkPos = new ChunkPos(event.getPos());
+            Chunk chunk = ((ServerWorld)event.getWorld()).getChunkProvider().getChunk(chunkPos.x, chunkPos.z, true);
+            chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
+                boolean broken = false;
+                for(DrawnSymbol symbol : symbolHandler.getSymbolsAt(event.getPos()))
+                {
+                    broken = true;
+                    symbolHandler.getSymbols().remove(symbol);
+                    symbolHandler.markDirty();
+                }
+                if(broken)
+                {
+                    SymbolSyncer.SymbolSyncMessage msg = new SymbolSyncer.SymbolSyncMessage(chunk, symbolHandler.getSymbols());
+                    for(PlayerEntity player : event.getWorld().getPlayers())
+                    {
+                        if(player.chunkCoordX > chunk.getPos().x - DIRTY_RANGE && player.chunkCoordX < chunk.getPos().x + DIRTY_RANGE &&
+                                player.chunkCoordZ > chunk.getPos().z - DIRTY_RANGE && player.chunkCoordZ < chunk.getPos().z + DIRTY_RANGE)
+                        {
+                            SymbolSyncer.INSTANCE.sendTo( msg, ((ServerPlayerEntity)(player)).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+                        }
+                    }
+                }
+            });
+        }
+
+    }
+
     @SubscribeEvent
     public static void onChunkTickEvent(TickEvent.ClientTickEvent evt)
     {
@@ -71,20 +139,22 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         if(evt.side.isClient())
         {
             //request updates to chunk data
-            for(int i=0; i<ClientChunks.list.size(); i++)
+            ArrayList<Chunk> chunks = ClientChunks.getLoadedChunks();
+            for(Chunk chunk : chunks)
             {
                 if(!SymbolSyncer.canAddMessage())
                     break;
-                IChunk chunk = ClientChunks.list.get(i);
-                Minecraft.getInstance().world.getChunkProvider().getChunk(chunk.getPos().x,chunk.getPos().z,true).getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
+                if(chunk == null)continue;
+                chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
                         symbolHandler.clientSync(chunk.getPos());
+                        symbolHandler.tick(Minecraft.getInstance().world, chunk);
                 });
             }
         }
     }
 
     @Override
-    public void tick(World world, IChunk chunk) {
+    public void tick(World world, Chunk chunk) {
 
         if(chunk instanceof EmptyChunk) return;
 
@@ -93,6 +163,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         {
             symbol.tick(world,chunk);
         }
+
     }
 
     @Override

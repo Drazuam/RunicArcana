@@ -158,7 +158,6 @@ public class SymbolRenderer {
         BlockPos pos = symbol.getDrawnOn();
         GlStateManager.translated(pos.getX()+0.5f, pos.getY()+0.5f, pos.getZ()+0.5f);
 
-
         bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
 
         switch (symbol.getBlockFace())
@@ -179,11 +178,17 @@ public class SymbolRenderer {
                 GlStateManager.rotatef(90, 1, 0, 0);
                 break;
         }
+        GlStateManager.rotatef(symbol.getWork()/10.0f,0,1,0);
 
-        bufferBuilder.pos(-0.5, 0.55, -0.5).tex(sprite.getMinU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
-        bufferBuilder.pos(-0.5, 0.55,  0.5).tex(sprite.getMinU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
-        bufferBuilder.pos( 0.5, 0.55,  0.5).tex(sprite.getMaxU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
-        bufferBuilder.pos( 0.5, 0.55, -0.5).tex(sprite.getMaxU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos(-0.5, 0.51, -0.5).tex(sprite.getMinU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos(-0.5, 0.51,  0.5).tex(sprite.getMinU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos( 0.5, 0.51,  0.5).tex(sprite.getMaxU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos( 0.5, 0.51, -0.5).tex(sprite.getMaxU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
+
+        bufferBuilder.pos(-0.5, 0.49, -0.5).tex(sprite.getMinU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos( 0.5, 0.49, -0.5).tex(sprite.getMinU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos( 0.5, 0.49,  0.5).tex(sprite.getMaxU(),sprite.getMaxV()).normal(0, 1, 0).endVertex();
+        bufferBuilder.pos(-0.5, 0.49,  0.5).tex(sprite.getMaxU(),sprite.getMinV()).normal(0, 1, 0).endVertex();
 
         tessellator.draw();
 

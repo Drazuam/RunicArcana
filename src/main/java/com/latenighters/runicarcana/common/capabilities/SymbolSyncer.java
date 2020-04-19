@@ -5,6 +5,7 @@ import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
 import com.latenighters.runicarcana.common.symbols.Symbol;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
+import com.latenighters.runicarcana.common.symbols.Symbols;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.CreativeScreen;
@@ -14,6 +15,7 @@ import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.PacketDirection;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
@@ -78,19 +80,19 @@ public class SymbolSyncer
     }
 
 
-    @SubscribeEvent
-    public void onChunkLoad(ChunkWatchEvent.Watch evt)
-    { Chunk chunk = evt.getWorld().getChunk(evt.getPos().x, evt.getPos().z);
-        chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
-            ArrayList<DrawnSymbol> symbols_ = null;
-            symbols_ = symbolHandler.getSymbols();
-            if(symbols_ == null || symbols_.size()==0)
-                return;
-            SymbolSyncMessage msg = new SymbolSyncMessage(chunk, symbols_);
-
-            INSTANCE.sendTo( msg, evt.getPlayer().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-        });
-    }
+//    @SubscribeEvent
+//    public void onChunkLoad(ChunkWatchEvent.Watch evt)
+//    { Chunk chunk = evt.getWorld().getChunk(evt.getPos().x, evt.getPos().z);
+//        chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
+//            ArrayList<DrawnSymbol> symbols_ = null;
+//            symbols_ = symbolHandler.getSymbols();
+//            if(symbols_ == null || symbols_.size()==0)
+//                return;
+//            SymbolSyncMessage msg = new SymbolSyncMessage(chunk, symbols_);
+//
+//            INSTANCE.sendTo( msg, evt.getPlayer().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+//        });
+//    }
 
     public static void registerPackets()
     {
@@ -110,6 +112,60 @@ public class SymbolSyncer
                 ChalkItem.ChalkSyncMessage::decode,
                 ChalkItem.ChalkSyncMessage::handle);
 
+        INSTANCE.registerMessage(ind++, AddWorkMessage.class,
+                AddWorkMessage::encode,
+                AddWorkMessage::decode,
+                AddWorkMessage::handle);
+
+    }
+
+    public static class AddWorkMessage
+    {
+        public int work;
+        public DrawnSymbol symbol;
+        public ChunkPos chunkPos;
+
+        public AddWorkMessage(int work, DrawnSymbol symbol, ChunkPos chunkPos)
+        {
+            this.work = work;
+            this.symbol = symbol;
+            this.chunkPos = chunkPos;
+        }
+
+        public static void encode(final AddWorkMessage msg, final PacketBuffer buf)
+        {
+            buf.writeInt(msg.work);
+            buf.writeInt(msg.chunkPos.x);
+            buf.writeInt(msg.chunkPos.z);
+            buf.writeBlockPos(msg.symbol.getDrawnOn());
+            buf.writeInt(msg.symbol.getBlockFace().getIndex());
+        }
+
+        public static AddWorkMessage decode(final PacketBuffer buf)
+        {
+            int work = buf.readInt();
+            ChunkPos chunkPos = new ChunkPos(buf.readInt(),buf.readInt());
+            DrawnSymbol symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()));
+
+            return new AddWorkMessage(work, symbol, chunkPos);
+        }
+
+        public static void handle(final AddWorkMessage msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+            final NetworkEvent.Context context = contextSupplier.get();
+            if (context.getDirection().equals(NetworkDirection.PLAY_TO_CLIENT)) {
+                context.enqueueWork(() -> {
+                    ClientWorld world = Minecraft.getInstance().world;
+                    Chunk chunk = world.getChunkProvider().getChunk(msg.chunkPos.x, msg.chunkPos.z, true);
+
+                    chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
+                        DrawnSymbol symbol = symbolHandler.getSymbolAt(msg.symbol.getDrawnOn(),msg.symbol.getBlockFace());
+                        if(symbol!=null)
+                            symbol.applyWork(msg.work);
+                    });
+                });
+                context.setPacketHandled(true);
+            }
+        }
     }
 
     public static class SymbolDirtyMessage
@@ -236,26 +292,14 @@ public class SymbolSyncer
             {
                 context.enqueueWork(() -> {
 
-//                    final ClientPlayerEntity sender = Minecraft.getInstance().player;
-//                    if (sender == null) {
-//                        return;
-//                    }
-
                     //Chunk chunk = sender.getEntityWorld().getChunk(msg.chunkPos.x,  msg.chunkPos.z);
                     ClientWorld world = Minecraft.getInstance().world;
                     Chunk chunk = world.getChunkProvider().getChunk(msg.chunkPos.x, msg.chunkPos.z, true);
 
                     chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
-
-                        for(DrawnSymbol symbol : msg.symbols)
-                        {
-                            symbolHandler.addSymbol(symbol);
-                        }
-
+                        symbolHandler.synchronizeSymbols(msg.symbols);
                         ((SymbolHandler)symbolHandler).setSynced();
-
                     });
-
                 });
                 context.setPacketHandled(true);
             }

@@ -9,13 +9,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.DropperTileEntity;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.server.ChunkHolder;
+import net.minecraft.world.server.ChunkManager;
+import net.minecraft.world.server.ServerChunkProvider;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class CommonEventHandler {
@@ -30,38 +35,25 @@ public class CommonEventHandler {
     @SubscribeEvent
     public void onChunkTickEvent(TickEvent.WorldTickEvent evt)
     {
-        ArrayList<IChunk> chunks;
         if(evt.side.isClient())
-        {
             return;
-        }else{
 
-            if(ServerChunks.list.size()==0)
-            {
-                //we're running on singleplayer
-                chunks = ClientChunks.list;
-            }
-            else
-            {
-                //we're running on a dedicated server
-                chunks = ServerChunks.list;
-            }
-        }
+        Iterable<ChunkHolder> loadedChunks = ServerChunks.getLoadedChunks((ServerWorld) evt.world);
+        if(loadedChunks==null) return;
 
-        //((ServerWorld)evt.world).getChunkProvider()
+        int chunksTicked = 0;
 
         //give each symbol handler a tick
-        for(int i=0; i<chunks.size(); i++)
+        for(ChunkHolder chunkHolder : loadedChunks)
         {
-            IChunk chunk = ClientChunks.list.get(i);
-            if (Minecraft.getInstance().world != null) {
-                Minecraft.getInstance().world.getChunkProvider().getChunk(chunk.getPos().x,chunk.getPos().z,true).getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
-                    symbolHandler.tick(evt.world, chunk);
-                });
-            }
+            Chunk chunk = chunkHolder.getChunkIfComplete();
+            if(chunk==null)continue;
+
+            chunksTicked++;
+            chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
+                symbolHandler.tick(evt.world, chunk);
+            });
         }
-
-
+        chunksTicked++;
     }
-
 }

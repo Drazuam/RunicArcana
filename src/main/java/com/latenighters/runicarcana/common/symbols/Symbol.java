@@ -7,6 +7,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 
 import java.io.Serializable;
@@ -42,7 +43,7 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
         return texture;
     }
 
-    public void onTick(DrawnSymbol symbol, World world, IChunk chunk, BlockPos drawnOn, Direction blockFace) {
+    public void onTick(DrawnSymbol symbol, World world, Chunk chunk, BlockPos drawnOn, Direction blockFace) {
 
     }
 

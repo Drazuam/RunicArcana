@@ -24,6 +24,6 @@ public interface ISymbolHandler {
     public boolean isSymbolAt(BlockPos position, Direction blockFace);
     public void addSymbol(DrawnSymbol symbol);
     public void markDirty();
-
-    void tick(World world, IChunk chunk);
+    public void synchronizeSymbols(ArrayList<DrawnSymbol> symbols);
+    void tick(World world, Chunk chunk);
 }
