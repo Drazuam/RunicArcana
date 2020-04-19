@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.common.event;
 
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.world.ChunkEvent;
@@ -16,12 +17,14 @@ public class ClientChunks {
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load evt)
     {
-        list.add(evt.getChunk());
+        if (evt.getChunk() instanceof Chunk)
+            list.add(evt.getChunk());
     }
 
     @SubscribeEvent
     public static void onChunkUnload(ChunkEvent.Unload evt)
     {
-        list.remove(evt.getChunk());
+        if (evt.getChunk() instanceof Chunk)
+            list.remove(evt.getChunk());
     }
 }

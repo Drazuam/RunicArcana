@@ -5,7 +5,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.ArrayList;
@@ -23,4 +25,5 @@ public interface ISymbolHandler {
     public void addSymbol(DrawnSymbol symbol);
     public void markDirty();
 
+    void tick(World world, IChunk chunk);
 }

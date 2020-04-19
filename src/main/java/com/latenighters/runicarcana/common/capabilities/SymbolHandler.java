@@ -13,7 +13,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.EmptyChunk;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
@@ -81,6 +83,17 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         }
     }
 
+    @Override
+    public void tick(World world, IChunk chunk) {
+
+        if(chunk instanceof EmptyChunk) return;
+
+        //tick each symbol individually
+        for(DrawnSymbol symbol : symbols)
+        {
+            symbol.tick(world,chunk);
+        }
+    }
 
     @Override
     public boolean isInit() {

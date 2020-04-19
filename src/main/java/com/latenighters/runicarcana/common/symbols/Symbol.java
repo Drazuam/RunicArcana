@@ -6,13 +6,15 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
-public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Symbol> {
+public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Symbol> {
 
     protected String name;
     protected ResourceLocation texture;
@@ -38,6 +40,10 @@ public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Sym
 
     public ResourceLocation getTexture() {
         return texture;
+    }
+
+    public void onTick(DrawnSymbol symbol, World world, IChunk chunk, BlockPos drawnOn, Direction blockFace) {
+
     }
 
     public static class DummySymbol extends Symbol{

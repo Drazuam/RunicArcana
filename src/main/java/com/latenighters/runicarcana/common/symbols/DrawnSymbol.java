@@ -6,6 +6,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.RegistryManager;
 
@@ -16,6 +18,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     protected Symbol symbol;
     protected BlockPos drawnOn;
     protected Direction blockFace;
+    protected int tickCounter = 0;
 
     public DrawnSymbol(CompoundNBT lnbt) {
         this.deserializeNBT(lnbt);
@@ -73,5 +76,15 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     public DrawnSymbol(final PacketBuffer buf, final Symbol symbol) {
         this.symbol = symbol;
         this.decode(buf);
+    }
+
+    public void tick(World world, IChunk chunk)
+    {
+        this.tickCounter++;
+        this.getSymbol().onTick(this, world, chunk, this.getDrawnOn(), this.getBlockFace());
+    }
+
+    public int getTicksAlive() {
+        return tickCounter;
     }
 }
