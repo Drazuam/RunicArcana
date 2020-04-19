@@ -1,6 +1,7 @@
 package com.latenighters.runicarcana;
 
-import com.latenighters.runicarcana.client.ClientEventHandler;
+import com.latenighters.runicarcana.client.event.ClientEventHandler;
+import com.latenighters.runicarcana.client.event.KeyEventHandler;
 import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
 import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
 import com.latenighters.runicarcana.common.capabilities.SymbolHandlerStorage;
@@ -9,7 +10,7 @@ import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistration;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
-import com.latenighters.runicarcana.common.symbols.SymbolTextures;
+import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,10 +19,7 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
@@ -43,6 +41,7 @@ public class RunicArcana
     public RunicArcana() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onSetupComplete);
         // Register the enqueueIMC method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
@@ -63,9 +62,6 @@ public class RunicArcana
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-//        LOGGER.info("HELLO FROM PREINIT");
-//        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 
         SymbolHandlerStorage storage = new SymbolHandlerStorage();
         SymbolHandler.SymbolHandlerFactory factory = new SymbolHandler.SymbolHandlerFactory();
@@ -76,8 +72,7 @@ public class RunicArcana
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-        // do something that can only be done on the client
-//        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+        KeyEventHandler.registerKeyBindings();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -93,6 +88,12 @@ public class RunicArcana
 //                map(m->m.getMessageSupplier().get()).
 //                collect(Collectors.toList()));
     }
+
+    private void onSetupComplete(final FMLLoadCompleteEvent event)
+    {
+        SymbolCategory.generateCategories();  //TODO remove this when static initialization is working
+    }
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {

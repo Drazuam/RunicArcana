@@ -68,7 +68,7 @@ public class SymbolRenderer {
 
 
         GlStateManager.pushMatrix();
-        Minecraft.getInstance().getRenderManager().textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        //Minecraft.getInstance().getRenderManager().textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         GlStateManager.bindTexture(Minecraft.getInstance().getRenderManager().textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE).getGlTextureId());
 
 

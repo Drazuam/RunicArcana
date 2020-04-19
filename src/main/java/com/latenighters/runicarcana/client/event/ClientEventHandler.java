@@ -1,4 +1,4 @@
-package com.latenighters.runicarcana.client;
+package com.latenighters.runicarcana.client.event;
 
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

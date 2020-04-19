@@ -1,6 +1,7 @@
 package com.latenighters.runicarcana.common.symbols;
 
 
+import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -19,6 +20,7 @@ public class SymbolRegistration {
             return;
 
         evt.getRegistry().register(new DebugSymbol());
+        evt.getRegistry().register(new ExpulsionSymbol());
 
         SymbolTextures.consolidateTextures(evt);
     }

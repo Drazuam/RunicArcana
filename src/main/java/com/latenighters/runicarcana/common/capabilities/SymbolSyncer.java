@@ -1,6 +1,7 @@
 package com.latenighters.runicarcana.common.capabilities;
 
 import com.latenighters.runicarcana.RunicArcana;
+import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
 import com.latenighters.runicarcana.common.symbols.Symbol;
 import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
@@ -103,6 +104,11 @@ public class SymbolSyncer
                 SymbolDirtyMessage::encode,
                 SymbolDirtyMessage::decode,
                 SymbolDirtyMessage::handle);
+
+        INSTANCE.registerMessage(ind++, ChalkItem.ChalkSyncMessage.class,
+                ChalkItem.ChalkSyncMessage::encode,
+                ChalkItem.ChalkSyncMessage::decode,
+                ChalkItem.ChalkSyncMessage::handle);
 
     }
 

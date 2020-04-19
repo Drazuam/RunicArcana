@@ -74,7 +74,7 @@ public class ChalkItem extends Item {
 
     @Override
     public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
-        CompoundNBT nbt = new CompoundNBT();
+        CompoundNBT nbt = stack.getOrCreateTag();
         nbt.putString("selected_symbol",Symbols.DEBUG.getRegistryName().toString());
         super.onCreated(stack, worldIn, playerIn);
     }
@@ -90,7 +90,7 @@ public class ChalkItem extends Item {
             this.hand = hand;
         }
 
-        public static void encode(ChalkSyncMessage msg, final PacketBuffer buf)
+        public static void encode(final ChalkSyncMessage msg, final PacketBuffer buf)
         {
             buf.writeString(msg.selectedSymbol.getRegistryName().toString());
             buf.writeBoolean(msg.hand.equals(Hand.MAIN_HAND));
@@ -116,7 +116,7 @@ public class ChalkItem extends Item {
             {
                 if(context.getSender()==null)return;
                 ItemStack chalk = context.getSender().getHeldItem(msg.hand);
-                chalk.getTag().putString("selected_symbol", msg.selectedSymbol.getRegistryName().toString());
+                chalk.getOrCreateTag().putString("selected_symbol", msg.selectedSymbol.getRegistryName().toString());
 
                 context.setPacketHandled(true);
             }

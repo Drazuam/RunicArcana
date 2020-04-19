@@ -1,6 +1,7 @@
 package com.latenighters.runicarcana.common.symbols;
 
 import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -16,16 +17,18 @@ public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Sym
     protected String name;
     protected ResourceLocation texture;
     protected int id = -1;
+    protected final SymbolCategory category;
 
-    public Symbol(String name, ResourceLocation texture) {
+    public Symbol(String name, ResourceLocation texture, SymbolCategory category) {
         this.name = name;
         this.texture = texture;
+        this.category = category;
         this.setRegistryName(new ResourceLocation(MODID, this.name));
     }
 
     public Symbol(String name)
     {
-        this(name, SymbolTextures.DEBUG);
+        this(name, SymbolTextures.DEBUG, SymbolCategory.DEFAULT);
     }
 
     public String getName()
@@ -41,6 +44,11 @@ public class Symbol extends net.minecraftforge.registries.ForgeRegistryEntry<Sym
         public DummySymbol(String name) {
             super(name);
         }
+    }
+
+    public SymbolCategory getCategory()
+    {
+        return category;
     }
 
     public int getId() {

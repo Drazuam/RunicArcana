@@ -1,0 +1,8 @@
+Symbol creation steps:
+
+1) choose symbol off of randomly generated https://ciaccodavi.de/qbdp/acg/
+2) import to paint.net
+3) apply gaussian blur, radius = 1
+4) apply ink sketch, coloring = 100
+5) use flood tool to turn black into 0 alpha, flood mode = global
+6) apply Brightness/contrast, brightness = 30, contrast = -4
