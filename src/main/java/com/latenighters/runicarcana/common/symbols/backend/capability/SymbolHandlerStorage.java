@@ -1,4 +1,4 @@
-package com.latenighters.runicarcana.common.capabilities;
+package com.latenighters.runicarcana.common.symbols.backend.capability;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;

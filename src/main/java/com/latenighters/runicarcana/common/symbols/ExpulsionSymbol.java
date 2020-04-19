@@ -1,12 +1,12 @@
 package com.latenighters.runicarcana.common.symbols;
 
+import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
-import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.Position;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +14,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
@@ -31,7 +30,7 @@ public class ExpulsionSymbol extends Symbol {
 
         if(!world.isRemote())
         {
-            //check for tile entities with item handler capabilities
+            //check for tile entities with item handler capability
             TileEntity tileEntity   = world.getTileEntity(drawnOn);
             TileEntity tileEntityTo = world.getTileEntity(drawnOn.offset(blockFace));
 
@@ -84,7 +83,7 @@ public class ExpulsionSymbol extends Symbol {
                     inventory.getStackInSlot(i).shrink(1);
 
                     Position dropFrom;
-                    switch(symbol.blockFace)
+                    switch(symbol.getBlockFace())
                     {
                         case UP:
                             dropFrom = new Position(drawnOn.getX()+0.5, drawnOn.getY()+1.1, drawnOn.getZ()+0.5);
@@ -123,7 +122,7 @@ public class ExpulsionSymbol extends Symbol {
                         {
                             ItemStack item = cap.extractItem(i,1,false);
                             Position dropFrom;
-                            switch(symbol.blockFace)
+                            switch(symbol.getBlockFace())
                             {
                                 case UP:
                                     dropFrom = new Position(drawnOn.getX()+0.5, drawnOn.getY()+1.1, drawnOn.getZ()+0.5);

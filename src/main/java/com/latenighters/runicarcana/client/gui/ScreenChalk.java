@@ -1,12 +1,10 @@
 package com.latenighters.runicarcana.client.gui;
 
-import com.latenighters.runicarcana.client.KeyBindings;
-import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.symbols.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

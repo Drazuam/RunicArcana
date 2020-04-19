@@ -1,8 +1,7 @@
-package com.latenighters.runicarcana.common.symbols;
+package com.latenighters.runicarcana.common.symbols.backend;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryInternal;
 import net.minecraftforge.registries.RegistryBuilder;

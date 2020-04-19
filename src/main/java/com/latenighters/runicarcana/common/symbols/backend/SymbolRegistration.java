@@ -1,14 +1,10 @@
-package com.latenighters.runicarcana.common.symbols;
+package com.latenighters.runicarcana.common.symbols.backend;
 
 
-import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
+import com.latenighters.runicarcana.common.symbols.DebugSymbol;
+import com.latenighters.runicarcana.common.symbols.ExpulsionSymbol;
+import com.latenighters.runicarcana.common.symbols.SymbolTextures;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.*;
-
-
-import static com.latenighters.runicarcana.RunicArcana.MODID;
 
 public class SymbolRegistration {
 

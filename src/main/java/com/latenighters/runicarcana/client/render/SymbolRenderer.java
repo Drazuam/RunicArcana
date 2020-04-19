@@ -1,44 +1,23 @@
 package com.latenighters.runicarcana.client.render;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
-import com.latenighters.runicarcana.common.symbols.DebugSymbol;
-import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
-import com.latenighters.runicarcana.common.symbols.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
+import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.MinecraftGame;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.Texture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import org.lwjgl.opengl.GL11;
-
-import java.util.ArrayList;
-import java.util.function.Function;
 
 public class SymbolRenderer {
 

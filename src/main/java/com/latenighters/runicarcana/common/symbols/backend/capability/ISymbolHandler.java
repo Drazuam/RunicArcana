@@ -1,14 +1,11 @@
-package com.latenighters.runicarcana.common.capabilities;
+package com.latenighters.runicarcana.common.symbols.backend.capability;
 
-import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
-import net.minecraft.nbt.CompoundNBT;
+import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import java.util.ArrayList;
 

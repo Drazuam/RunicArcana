@@ -1,16 +1,12 @@
 package com.latenighters.runicarcana.common.items;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.setup.ModSetup;
-import com.latenighters.runicarcana.common.symbols.DebugSymbol;
-import com.latenighters.runicarcana.common.symbols.DrawnSymbol;
-import com.latenighters.runicarcana.common.symbols.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -26,10 +22,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.registries.RegistryManager;
-import org.apache.commons.lang3.concurrent.Computable;
-import org.jline.utils.Log;
 
 import java.util.function.Supplier;
 

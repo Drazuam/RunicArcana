@@ -1,6 +1,6 @@
-package com.latenighters.runicarcana.common.symbols;
+package com.latenighters.runicarcana.common.symbols.backend;
 
-import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -11,12 +11,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryManager;
-
-import java.rmi.registry.Registry;
 
 public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
 

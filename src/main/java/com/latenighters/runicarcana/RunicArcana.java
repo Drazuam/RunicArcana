@@ -2,14 +2,14 @@ package com.latenighters.runicarcana;
 
 import com.latenighters.runicarcana.client.event.ClientEventHandler;
 import com.latenighters.runicarcana.client.event.KeyEventHandler;
-import com.latenighters.runicarcana.common.capabilities.ISymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandler;
-import com.latenighters.runicarcana.common.capabilities.SymbolHandlerStorage;
-import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandler;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandlerStorage;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
-import com.latenighters.runicarcana.common.symbols.SymbolRegistration;
-import com.latenighters.runicarcana.common.symbols.SymbolRegistryHandler;
+import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistration;
+import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.latenighters.runicarcana.common.capabilities.SymbolSyncer.registerPackets;
+import static com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer.registerPackets;
 
 @Mod("runicarcana")
 public class RunicArcana

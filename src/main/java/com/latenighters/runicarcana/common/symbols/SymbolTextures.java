@@ -1,25 +1,15 @@
 package com.latenighters.runicarcana.common.symbols;
 
-import com.latenighters.runicarcana.RunicArcana;
-import net.minecraft.client.Minecraft;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.texture.Texture;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import static com.latenighters.runicarcana.RunicArcana.MODID;
-
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 

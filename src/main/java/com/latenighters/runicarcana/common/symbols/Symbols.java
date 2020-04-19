@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.common.symbols;
 
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class Symbols {

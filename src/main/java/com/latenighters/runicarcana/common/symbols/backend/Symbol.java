@@ -1,6 +1,6 @@
-package com.latenighters.runicarcana.common.symbols;
+package com.latenighters.runicarcana.common.symbols.backend;
 
-import com.latenighters.runicarcana.common.capabilities.SymbolSyncer;
+import com.latenighters.runicarcana.common.symbols.SymbolTextures;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
@@ -8,10 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 

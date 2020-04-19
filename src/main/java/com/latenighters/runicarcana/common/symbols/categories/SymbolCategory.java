@@ -1,10 +1,7 @@
 package com.latenighters.runicarcana.common.symbols.categories;
 
-import com.latenighters.runicarcana.common.symbols.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
