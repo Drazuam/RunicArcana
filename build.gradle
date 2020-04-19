@@ -8,16 +8,40 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
+
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0'
-group = 'com.yourname.modid' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'modid'
+version = '0.1'
+group = 'net.latenighters.runicarcana' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'runicarcana'
+
+
+
+apply from: 'private.gradle'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+curseforge {
+    apiKey = "${privateApiKey}"
+    project {
+        id = '377186'
+        changelog = 'Initial push to curse'
+        releaseType = 'alpha'
+        addGameVersion '1.5.2'
+        mainArtifact jar
+
+        mainArtifact(jar) {
+            displayName = "Runic Arcana - $project.version"
+        }
+    }
+}
 
 minecraft {
     // The mappings can be changed at any time, and must be in the following format.
@@ -74,7 +98,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'runicarcana', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 examplemod {
@@ -115,12 +139,12 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "examplemod",
-            "Specification-Vendor": "examplemodsareus",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Title": "runicarcana",
+            "Specification-Vendor": "latenighters",
+            "Specification-Version": "0.1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Vendor" :"latenighters",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
