@@ -37,10 +37,10 @@ public class TransportRodItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(Util.tooltipStyle("tooltip.principium.transport_rod.1"));
-        tooltip.add(Util.tooltipStyle("tooltip.principium.transport_rod.2", (int) teleRange, maxBlocksSearched));
-        tooltip.add(Util.tooltipStyle("tooltip.principium.transport_rod.3"));
-        tooltip.add(Util.loreStyle("lore.principium.transport_rod"));
+        tooltip.add(Util.tooltipStyle("tooltip.runicarcana.transport_rod.1"));
+        tooltip.add(Util.tooltipStyle("tooltip.runicarcana.transport_rod.2", (int) teleRange, maxBlocksSearched));
+        tooltip.add(Util.tooltipStyle("tooltip.runicarcana.transport_rod.3"));
+        tooltip.add(Util.loreStyle("lore.runicarcana.transport_rod"));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.latenighters.runicarcana.common.setup;
 import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
+import com.latenighters.runicarcana.common.items.trinkets.HearthstoneItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -40,6 +41,7 @@ public class Registration {
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
+    public static final RegistryObject<HearthstoneItem> HEARTHSTONE_ITEM = ITEMS.register("hearthstone", HearthstoneItem::new);
 
     // Block Registration
     public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);
