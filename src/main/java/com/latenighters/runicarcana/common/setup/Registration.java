@@ -1,7 +1,10 @@
 package com.latenighters.runicarcana.common.setup;
 
+import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.items.ChalkItem;
+import com.latenighters.runicarcana.common.items.TransportRodItem;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -36,5 +39,10 @@ public class Registration {
 
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
+    public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
+
+    // Block Registration
+    public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);
+    public static final RegistryObject<Item> PRINCIPIC_BLOCK_ITEM = ITEMS.register("principic_block", () -> new BlockItem(PRINCIPIC_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
 }
