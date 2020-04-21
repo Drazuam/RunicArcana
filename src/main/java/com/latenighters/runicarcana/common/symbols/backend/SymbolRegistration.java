@@ -6,6 +6,8 @@ import com.latenighters.runicarcana.common.symbols.ExpulsionSymbol;
 import com.latenighters.runicarcana.common.symbols.SymbolTextures;
 import net.minecraftforge.event.RegistryEvent;
 
+import static com.latenighters.runicarcana.common.symbols.backend.DataType.registerDataTypes;
+
 public class SymbolRegistration {
 
 //    private static final DeferredRegister<Symbol> SYMBOLS = new DeferredRegister<>(SymbolRegistryHandler.SYMBOLS, MODID);
@@ -17,6 +19,10 @@ public class SymbolRegistration {
 
         evt.getRegistry().register(new DebugSymbol());
         evt.getRegistry().register(new ExpulsionSymbol());
+
+        //TODO move this out of here...
+        FunctionalObjects.putObject("DrawnSymbol",DrawnSymbol.class);
+        registerDataTypes();
 
         SymbolTextures.consolidateTextures(evt);
     }

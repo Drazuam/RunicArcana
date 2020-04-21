@@ -48,7 +48,7 @@ public class ChalkItem extends Item {
                             .getValue(new ResourceLocation(context.getItem().getOrCreateTag().contains("selected_symbol")
                                     ? context.getItem().getOrCreateTag().getString("selected_symbol") : Symbols.DEBUG.getRegistryName().toString()));
 
-                symbols.addSymbol(new DrawnSymbol(symbolToDraw, context.getPos(), context.getFace(),context.getWorld()), chunk);
+                symbols.addSymbol(new DrawnSymbol(symbolToDraw, context.getPos(), context.getFace(),chunk), chunk);
 
                 for(PlayerEntity player : context.getWorld().getPlayers())
                 {
