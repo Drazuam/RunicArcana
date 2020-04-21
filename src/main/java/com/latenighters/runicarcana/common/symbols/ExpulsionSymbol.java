@@ -202,4 +202,9 @@ public class ExpulsionSymbol extends Symbol {
             return ItemStack.areItemStackTagsEqual(stack1, stack2);
         }
     }
+
+    @Override
+    protected void registerFunctions() {
+        //TODO put the actual function here
+    }
 }

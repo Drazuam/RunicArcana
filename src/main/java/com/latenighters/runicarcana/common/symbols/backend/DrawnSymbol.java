@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -15,7 +16,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryManager;
 
-public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
+import java.util.List;
+import java.util.Map;
+
+public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalObject {
 
     protected Symbol symbol;
     protected BlockPos drawnOn;
@@ -29,6 +33,10 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     private static final float mass              = 50f;
     private static final float constant_drag     = 0.005f;
     private static final float proportional_drag = 0.005f;
+
+    public Map<Tuple<String,DataType>, Tuple<IFunctionalObject,IFunctional>> linkedInputs;
+
+    public static World world;
 
     public DrawnSymbol(CompoundNBT lnbt) {
         this.deserializeNBT(lnbt);
@@ -50,10 +58,36 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
         return this.symbol.texture;
     }
 
-    public DrawnSymbol(Symbol symbol, BlockPos drawnOn, Direction blockFace) {
+    @Override
+    public List<IFunctional> getOutputs() {
+        return symbol.getOutputs();
+    }
+
+    @Override
+    public List<Tuple<String,DataType>> getInputs() {
+        return symbol.getInputs();
+    }
+
+    @Override
+    public List<IFunctional> getFunctions() {
+        return symbol.getFunctions();
+    }
+
+    @Override
+    public List<Tuple<Tuple<String, DataType>, IFunctional>> getTriggers() {
+        return symbol.getTriggers();
+    }
+
+    @Override
+    public Map<Tuple<String, DataType>, Tuple<IFunctionalObject, IFunctional>> getInputLinks() {
+        return linkedInputs;
+    }
+
+    public DrawnSymbol(Symbol symbol, BlockPos drawnOn, Direction blockFace, World world) {
         this.symbol = symbol;
         this.drawnOn = drawnOn;
         this.blockFace = blockFace;
+        this.world = world;
     }
 
     @Override
@@ -92,6 +126,10 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT> {
     {
         this.tickCounter++;
         this.getSymbol().onTick(this, world, chunk, this.getDrawnOn(), this.getBlockFace());
+
+
+
+
 
         //TODO do this stuff based on render ticks, not game ticks
         workVelocity += ((float)workDone)/mass - proportional_drag*workVelocity;

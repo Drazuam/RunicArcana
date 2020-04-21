@@ -136,7 +136,9 @@ public class SymbolSyncer
         {
             int work = buf.readInt();
             ChunkPos chunkPos = new ChunkPos(buf.readInt(),buf.readInt());
-            DrawnSymbol symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()));
+            DrawnSymbol symbol = null;
+            if(Minecraft.getInstance().world!=null)
+                symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()),Minecraft.getInstance().world);
 
             return new AddWorkMessage(work, symbol, chunkPos);
         }

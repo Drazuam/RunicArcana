@@ -3,6 +3,8 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
 import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
+import com.latenighters.runicarcana.common.symbols.backend.IFunctional;
+import com.latenighters.runicarcana.common.symbols.backend.IFunctionalObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -11,6 +13,7 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -28,6 +31,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
@@ -146,8 +150,23 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         for(DrawnSymbol symbol : symbols)
         {
             symbol.tick(world,chunk);
+
+            symbol.getFunctions().forEach(function ->{
+                resolveOutputInWorld(new Tuple<>(symbol, function), chunk);
+            });
         }
 
+    }
+
+    public static Object resolveOutputInWorld(Tuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
+    {
+        List<Tuple<String, Object>> args = new ArrayList<>();
+        functionToRun.getB().getRequiredInputs().forEach(input -> {
+            if(functionToRun.getA().getInputLinks().containsKey(input))
+                args.add(new Tuple<String,Object>(input.getA(),resolveOutputInWorld(functionToRun.getA().getInputLinks().get(input),chunk)));
+        });
+
+        return functionToRun.getB().executeInWorld(functionToRun.getA(), chunk, args);
     }
 
     @Override
