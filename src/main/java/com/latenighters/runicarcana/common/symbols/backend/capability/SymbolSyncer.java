@@ -138,7 +138,7 @@ public class SymbolSyncer
             ChunkPos chunkPos = new ChunkPos(buf.readInt(),buf.readInt());
             DrawnSymbol symbol = null;
             if(Minecraft.getInstance().world!=null)
-                symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()),Minecraft.getInstance().world);
+                symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()),Minecraft.getInstance().world.getChunk(chunkPos.x, chunkPos.z));
 
             return new AddWorkMessage(work, symbol, chunkPos);
         }
