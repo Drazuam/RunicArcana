@@ -1,0 +1,10 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "runicarcana:item/principic_chestplate"
+  },
+  "overrides": [
+    { "predicate": { "toggled": 0.0 }, "model": "runicarcana:item/principic_chestplate" },
+    { "predicate": { "toggled": 1.0 }, "model": "runicarcana:item/armor_effect_chestplate" }
+  ]
+}

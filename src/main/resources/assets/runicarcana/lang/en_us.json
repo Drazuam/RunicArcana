@@ -1,0 +1,56 @@
+{
+  "block.runicarcana.principic_block": "Principic Block",
+  "block.runicarcana.dumpster_block": "Dumpster Block",
+
+  "item.runicarcana.bio_mash_ingot": "Bio Mash Ingot",
+
+  "item.runicarcana.chalk": "Primitive Chalk",
+
+  "tooltip.runicarcana.principic_armor": "Full set: Immunity to all damage.",
+
+  "item.runicarcana.principic_helmet": "Principic Circlet",
+  "lore.runicarcana.principic_helmet": "The Ultimate Helmet",
+  "tooltip.runicarcana.principic_helmet": "Provides water breathing.",
+  "tooltip.runicarcana.principic_helmet.effect_enabled": "Right click to toggle Night Vision: Active",
+  "tooltip.runicarcana.principic_helmet.effect_disabled": "Right click to toggle Night Vision: Inactive",
+
+
+  "item.runicarcana.principic_chestplate": "Principic Shoulder Pads",
+  "lore.runicarcana.principic_chestplate": "The Ultimate Chestplate",
+  "tooltip.runicarcana.principic_chestplate.effect_enabled": "Right click to toggle Elytra: Active",
+  "tooltip.runicarcana.principic_chestplate.effect_disabled": "Right click to toggle Elytra: Inactive",
+
+  "item.runicarcana.principic_leggings": "Principic Waistband",
+  "lore.runicarcana.principic_leggings": "The Ultimate Leggings",
+  "tooltip.runicarcana.principic_leggings": "Provides void protection.",
+  "tooltip.runicarcana.principic_leggings.effect_enabled": "Right click to toggle Speed Boost: Active",
+  "tooltip.runicarcana.principic_leggings.effect_disabled": "Right click to toggle Speed Boost: Inactive",
+
+
+  "item.runicarcana.principic_boots": "Principic Ankle Bracelets",
+  "lore.runicarcana.principic_boots": "The Ultimate Boots",
+  "tooltip.runicarcana.principic_boots": "Provides fall damage negation",
+  "tooltip.runicarcana.principic_boots.effect_enabled": "Right click to toggle Step-Assist: Active",
+  "tooltip.runicarcana.principic_boots.effect_disabled": "Right click to toggle Step-Assist: Inactive",
+
+
+  "item.runicarcana.transport_rod": "Transport Rod",
+  "tooltip.runicarcana.transport_rod.1": "Right click to teleport on to the block you're looking at.",
+  "tooltip.runicarcana.transport_rod.2": "Range %d. Will search upwards %d blocks for a space.",
+  "tooltip.runicarcana.transport_rod.3": "Sneak + right click a block to teleport through it.",
+  "lore.runicarcana.transport_rod": "Zzzvoop!",
+
+  "item.runicarcana.dumpster_ring": "Dumpster Ring",
+  "tooltip.runicarcana.dumpster_ring": "Eliminates mobs in a %d block range.",
+  "lore.runicarcana.dumpster_ring": "Dump 'Em",
+
+  "item.runicarcana.hearthstone": "Hearthstone",
+  "lore.runicarcana.hearthstone": "You could make a card game out of this.",
+  "tooltip.runicarcana.hearthstone.set_block_pos": "Set to: [%d, %d, %d] in %s",
+  "tooltip.runicarcana.hearthstone.no_set_block_pos": "Set to: [~]",
+  "status.runicarcana.hearthstone.player_not_sneaking": "Player must be sneaking to teleport.",
+  "status.runicarcana.hearthstone.set_block_pos": "Set Hearthstone to [%d, %d, %d]",
+  "status.runicarcana.hearthstone.wrong_dimension": "Cross-dimension travel not yet implemented. Sorry.",
+
+  "itemGroup.runicarcana": "Runic Arcana"
+}

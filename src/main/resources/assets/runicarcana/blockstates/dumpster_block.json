@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "runicarcana:block/dumpster_block"},
+    "facing=south": {"model": "runicarcana:block/dumpster_block", "y": 180},
+    "facing=west": {"model": "runicarcana:block/dumpster_block", "y": 270},
+    "facing=east": {"model": "runicarcana:block/dumpster_block", "y": 90}
+  }
+}

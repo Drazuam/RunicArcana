@@ -1,0 +1,11 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "runicarcana:item/principic_boots"
+  },
+  "overrides": [
+    { "predicate": { "toggled": 0.0 }, "model": "runicarcana:item/principic_boots" },
+    { "predicate": { "toggled": 1.0 }, "model": "runicarcana:item/armor_effect_boots" }
+  ]
+
+}
