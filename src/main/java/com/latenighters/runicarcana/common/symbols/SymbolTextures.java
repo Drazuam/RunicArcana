@@ -18,6 +18,7 @@ public class SymbolTextures {
 
     public static final ResourceLocation DEBUG = new ResourceLocation(MODID , "symbols/symbol_x");
     public static final ResourceLocation EXPEL = new ResourceLocation(MODID , "symbols/symbol_expel");
+    public static final ResourceLocation REDSTONE = new ResourceLocation(MODID , "symbols/symbol_redstone");
 
 
 

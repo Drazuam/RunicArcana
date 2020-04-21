@@ -66,7 +66,7 @@ public class ExpulsionSymbol extends Symbol {
                 }
                 if (transferred)
                 {
-                    symbol.applyServerWork(80, chunk);
+                    symbol.applyServerTorque(80, chunk);
                 }
             }
             else if(inventory!=null)
@@ -107,7 +107,7 @@ public class ExpulsionSymbol extends Symbol {
                     }
 
                     DefaultDispenseItemBehavior.doDispense(world,toDrop,1,blockFace, dropFrom);
-                    symbol.applyServerWork(80, chunk);
+                    symbol.applyServerTorque(80, chunk);
                     break;
                 }
             }
@@ -146,7 +146,7 @@ public class ExpulsionSymbol extends Symbol {
                             }
 
                             DefaultDispenseItemBehavior.doDispense(world,item,1,blockFace, dropFrom);
-                            symbol.applyServerWork(80, chunk);
+                            symbol.applyServerTorque(80, chunk);
                             break;
                         }
                     }

@@ -240,7 +240,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
         workDone += work;
     }
 
-    public void applyServerWork(int work, Chunk chunk)
+    public void applyServerTorque(int work, Chunk chunk)
     {
         for(PlayerEntity player : chunk.getWorld().getPlayers())
         {
