@@ -3,6 +3,7 @@ package com.latenighters.runicarcana.common.setup;
 import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
+import com.latenighters.runicarcana.common.items.trinkets.EliminationRingItem;
 import com.latenighters.runicarcana.common.items.trinkets.HearthstoneItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -12,8 +13,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import javax.annotation.Nullable;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
@@ -41,7 +40,8 @@ public class Registration {
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
-    public static final RegistryObject<HearthstoneItem> HEARTHSTONE_ITEM = ITEMS.register("hearthstone", HearthstoneItem::new);
+    public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);
+    public static final RegistryObject<EliminationRingItem> ELIMINATION_RING = ITEMS.register("elimination_ring", EliminationRingItem::new);
 
     // Block Registration
     public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);

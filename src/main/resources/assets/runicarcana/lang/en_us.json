@@ -40,9 +40,9 @@
   "tooltip.runicarcana.transport_rod.3": "Sneak + right click a block to teleport through it.",
   "lore.runicarcana.transport_rod": "Zzzvoop!",
 
-  "item.runicarcana.dumpster_ring": "Dumpster Ring",
-  "tooltip.runicarcana.dumpster_ring": "Eliminates mobs in a %d block range.",
-  "lore.runicarcana.dumpster_ring": "Dump 'Em",
+  "item.runicarcana.elimination_ring": "Elimination Ring",
+  "tooltip.runicarcana.elimination_ring": "Eliminates mobs in a %d block range.",
+  "lore.runicarcana.elimination_ring": "Dump 'Em",
 
   "item.runicarcana.hearthstone": "Hearthstone",
   "lore.runicarcana.hearthstone": "You could make a card game out of this.",
