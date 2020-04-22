@@ -1,10 +1,7 @@
 package com.latenighters.runicarcana.client.gui;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.symbols.backend.DataType;
-import com.latenighters.runicarcana.common.symbols.backend.IFunctional;
-import com.latenighters.runicarcana.common.symbols.backend.IFunctionalObject;
-import com.latenighters.runicarcana.common.symbols.backend.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
@@ -58,20 +55,8 @@ public class OverlayPopup extends Screen {
     public void render(float partialTicks, ItemStack chalk) {
 
         AtomicReference<IFunctionalObject> symbol = new AtomicReference<>();
-        symbol.set(null);
+        symbol.set(SymbolUtil.getLookedFunctionalObject());
 
-        //first check for a symbol that the player is looking at
-        PlayerEntity player = Minecraft.getInstance().player;
-        //BlockPos blockPos = Minecraft.getInstance().world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(partialTicks), player.getLook(partialTicks)*player.reach, ));
-        if (Minecraft.getInstance().objectMouseOver != null && Minecraft.getInstance().objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
-            BlockRayTraceResult blockRayTrace = (BlockRayTraceResult)Minecraft.getInstance().objectMouseOver;
-            IChunk chunk = Minecraft.getInstance().world.getChunk(blockRayTrace.getPos());
-
-            if(chunk instanceof Chunk)
-                ((Chunk)chunk).getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
-                    symbol.set(symbolHandler.getSymbolAt(blockRayTrace.getPos(), blockRayTrace.getFace()));
-                });
-        }
         if(symbol.get()==null)
         {
             funcObject.set(null);

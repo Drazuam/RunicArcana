@@ -2,17 +2,20 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
-import com.latenighters.runicarcana.common.symbols.backend.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.Symbols;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -23,6 +26,7 @@ import net.minecraftforge.registries.RegistryManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.function.Supplier;
 
@@ -30,6 +34,8 @@ import static com.latenighters.runicarcana.RunicArcana.MODID;
 
 public class SymbolSyncer
 {
+
+    private static final int DIRTY_RANGE = 15;
 
     private static final String PROTOCOL_VERSION = "1";
     private static final int MESSAGE_QUEUE_SIZE = 100;
@@ -107,6 +113,11 @@ public class SymbolSyncer
                 AddWorkMessage::encode,
                 AddWorkMessage::decode,
                 AddWorkMessage::handle);
+
+        INSTANCE.registerMessage(ind++, SymbolLinkMessage.class,
+                SymbolLinkMessage::encode,
+                SymbolLinkMessage::decode,
+                SymbolLinkMessage::handle);
 
     }
 
@@ -208,6 +219,137 @@ public class SymbolSyncer
             }
         }
 
+    }
+
+    public static class SymbolLinkMessage
+    {
+        public IFunctionalObject linkingFrom;
+        public IFunctionalObject linkingTo;
+        public Tuple<String, DataType> input;
+        public String outputName;
+        public String outputType;
+
+        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, Tuple<String, DataType> input, String outputName, String outputType) {
+            this.linkingFrom = linkingFrom;
+            this.linkingTo = linkingTo;
+            this.input = input;
+            this.outputName = outputName;
+            this.outputType = outputType;
+        }
+
+        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, Tuple<String, DataType> input, IFunctional output) {
+            this.linkingFrom = linkingFrom;
+            this.linkingTo = linkingTo;
+            this.input = input;
+            this.outputName = output.getName();
+            this.outputType = output.getOutputType().name;
+        }
+
+        public static void encode(final SymbolLinkMessage msg, final PacketBuffer buf)
+        {
+            buf.writeString(msg.linkingFrom.getObjectType());
+            buf.writeCompoundTag(msg.linkingFrom.basicSerializeNBT());
+            buf.writeString(msg.linkingFrom.getObjectType());
+            buf.writeCompoundTag(msg.linkingTo.basicSerializeNBT());
+            buf.writeString(msg.input.getA());
+            buf.writeString(msg.input.getB().name);
+            buf.writeString(msg.outputName);
+            buf.writeString(msg.outputType);
+        }
+
+        public static SymbolLinkMessage decode(final PacketBuffer buf)
+        {
+            IFunctionalObject linkingFrom = FunctionalTypeRegister.getFunctionalObject(buf.readString());
+            linkingFrom.deserializeNBT(buf.readCompoundTag());
+            IFunctionalObject linkingTo = FunctionalTypeRegister.getFunctionalObject(buf.readString());
+            linkingTo.deserializeNBT(buf.readCompoundTag());
+
+            Tuple<String, DataType> input = new Tuple<>(buf.readString(),DataType.getDataType(buf.readString()));
+            String outputName = buf.readString();
+            String outputType = buf.readString();
+
+            return new SymbolLinkMessage(linkingFrom,linkingTo,input,outputName,outputType);
+        }
+
+        public static void handle(final SymbolLinkMessage msg, final Supplier<NetworkEvent.Context> contextSupplier) {
+            final NetworkEvent.Context context = contextSupplier.get();
+            if (context.getDirection().equals(NetworkDirection.PLAY_TO_SERVER)) {
+
+                context.setPacketHandled(true);
+                ServerPlayerEntity sender = context.getSender();
+
+                IFunctionalObject realLinkingFrom = null;
+                IFunctionalObject realLinkingTo = null;
+                IChunk chunk = sender.world.getChunk(msg.linkingFrom.getBlockPos());
+                if (chunk instanceof Chunk)
+                    realLinkingFrom = msg.linkingFrom.findReal((Chunk) chunk);
+                chunk = sender.world.getChunk(msg.linkingTo.getBlockPos());
+                if (chunk instanceof Chunk)
+                    realLinkingFrom = msg.linkingTo.findReal((Chunk) chunk);
+
+                if (realLinkingFrom == null || realLinkingTo == null) return;
+
+                Tuple<String, DataType> realInput = null;
+                for (Tuple<String, DataType> input : realLinkingFrom.getInputs()) {
+                    if (input.getA().equals(msg.input.getA()) && input.getB() == msg.input.getB()) {
+                        realInput = input;
+                    }
+                }
+
+                IFunctional realOutput = null;
+                for (IFunctional output : realLinkingTo.getOutputs()) {
+                    if (output.getName().equals(msg.outputName) && output.getOutputType().name.equals(msg.outputType))
+                        realOutput = output;
+                }
+
+                if (realInput == null || realOutput == null) return;
+
+                realLinkingFrom.getInputLinks().put(realInput, new Tuple<>(realLinkingTo, realOutput));
+
+                for(PlayerEntity player : ((Chunk)chunk).getWorld().getPlayers())
+                {
+                    if(player.chunkCoordX > chunk.getPos().x - DIRTY_RANGE && player.chunkCoordX < chunk.getPos().x + DIRTY_RANGE &&
+                            player.chunkCoordZ > chunk.getPos().z - DIRTY_RANGE && player.chunkCoordZ < chunk.getPos().z + DIRTY_RANGE)
+                    {
+                        SymbolSyncer.INSTANCE.sendTo( msg, ((ServerPlayerEntity)(player)).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+                    }
+                }
+
+            }
+            else if(context.getDirection().equals(NetworkDirection.PLAY_TO_CLIENT))
+            {
+                context.setPacketHandled(true);
+                PlayerEntity sender = Minecraft.getInstance().player;
+
+                IFunctionalObject realLinkingFrom = null;
+                IFunctionalObject realLinkingTo = null;
+                IChunk chunk = sender.world.getChunk(msg.linkingFrom.getBlockPos());
+                if (chunk instanceof Chunk)
+                    realLinkingFrom = msg.linkingFrom.findReal((Chunk) chunk);
+                chunk = sender.world.getChunk(msg.linkingTo.getBlockPos());
+                if (chunk instanceof Chunk)
+                    realLinkingFrom = msg.linkingTo.findReal((Chunk) chunk);
+
+                if (realLinkingFrom == null || realLinkingTo == null) return;
+
+                Tuple<String, DataType> realInput = null;
+                for (Tuple<String, DataType> input : realLinkingFrom.getInputs()) {
+                    if (input.getA().equals(msg.input.getA()) && input.getB() == msg.input.getB()) {
+                        realInput = input;
+                    }
+                }
+
+                IFunctional realOutput = null;
+                for (IFunctional output : realLinkingTo.getOutputs()) {
+                    if (output.getName().equals(msg.outputName) && output.getOutputType().name.equals(msg.outputType))
+                        realOutput = output;
+                }
+
+                if (realInput == null || realOutput == null) return;
+
+                realLinkingFrom.getInputLinks().put(realInput, new Tuple<>(realLinkingTo, realOutput));
+            }
+        }
     }
 
     public static class SymbolSyncMessage

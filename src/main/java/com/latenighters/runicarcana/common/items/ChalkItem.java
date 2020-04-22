@@ -58,11 +58,12 @@ public class ChalkItem extends Item {
 
             if (!context.getWorld().isRemote)
             {
+                //TODO this will not work if shift+right clicking on a non-symbol functional object
                 Chunk chunk = context.getWorld().getChunkAt(context.getPos());
                 Symbol symbolToDraw = null;
-                    symbolToDraw = RegistryManager.ACTIVE.getRegistry(Symbol.class)
-                            .getValue(new ResourceLocation(context.getItem().getOrCreateTag().contains("selected_symbol")
-                                    ? context.getItem().getOrCreateTag().getString("selected_symbol") : Symbols.DEBUG.getRegistryName().toString()));
+                symbolToDraw = RegistryManager.ACTIVE.getRegistry(Symbol.class)
+                        .getValue(new ResourceLocation(context.getItem().getOrCreateTag().contains("selected_symbol")
+                        ? context.getItem().getOrCreateTag().getString("selected_symbol") : Symbols.DEBUG.getRegistryName().toString()));
 
                 symbols.addSymbol(new DrawnSymbol(symbolToDraw, context.getPos(), context.getFace(),chunk), chunk);
 
@@ -75,6 +76,39 @@ public class ChalkItem extends Item {
                         SymbolSyncer.INSTANCE.sendTo( msg, ((ServerPlayerEntity)(player)).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
                     }
                 }
+            }
+            else if(context.getWorld().isRemote && context.getPlayer().isSteppingCarefully())
+            {
+                IFunctionalObject symbol = SymbolUtil.getLookedFunctionalObject();
+                if(symbol !=null) {
+
+                    ItemStack chalk = context.getItem();
+                    Chunk chunk = context.getWorld().getChunkAt(context.getPos());
+
+                    if (!chalk.getOrCreateTag().contains("linking_from")) {
+                        CompoundNBT nbt = symbol.basicSerializeNBT();
+                        nbt.putString("func",selectedFunction.get().getA());
+                        nbt.putString("type",selectedFunction.get().getB().name);
+                        chalk.getTag().put("linking_from",nbt);
+                    }else
+                    {
+                        IFunctionalObject object;
+                        try {
+                            object = symbol.getClass().newInstance();
+                            object.deserializeNBT(chalk.getTag().getCompound("linking_from"));
+                            object = object.findReal(chunk);
+
+                            SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(symbol, object,
+                                    new Tuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
+                                    popup.selectedFunction.get().getA(),popup.selectedFunction.get().getB().name));
+
+                        } catch (InstantiationException | IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+
             }
         });
 

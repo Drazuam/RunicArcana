@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalObject {
 
@@ -48,6 +49,14 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
 
     public DrawnSymbol(CompoundNBT lnbt) {
         this.deserializeNBT(lnbt);
+    }
+
+    public DrawnSymbol() {
+    }
+
+    @Override
+    public BlockPos getBlockPos() {
+        return getDrawnOn();
     }
 
     public Symbol getSymbol() {
@@ -163,6 +172,17 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
         }
     }
 
+
+
+    @Override
+    public IFunctionalObject findReal(Chunk chunk) {
+        AtomicReference<DrawnSymbol> realSymbol = new AtomicReference<>();
+        chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
+            realSymbol.set(symbolHandler.getSymbolAt(this.drawnOn, this.blockFace));
+        });
+        return realSymbol.get();
+    }
+
     public boolean tryToLinkInputs(Chunk chunk)
     {
         this.chunk = chunk;
@@ -252,6 +272,8 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
             }
         }
     }
+
+
 
     public int getWork()
     {
