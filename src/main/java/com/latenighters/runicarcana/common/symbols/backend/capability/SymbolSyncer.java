@@ -285,7 +285,7 @@ public class SymbolSyncer
                     realLinkingFrom = msg.linkingFrom.findReal((Chunk) chunk);
                 chunk = sender.world.getChunk(msg.linkingTo.getBlockPos());
                 if (chunk instanceof Chunk)
-                    realLinkingFrom = msg.linkingTo.findReal((Chunk) chunk);
+                    realLinkingTo = msg.linkingTo.findReal((Chunk) chunk);
 
                 if (realLinkingFrom == null || realLinkingTo == null) return;
 
@@ -293,17 +293,21 @@ public class SymbolSyncer
                 for (Tuple<String, DataType> input : realLinkingFrom.getInputs()) {
                     if (input.getA().equals(msg.input.getA()) && input.getB() == msg.input.getB()) {
                         realInput = input;
+                        break;
                     }
                 }
 
                 IFunctional realOutput = null;
                 for (IFunctional output : realLinkingTo.getOutputs()) {
-                    if (output.getName().equals(msg.outputName) && output.getOutputType().name.equals(msg.outputType))
+                    if (output.getName().equals(msg.outputName) && output.getOutputType().name.equals(msg.outputType)) {
                         realOutput = output;
+                        break;
+                    }
                 }
 
                 if (realInput == null || realOutput == null) return;
 
+                //TODO inputs not linking properly with this
                 realLinkingFrom.getInputLinks().put(realInput, new Tuple<>(realLinkingTo, realOutput));
 
                 for(PlayerEntity player : ((Chunk)chunk).getWorld().getPlayers())

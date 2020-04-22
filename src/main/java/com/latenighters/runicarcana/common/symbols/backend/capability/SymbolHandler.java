@@ -2,6 +2,7 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
+import com.latenighters.runicarcana.common.symbols.backend.DataType;
 import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
 import com.latenighters.runicarcana.common.symbols.backend.IFunctional;
 import com.latenighters.runicarcana.common.symbols.backend.IFunctionalObject;
@@ -32,6 +33,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
@@ -161,6 +163,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     public static Object resolveOutputInWorld(Tuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
     {
         List<Tuple<String, Object>> args = new ArrayList<>();
+        Map<Tuple<String, DataType>, Tuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();
         functionToRun.getB().getRequiredInputs().forEach(input -> {
             if(functionToRun.getA().getInputLinks().containsKey(input))
                 args.add(new Tuple<String,Object>(input.getA(),resolveOutputInWorld(functionToRun.getA().getInputLinks().get(input),chunk)));

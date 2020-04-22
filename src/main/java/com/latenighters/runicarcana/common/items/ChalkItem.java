@@ -98,9 +98,13 @@ public class ChalkItem extends Item {
                             object.deserializeNBT(chalk.getTag().getCompound("linking_from"));
                             object = object.findReal(chunk);
 
-                            SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(symbol, object,
+                            SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(object,symbol,
                                     new Tuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
                                     popup.selectedFunction.get().getA(),popup.selectedFunction.get().getB().name));
+
+                            chalk.getTag().remove("linking_from");
+                            popup.funcObject.set(null);
+                            popup.selectedFunction.set(null);
 
                         } catch (InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();

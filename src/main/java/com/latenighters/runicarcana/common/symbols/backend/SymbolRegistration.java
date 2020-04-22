@@ -8,6 +8,7 @@ import com.latenighters.runicarcana.common.symbols.SymbolTextures;
 import net.minecraftforge.event.RegistryEvent;
 
 import static com.latenighters.runicarcana.common.symbols.backend.DataType.registerDataTypes;
+import static com.latenighters.runicarcana.common.symbols.backend.FunctionalTypeRegister.registerBaseProviders;
 
 public class SymbolRegistration {
 
@@ -25,6 +26,7 @@ public class SymbolRegistration {
         //TODO move this out of here...
         FunctionalObjects.putObject("DrawnSymbol",DrawnSymbol.class);
         registerDataTypes();
+        registerBaseProviders();
 
         SymbolTextures.consolidateTextures(evt);
     }
