@@ -12,6 +12,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -19,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-
+@Mod.EventBusSubscriber
 public class PrincipicBootsItem extends AbstractPrincipicArmor {
 
     private static final float STEP_ASSIST_HEIGHT  = 1.0f;
@@ -40,6 +42,7 @@ public class PrincipicBootsItem extends AbstractPrincipicArmor {
         tooltip.add(Util.loreStyle("lore.runicarcana.principic_boots"));
     }
 
+    @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent evt) {
 
         if (!(evt.getEntityLiving() instanceof PlayerEntity)) {

@@ -49,6 +49,7 @@ public class PrincipicLeggingsItem extends AbstractPrincipicArmor {
             AttributeModifier.Operation.ADDITION);
 
 
+    @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent evt)
     {
         if (!(evt.getEntityLiving() instanceof PlayerEntity)) {

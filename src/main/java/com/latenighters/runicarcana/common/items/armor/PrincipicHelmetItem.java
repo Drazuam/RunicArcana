@@ -20,8 +20,10 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class PrincipicHelmetItem extends AbstractPrincipicArmor {
 
     public PrincipicHelmetItem() {
         super(EquipmentSlotType.HEAD);
+        onSetup();
     }
 
     @Override
@@ -66,23 +69,35 @@ public class PrincipicHelmetItem extends AbstractPrincipicArmor {
             }
 
             Entity entity = Minecraft.getInstance().getRenderViewEntity();
-            if (entity != null){
-                if(isEnabled) {
-                    ((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 120));
-                } else {
-                    ((LivingEntity) entity).removeActivePotionEffect(Effects.NIGHT_VISION);
-                }
-            }
+            if(isEnabled)
+                entity = null;
+
+            if (entity != null)
+                entity.getDataManager().set(potionEffects, 0);
         }
     }
 
-
+    public static void onSetup()
+    {
+        //Grab LivingEntity.POTION_EFFECTS
+        Field potionEffectsField = ObfuscationReflectionHelper.findField(LivingEntity.class,"field_184633_f");
+        if(potionEffectsField!=null)
+        {
+            potionEffectsField.setAccessible(true);
+            try {
+                potionEffects = (DataParameter<Integer>)potionEffectsField.get(null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
         player.setAir(20);
     }
 
+    @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent evt)
     {
         if (!(evt.getEntityLiving() instanceof PlayerEntity)) {

@@ -14,6 +14,7 @@ import static com.latenighters.runicarcana.RunicArcana.MODID;
 public class GuiTextures {
 
     public static final ResourceLocation CHALK_BACKGROUND = new ResourceLocation(MODID , "/textures/gui/chalk_gui.png");
+    public static final ResourceLocation CHALK_POPUP      = new ResourceLocation(MODID, "/textures/gui/popup.png");
 
     @SubscribeEvent
     public static void onGuiStitchEvent(TextureStitchEvent.Pre event)

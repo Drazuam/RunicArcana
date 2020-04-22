@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.caelus.api.CaelusAPI;
 //import top.theillusivec4.caelus.api.event.RenderElytraEvent;
 
@@ -20,7 +22,7 @@ import java.util.UUID;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
-
+@Mod.EventBusSubscriber
 public class PrincipicChestplateItem extends AbstractPrincipicArmor implements IClickable {
 
     public PrincipicChestplateItem() {
@@ -31,9 +33,6 @@ public class PrincipicChestplateItem extends AbstractPrincipicArmor implements I
             UUID.fromString("1e59d018-c9b1-4152-a474-7d318cc41a00"), MODID + "flight_modifier", 1.0d,
             AttributeModifier.Operation.ADDITION);
 
-//    public static void onRenderElytraEvent(RenderElytraEvent evt) {
-//        evt.setRenderElytra(false);
-//    }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
@@ -46,6 +45,7 @@ public class PrincipicChestplateItem extends AbstractPrincipicArmor implements I
 
     }
 
+    @SubscribeEvent
     public static void onLivingEquipmentChange(LivingEquipmentChangeEvent evt)
     {
 

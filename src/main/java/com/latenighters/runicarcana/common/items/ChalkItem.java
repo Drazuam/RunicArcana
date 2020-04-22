@@ -1,12 +1,15 @@
 package com.latenighters.runicarcana.common.items;
 
 import com.latenighters.runicarcana.RunicArcana;
+import com.latenighters.runicarcana.client.gui.OverlayPopup;
+import com.latenighters.runicarcana.client.gui.ScreenChalk;
 import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.setup.ModSetup;
 import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
 import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -19,14 +22,22 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.registries.RegistryManager;
 
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber
 public class ChalkItem extends Item {
+
+    static OverlayPopup popup = new OverlayPopup();
 
     public ChalkItem() {
         super(new Properties().maxStackSize(1).group(ModSetup.ITEM_GROUP));
@@ -70,6 +81,14 @@ public class ChalkItem extends Item {
         CompoundNBT nbt = stack.getOrCreateTag();
         nbt.putString("selected_symbol",Symbols.DEBUG.getRegistryName().toString());
         super.onCreated(stack, worldIn, playerIn);
+    }
+
+    @SubscribeEvent
+    public static void onRenderEvent(RenderGameOverlayEvent.Post event)
+    {
+        if(event.getType() == RenderGameOverlayEvent.ElementType.CROSSHAIRS) return;
+        if(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ChalkItem || Minecraft.getInstance().player.getHeldItemOffhand().getItem() instanceof ChalkItem)
+            popup.render();
     }
 
     public static class ChalkSyncMessage
