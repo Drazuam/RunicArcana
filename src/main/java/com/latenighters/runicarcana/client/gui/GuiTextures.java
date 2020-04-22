@@ -15,6 +15,7 @@ public class GuiTextures {
 
     public static final ResourceLocation CHALK_BACKGROUND = new ResourceLocation(MODID , "/textures/gui/chalk_gui.png");
     public static final ResourceLocation CHALK_POPUP      = new ResourceLocation(MODID, "/textures/gui/popup.png");
+    public static final ResourceLocation CHALK_SELECT     = new ResourceLocation(MODID, "/textures/gui/selected_box.png");
 
     @SubscribeEvent
     public static void onGuiStitchEvent(TextureStitchEvent.Pre event)

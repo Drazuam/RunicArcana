@@ -30,6 +30,10 @@ public class DataType {
         registerDataType(BOOLEAN);
     }
 
+    public String getShortName(){
+        return String.valueOf(name.charAt(0));
+    }
+
     public static DataType getDataType(String name)
     {
         return dataTypes.getOrDefault(name, null);
