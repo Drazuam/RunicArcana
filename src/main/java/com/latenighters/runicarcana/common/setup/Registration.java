@@ -3,6 +3,10 @@ package com.latenighters.runicarcana.common.setup;
 import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
+import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
+import com.latenighters.runicarcana.common.items.armor.PrincipicChestplateItem;
+import com.latenighters.runicarcana.common.items.armor.PrincipicHelmetItem;
+import com.latenighters.runicarcana.common.items.armor.PrincipicLeggingsItem;
 import com.latenighters.runicarcana.common.items.trinkets.EliminationRingItem;
 import com.latenighters.runicarcana.common.items.trinkets.HearthstoneItem;
 import net.minecraft.block.Block;
@@ -42,6 +46,11 @@ public class Registration {
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
     public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);
     public static final RegistryObject<EliminationRingItem> ELIMINATION_RING = ITEMS.register("elimination_ring", EliminationRingItem::new);
+
+    public static final RegistryObject<PrincipicHelmetItem> PRINCIPIC_HELMET = ITEMS.register("principic_helmet", PrincipicHelmetItem::new);
+    public static final RegistryObject<PrincipicChestplateItem> PRINCIPIC_CHESTPLATE = ITEMS.register("principic_chestplate", PrincipicChestplateItem::new);
+    public static final RegistryObject<PrincipicLeggingsItem> PRINCIPIC_LEGGINGS = ITEMS.register("principic_leggings", PrincipicLeggingsItem::new);
+    public static final RegistryObject<PrincipicBootsItem> PRINCIPIC_BOOTS = ITEMS.register("principic_boots", PrincipicBootsItem::new);
 
     // Block Registration
     public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);

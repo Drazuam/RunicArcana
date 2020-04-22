@@ -11,6 +11,8 @@ import com.latenighters.runicarcana.common.setup.Registration;
 import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistration;
 import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
+import com.latenighters.runicarcana.network.ClickableHandler;
+import com.latenighters.runicarcana.network.NetworkSync;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -59,8 +61,11 @@ public class RunicArcana
         MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
         MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         MinecraftForge.EVENT_BUS.register(new SymbolSyncer());
+        NetworkSync.registerPackets();
+        ClickableHandler.registerPackets();
         Registration.init();
         //SymbolRegistration.init();
+
     }
 
     private void setup(final FMLCommonSetupEvent event)
