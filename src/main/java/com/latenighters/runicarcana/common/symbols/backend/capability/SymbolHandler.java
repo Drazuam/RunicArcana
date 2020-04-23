@@ -171,6 +171,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
                     args.add(new HashableTuple<>(input.getA(), resolvedFunctions.get(inputLinks.get(input))));
                 else {
                     Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
+                    if(resolution==null)return;
                     args.add(new HashableTuple<>(input.getA(),resolution));
                     resolvedFunctions.put(inputLinks.get(input),resolution);
                 }
