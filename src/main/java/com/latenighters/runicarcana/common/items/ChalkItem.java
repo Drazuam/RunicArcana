@@ -2,7 +2,6 @@ package com.latenighters.runicarcana.common.items;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.client.gui.OverlayPopup;
-import com.latenighters.runicarcana.client.gui.ScreenChalk;
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
@@ -19,14 +18,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -40,7 +36,7 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber
 public class ChalkItem extends Item {
 
-    public static final AtomicReference<Tuple<String, DataType>> selectedFunction = new AtomicReference<>();
+    public static final AtomicReference<HashableTuple<String, DataType>> selectedFunction = new AtomicReference<>();
 
     static OverlayPopup popup = new OverlayPopup(selectedFunction);
 
@@ -99,7 +95,7 @@ public class ChalkItem extends Item {
                             object = object.findReal(chunk);
 
                             SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(object,symbol,
-                                    new Tuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
+                                    new HashableTuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
                                     popup.selectedFunction.get().getA(),popup.selectedFunction.get().getB().name));
 
                             chalk.getTag().remove("linking_from");
@@ -165,7 +161,7 @@ public class ChalkItem extends Item {
 
                 int newInd = (prevIndex + indexMove)%popup.funcObject.get().getOutputs().size();
                 if (newInd<0) newInd += popup.funcObject.get().getOutputs().size();
-                popup.selectedFunction.set(new Tuple<>(outputs.get(newInd).getName(), outputs.get(newInd).getOutputType()));
+                popup.selectedFunction.set(new HashableTuple<>(outputs.get(newInd).getName(), outputs.get(newInd).getOutputType()));
             }
             else
             {

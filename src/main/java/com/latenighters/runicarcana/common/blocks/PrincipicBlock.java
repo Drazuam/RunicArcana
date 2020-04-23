@@ -11,5 +11,7 @@ public class PrincipicBlock extends Block {
                 .hardnessAndResistance(1.5f)
                 .lightValue(14)
         );
+
+
     }
 }

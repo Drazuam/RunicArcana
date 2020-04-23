@@ -1,6 +1,5 @@
 package com.latenighters.runicarcana.common.symbols.backend;
 
-import net.minecraft.util.Tuple;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;
@@ -20,12 +19,12 @@ public class DummyFunction implements IFunctional {
     }
 
     @Override
-    public List<Tuple<String, DataType>> getRequiredInputs() {
+    public List<HashableTuple<String, DataType>> getRequiredInputs() {
         return new ArrayList<>();
     }
 
     @Override
-    public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<Tuple<String, Object>> args) {
+    public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
         return null;
     }
 
@@ -35,7 +34,7 @@ public class DummyFunction implements IFunctional {
     }
 
     @Override
-    public List<Tuple<String, DataType>> getTriggers() {
+    public List<HashableTuple<String, DataType>> getTriggers() {
         return new ArrayList<>();
     }
 }

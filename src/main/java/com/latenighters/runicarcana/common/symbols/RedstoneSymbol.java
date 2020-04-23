@@ -2,7 +2,6 @@ package com.latenighters.runicarcana.common.symbols;
 
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;
@@ -24,12 +23,12 @@ public class RedstoneSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getRequiredInputs() {
+            public List<HashableTuple<String, DataType>> getRequiredInputs() {
                 return new ArrayList<>();
             }
 
             @Override
-            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<Tuple<String, Object>> args) {
+            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 if(chunk.getWorld().isRemote) return null;
 
@@ -49,7 +48,7 @@ public class RedstoneSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getTriggers() {
+            public List<HashableTuple<String, DataType>> getTriggers() {
                 return new ArrayList<>();
             }
         });
@@ -61,14 +60,14 @@ public class RedstoneSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getRequiredInputs() {
+            public List<HashableTuple<String, DataType>> getRequiredInputs() {
                 return new ArrayList<>();
             }
 
             @Override
-            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<Tuple<String, Object>> args) {
+            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
-                DrawnSymbol symbol = (DrawnSymbol)object;
+                 DrawnSymbol symbol = (DrawnSymbol)object;
                 int redstoneLevel =  chunk.getWorld().getRedstonePower(symbol.getDrawnOn(), symbol.getBlockFace());
                 Boolean retval = redstoneLevel > 0;
                 return retval;
@@ -80,7 +79,7 @@ public class RedstoneSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getTriggers() {
+            public List<HashableTuple<String, DataType>> getTriggers() {
                 return new ArrayList<>();
             }
         });

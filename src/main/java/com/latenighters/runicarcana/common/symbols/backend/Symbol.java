@@ -5,16 +5,12 @@ import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
@@ -26,9 +22,9 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
     protected final SymbolCategory category;
 
     protected List<IFunctional> functions = new ArrayList<IFunctional>();
-    protected List<Tuple<String,DataType>> inputs = new ArrayList<Tuple<String,DataType>>();
+    protected List<HashableTuple<String,DataType>> inputs = new ArrayList<HashableTuple<String,DataType>>();
     protected List<IFunctional> outputs = new ArrayList<IFunctional>();
-    protected List<Tuple<Tuple<String, DataType>, IFunctional>> triggers = new ArrayList<Tuple<Tuple<String, DataType>, IFunctional>>();
+    protected List<HashableTuple<HashableTuple<String, DataType>, IFunctional>> triggers = new ArrayList<HashableTuple<HashableTuple<String, DataType>, IFunctional>>();
 
     public Symbol(String name, ResourceLocation texture, SymbolCategory category) {
         this.name = name;
@@ -42,7 +38,7 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
         for (IFunctional function : functions)
         {
             //synchronize the inputs from all the functions
-            for(Tuple<String,DataType> input : inputs) {
+            for(HashableTuple<String,DataType> input : inputs) {
                 //check to see if inputs already has the same DataType and String registered
                 function.getRequiredInputs().removeIf(finput ->
                 {
@@ -89,7 +85,7 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
         return functions;
     }
 
-    public List<Tuple<String,DataType>> getInputs(){
+    public List<HashableTuple<String,DataType>> getInputs(){
         return inputs;
     }
 
@@ -97,7 +93,7 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
         return outputs;
     }
 
-    public List<Tuple<Tuple<String, DataType>, IFunctional>> getTriggers()
+    public List<HashableTuple<HashableTuple<String, DataType>, IFunctional>> getTriggers()
     {
         return triggers;
     }

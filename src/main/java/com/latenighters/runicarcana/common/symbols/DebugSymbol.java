@@ -3,22 +3,16 @@ package com.latenighters.runicarcana.common.symbols;
 import com.google.common.collect.Lists;
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.FireworkRocketEntity;
 import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DebugSymbol extends Symbol {
     public DebugSymbol() {
@@ -36,12 +30,12 @@ public class DebugSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String,DataType>> getRequiredInputs() {
-                return new ArrayList<Tuple<String,DataType>>();
+            public List<HashableTuple<String,DataType>> getRequiredInputs() {
+                return new ArrayList<HashableTuple<String,DataType>>();
             }
 
             @Override
-            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<Tuple<String, Object>> args) {
+            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
                 DrawnSymbol symbol = (DrawnSymbol)object;
                 if(symbol.getTicksAlive()%20==0)
                 {
@@ -79,8 +73,8 @@ public class DebugSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getTriggers() {
-                return new ArrayList<Tuple<String,DataType>>();
+            public List<HashableTuple<String, DataType>> getTriggers() {
+                return new ArrayList<HashableTuple<String,DataType>>();
             }
         });
     }

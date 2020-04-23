@@ -8,11 +8,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
@@ -26,7 +24,6 @@ import net.minecraftforge.registries.RegistryManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.function.Supplier;
 
@@ -225,11 +222,11 @@ public class SymbolSyncer
     {
         public IFunctionalObject linkingFrom;
         public IFunctionalObject linkingTo;
-        public Tuple<String, DataType> input;
+        public HashableTuple<String, DataType> input;
         public String outputName;
         public String outputType;
 
-        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, Tuple<String, DataType> input, String outputName, String outputType) {
+        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, HashableTuple<String, DataType> input, String outputName, String outputType) {
             this.linkingFrom = linkingFrom;
             this.linkingTo = linkingTo;
             this.input = input;
@@ -237,7 +234,7 @@ public class SymbolSyncer
             this.outputType = outputType;
         }
 
-        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, Tuple<String, DataType> input, IFunctional output) {
+        public SymbolLinkMessage(IFunctionalObject linkingFrom, IFunctionalObject linkingTo, HashableTuple<String, DataType> input, IFunctional output) {
             this.linkingFrom = linkingFrom;
             this.linkingTo = linkingTo;
             this.input = input;
@@ -264,7 +261,7 @@ public class SymbolSyncer
             IFunctionalObject linkingTo = FunctionalTypeRegister.getFunctionalObject(buf.readString());
             linkingTo.deserializeNBT(buf.readCompoundTag());
 
-            Tuple<String, DataType> input = new Tuple<>(buf.readString(),DataType.getDataType(buf.readString()));
+            HashableTuple<String, DataType> input = new HashableTuple<>(buf.readString(),DataType.getDataType(buf.readString()));
             String outputName = buf.readString();
             String outputType = buf.readString();
 
@@ -289,8 +286,8 @@ public class SymbolSyncer
 
                 if (realLinkingFrom == null || realLinkingTo == null) return;
 
-                Tuple<String, DataType> realInput = null;
-                for (Tuple<String, DataType> input : realLinkingFrom.getInputs()) {
+                HashableTuple<String, DataType> realInput = null;
+                for (HashableTuple<String, DataType> input : realLinkingFrom.getInputs()) {
                     if (input.getA().equals(msg.input.getA()) && input.getB() == msg.input.getB()) {
                         realInput = input;
                         break;
@@ -308,7 +305,7 @@ public class SymbolSyncer
                 if (realInput == null || realOutput == null) return;
 
                 //TODO inputs not linking properly with this
-                realLinkingFrom.getInputLinks().put(realInput, new Tuple<>(realLinkingTo, realOutput));
+                realLinkingFrom.getInputLinks().put(realInput, new HashableTuple<>(realLinkingTo, realOutput));
 
                 for(PlayerEntity player : ((Chunk)chunk).getWorld().getPlayers())
                 {
@@ -336,8 +333,8 @@ public class SymbolSyncer
 
                 if (realLinkingFrom == null || realLinkingTo == null) return;
 
-                Tuple<String, DataType> realInput = null;
-                for (Tuple<String, DataType> input : realLinkingFrom.getInputs()) {
+                HashableTuple<String, DataType> realInput = null;
+                for (HashableTuple<String, DataType> input : realLinkingFrom.getInputs()) {
                     if (input.getA().equals(msg.input.getA()) && input.getB() == msg.input.getB()) {
                         realInput = input;
                     }
@@ -351,7 +348,7 @@ public class SymbolSyncer
 
                 if (realInput == null || realOutput == null) return;
 
-                realLinkingFrom.getInputLinks().put(realInput, new Tuple<>(realLinkingTo, realOutput));
+                realLinkingFrom.getInputLinks().put(realInput, new HashableTuple<>(realLinkingTo, realOutput));
             }
         }
     }

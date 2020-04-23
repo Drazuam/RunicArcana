@@ -2,10 +2,7 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
-import com.latenighters.runicarcana.common.symbols.backend.DataType;
-import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
-import com.latenighters.runicarcana.common.symbols.backend.IFunctional;
-import com.latenighters.runicarcana.common.symbols.backend.IFunctionalObject;
+import com.latenighters.runicarcana.common.symbols.backend.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -14,7 +11,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -32,6 +28,7 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -48,6 +45,8 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     private int ticks_since_last_request = REQUEST_COOLDOWN;
     private static final int REQUEST_COOLDOWN = 20;
     private static final int DIRTY_RANGE = 15;
+
+    private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
 
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo)
     {
@@ -126,6 +125,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     public static void onChunkTickEvent(TickEvent.ClientTickEvent evt)
     {
         if(Minecraft.getInstance().world == null) return;
+        resolvedFunctions.clear();
         if(evt.side.isClient())
         {
             //request updates to chunk data
@@ -154,19 +154,27 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
             symbol.tick(world,chunk);
 
             symbol.getFunctions().forEach(function ->{
-                resolveOutputInWorld(new Tuple<>(symbol, function), chunk);
+                resolveOutputInWorld(new HashableTuple<>(symbol, function), chunk);
             });
         }
 
     }
 
-    public static Object resolveOutputInWorld(Tuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
+    public static Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
     {
-        List<Tuple<String, Object>> args = new ArrayList<>();
-        Map<Tuple<String, DataType>, Tuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();
-        functionToRun.getB().getRequiredInputs().forEach(input -> {
-            if(functionToRun.getA().getInputLinks().containsKey(input))
-                args.add(new Tuple<String,Object>(input.getA(),resolveOutputInWorld(functionToRun.getA().getInputLinks().get(input),chunk)));
+        List<HashableTuple<String, Object>> args = new ArrayList<>();
+        Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();
+
+        functionToRun.getB().getRequiredInputs().forEach( input -> {
+            if(inputLinks.containsKey(input)) {
+                if(resolvedFunctions.containsKey(inputLinks.get(input)))
+                    args.add(new HashableTuple<>(input.getA(), resolvedFunctions.get(inputLinks.get(input))));
+                else {
+                    Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
+                    args.add(new HashableTuple<>(input.getA(),resolution));
+                    resolvedFunctions.put(inputLinks.get(input),resolution);
+                }
+            }
         });
 
         return functionToRun.getB().executeInWorld(functionToRun.getA(), chunk, args);

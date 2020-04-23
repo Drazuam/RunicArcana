@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -67,31 +66,38 @@ public class ExpulsionSymbol extends Symbol {
         }
     }
 
+
     @Override
     protected void registerFunctions() {
-        //TODO put the actual function here
+
+        //put all Hashable Tuples
+        HashableTuple<String,DataType> enableInput = new HashableTuple<>("Enabled",DataType.BOOLEAN);
+        HashableTuple<String,DataType> entityInput = new HashableTuple<>("Player", DataType.ENTITY);
+        List<HashableTuple<String, DataType>> requiredInputs = new ArrayList<HashableTuple<String, DataType>>();
+        requiredInputs.add(enableInput);
+        requiredInputs.add(entityInput);
+
         this.functions.add(new IFunctional() {
+
+            final List<HashableTuple<String, DataType>> requiredInputsFinal = requiredInputs;
+
             @Override
             public String getName() {
                 return null;
             }
 
             @Override
-            public List<Tuple<String, DataType>> getRequiredInputs() {
-                List<Tuple<String, DataType>> requiredInputs = new ArrayList<>();
-                requiredInputs.add(new Tuple<>("Enabled",DataType.BOOLEAN));
-                requiredInputs.add(new Tuple<>("Player", DataType.ENTITY));
-
-                return requiredInputs;
+            public List<HashableTuple<String, DataType>> getRequiredInputs() {
+                return requiredInputsFinal;
             }
 
             @Override
-            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<Tuple<String, Object>> args) {
+            public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 //default values
                 boolean enabled = true;
 
-                for(Tuple<String, Object> arg : args)
+                for(HashableTuple<String, Object> arg : args)
                 {
                     if(arg.getA()=="Enabled")
                         enabled = (Boolean)arg.getB();
@@ -243,7 +249,7 @@ public class ExpulsionSymbol extends Symbol {
             }
 
             @Override
-            public List<Tuple<String, DataType>> getTriggers() {
+            public List<HashableTuple<String, DataType>> getTriggers() {
                 return null;
             }
         });

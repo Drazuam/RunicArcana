@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -19,6 +18,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.registries.RegistryManager;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +43,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
     private static final float constant_drag     = 0.005f;
     private static final float proportional_drag = 0.005f;
 
-    public Map<Tuple<String,DataType>, Tuple<IFunctionalObject,IFunctional>> linkedInputs = new HashMap<>();
+    public Map<HashableTuple<String,DataType>, HashableTuple<IFunctionalObject,IFunctional>> linkedInputs = new HashMap<>();
 
     public World world;
 
@@ -81,7 +81,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
     }
 
     @Override
-    public List<Tuple<String,DataType>> getInputs() {
+    public List<HashableTuple<String,DataType>> getInputs() {
         return symbol.getInputs();
     }
 
@@ -91,12 +91,12 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
     }
 
     @Override
-    public List<Tuple<Tuple<String, DataType>, IFunctional>> getTriggers() {
+    public List<HashableTuple<HashableTuple<String, DataType>, IFunctional>> getTriggers() {
         return symbol.getTriggers();
     }
 
     @Override
-    public Map<Tuple<String, DataType>, Tuple<IFunctionalObject, IFunctional>> getInputLinks() {
+    public Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject, IFunctional>> getInputLinks() {
         return linkedInputs;
     }
 
@@ -145,6 +145,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
             linkNBT.putString("function",link.getB().getName());
 
             linkNBT.putString("class",className);
+            symbols.add(linkNBT);
         });
         nbt.put("inputs",symbols);
 
@@ -159,15 +160,23 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
 
         if(nbt.contains("inputs"))
         {
-            ListNBT list = nbt.getList("symbols",10);
+            ListNBT list = nbt.getList("inputs",10);
             list.iterator().forEachRemaining(obj ->{
+                this.hasUnloadedLinkedInputs = true;
                 CompoundNBT entry = (CompoundNBT)obj;
                 IFunctionalObject object = FunctionalObjects.getNewObject(entry.getString("class"));
                 if(object==null)return;
                 object.deserializeNBT((CompoundNBT)entry.get("object"));
-                Tuple<String,DataType> input = new Tuple<>(entry.getString("name"), DataType.getDataType(entry.getString("type")));
-                //Tuple<IFunctionalObject,IFunctional>>
-                Tuple<IFunctionalObject, IFunctional> functionalObject = new Tuple<>(object,new DummyFunction(entry.getString("function")));
+                HashableTuple<String,DataType> input = null; // = new HashableTuple<>(entry.getString("name"), DataType.getDataType(entry.getString("type")));
+                for(HashableTuple<String,DataType> symbolInput : this.getInputs())
+                {
+                    if(symbolInput.getA().equals(entry.getString("name")) && symbolInput.getB().equals(DataType.getDataType((entry.getString("type")))))
+                        input = symbolInput;
+                }
+                //IndexibleTuple<IFunctionalObject,IFunctional>>
+                HashableTuple<IFunctionalObject, IFunctional> functionalObject = new HashableTuple<>(object,new DummyFunction(entry.getString("function")));
+                if(input!=null)
+                this.linkedInputs.put(input,functionalObject);
             });
         }
     }
@@ -188,6 +197,8 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
         this.chunk = chunk;
         AtomicBoolean gotAll = new AtomicBoolean(true);
 
+        ArrayList<HashableTuple<String,DataType>> toRemove = new ArrayList<>();
+
         this.linkedInputs.forEach((input,objectSet) ->{
             if((objectSet.getB() instanceof DummyFunction))
             {
@@ -199,18 +210,22 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
                     {
                         ((Chunk) symbolIChunk).getCapability(RunicArcana.SYMBOL_CAP).ifPresent(cap->{
                             DrawnSymbol symbolToAdd = cap.getSymbolAt(((DrawnSymbol) objectSet.getA()).drawnOn, ((DrawnSymbol) objectSet.getA()).blockFace);
+                            if(symbolToAdd==null)
+                            {
+                                toRemove.add(input);
+                                return;
+                            }
                             //TODO use a reference here you dumbass
                             ArrayList<IFunctional> functionToAdd = new ArrayList<>();
                             symbolToAdd.getOutputs().forEach(output ->{
                                 if(output.getName().equals(objectSet.getB().getName()))
                                     functionToAdd.add(output);
                             });
-                            this.linkedInputs.remove(input);
                             if (functionToAdd.size()==0)
                             {
                                 return;
                             }
-                            Tuple<IFunctionalObject,IFunctional> objectSetToAdd = new Tuple<>(symbolToAdd,functionToAdd.get(0));
+                            HashableTuple<IFunctionalObject,IFunctional> objectSetToAdd = new HashableTuple<>(symbolToAdd,functionToAdd.get(0));
                             this.linkedInputs.put(input, objectSetToAdd);
                         });
                     }
@@ -220,7 +235,12 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
                     }
                 }
             }
+            //TODO: add code for checking other types of Functional Objects here
         });
+        toRemove.forEach(removal ->{
+            this.linkedInputs.remove(removal);
+        });
+
         return gotAll.get();
     }
 
@@ -240,7 +260,7 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
 
     public void tick(World world, Chunk chunk)
     {
-        if(this.hasUnloadedLinkedInputs) this.tryToLinkInputs(chunk);
+        if(this.hasUnloadedLinkedInputs) this.hasUnloadedLinkedInputs = this.tryToLinkInputs(chunk);
         this.tickCounter++;
         this.getSymbol().onTick(this, world, chunk, this.getDrawnOn(), this.getBlockFace());
 

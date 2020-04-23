@@ -3,6 +3,7 @@ package com.latenighters.runicarcana.common.symbols.backend;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class FunctionalObjects {
     private static Map<String, Class<? extends IFunctionalObject>> objects = new HashMap<>();
@@ -20,7 +21,7 @@ public class FunctionalObjects {
     {
         IFunctionalObject retval = null;
         try {
-            objects.get(name).newInstance();
+            retval = objects.get(name).newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -29,12 +30,11 @@ public class FunctionalObjects {
 
     public static String getName(Class<? extends IFunctionalObject> clazz)
     {
-        String retval = "";
+        AtomicReference<String> retval = new AtomicReference<>(null);
         objects.forEach((key,value)->{
-            if (retval.isEmpty() && value.equals(clazz))
-                retval.concat(key);
+            if (value.isAssignableFrom(clazz))
+                retval.set(key);
         });
-        if (retval.isEmpty())return null;
-        return retval;
+        return retval.get();
     }
 }

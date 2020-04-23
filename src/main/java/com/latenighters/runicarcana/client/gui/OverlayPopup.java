@@ -1,28 +1,13 @@
 package com.latenighters.runicarcana.client.gui;
 
-import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Tuple;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -42,11 +27,11 @@ public class OverlayPopup extends Screen {
     private static final int X_OFFSET = 30 + 10;
     private static final int Y_OFFSET = -10;
 
-    public final AtomicReference<Tuple<String, DataType>> selectedFunction;
+    public final AtomicReference<HashableTuple<String, DataType>> selectedFunction;
     public AtomicReference<IFunctionalObject> funcObject = new AtomicReference<>();
-    private List<Tuple<String, DataType>> listToRender = new ArrayList<>();
+    private List<HashableTuple<String, DataType>> listToRender = new ArrayList<>();
 
-    public OverlayPopup(AtomicReference<Tuple<String, DataType>> selectedFunction) {
+    public OverlayPopup(AtomicReference<HashableTuple<String, DataType>> selectedFunction) {
         super(new TranslationTextComponent(MODID + ".popup_gui"));
         this.selectedFunction = selectedFunction;
     }
@@ -105,7 +90,7 @@ public class OverlayPopup extends Screen {
                 if (chalk.getTag().contains("linking_from")) {
                     //render outputs
                     symbol.get().getOutputs().forEach(output -> {
-                        listToRender.add(new Tuple<>(output.getName(), output.getOutputType()));
+                        listToRender.add(new HashableTuple<>(output.getName(), output.getOutputType()));
                     });
                 } else {
                     //render inputs

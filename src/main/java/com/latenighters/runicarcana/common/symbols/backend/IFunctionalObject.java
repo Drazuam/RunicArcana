@@ -1,7 +1,6 @@
 package com.latenighters.runicarcana.common.symbols.backend;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -13,10 +12,10 @@ import java.util.Map;
 public interface IFunctionalObject extends INBTSerializable<CompoundNBT> {
 
     public List<IFunctional> getOutputs();
-    public List<Tuple<String,DataType>>   getInputs();
+    public List<HashableTuple<String,DataType>>   getInputs();
     public List<IFunctional>       getFunctions();
-    public List<Tuple<Tuple<String,DataType>,IFunctional>> getTriggers();
-    public Map<Tuple<String,DataType>, Tuple<IFunctionalObject,IFunctional>> getInputLinks();
+    public List<HashableTuple<HashableTuple<String,DataType>,IFunctional>> getTriggers();
+    public Map<HashableTuple<String,DataType>, HashableTuple<IFunctionalObject,IFunctional>> getInputLinks();
 
     //serialization with no downward linking
     public CompoundNBT basicSerializeNBT();
