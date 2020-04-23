@@ -18,11 +18,12 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.1'
+ext.configFile = file('build.properties')
+ext.config = parseConfig(configFile)
+
+version = "${config.version}-${config.build_number}"
 group = 'net.latenighters.runicarcana' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'runicarcana'
-
-
 
 apply from: 'private.gradle'
 
@@ -32,13 +33,13 @@ curseforge {
     apiKey = "${privateApiKey}"
     project {
         id = '377186'
-        changelog = 'Initial push to curse'
-        releaseType = 'alpha'
-        addGameVersion '1.5.2'
+        changelog = "${config.changelog}"
+        releaseType = 'beta'
+        addGameVersion '1.15.2'
         mainArtifact jar
 
         mainArtifact(jar) {
-            displayName = "Runic Arcana - $project.version"
+            displayName = "Runic Arcana ${version}"
         }
     }
 }
@@ -67,7 +68,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                runicarcana {
                     source sourceSets.main
                 }
             }
@@ -83,7 +84,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                runicarcana {
                     source sourceSets.main
                 }
             }
@@ -101,7 +102,7 @@ minecraft {
             args '--mod', 'runicarcana', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                examplemod {
+                runicarcana {
                     source sourceSets.main
                 }
             }
@@ -180,5 +181,29 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
+    }
+}
+
+task incrementBuildNumber {
+    doFirst {
+        config.build_number = (config.build_number.toString().toInteger()) + 1
+        configFile.withWriter {
+            config.toProperties().store(it, "")
+        }
+
+        //file('web/versions.ini').append("\n${project.version}=${mc_version}")
+        //file("${config.dir_repo}/version/${mc_version}.txt").write("${project.version}")
+    }
+}
+
+def parseConfig(File config) {
+    if(config.exists()){
+        config.withReader {
+            def prop = new Properties()
+            prop.load(it)
+            return (new ConfigSlurper().parse(prop))
+        }
+    } else {
+        return null
     }
 }
