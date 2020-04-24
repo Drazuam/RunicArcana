@@ -20,6 +20,7 @@ public class SymbolRegistration {
         evt.getRegistry().register(new ExpulsionSymbol());
         evt.getRegistry().register(new RedstoneSymbol());
         evt.getRegistry().register(new BooleanLogicSymbol());
+        evt.getRegistry().register(new DetectSymbol());
 
         //TODO move this out of here...
         FunctionalObjects.putObject("DrawnSymbol",DrawnSymbol.class);

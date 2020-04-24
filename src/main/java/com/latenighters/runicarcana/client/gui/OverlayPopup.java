@@ -86,17 +86,8 @@ public class OverlayPopup extends Screen {
             //render the list of functions for the symbol.
             if(!(this.funcObject.get()==symbol.get())) {
                 //if we currently have linking data in our chalk, then we need to render outputs
-                listToRender.clear();
-                if (chalk.getTag().contains("linking_from")) {
-                    //render outputs
-                    symbol.get().getOutputs().forEach(output -> {
-                        listToRender.add(new HashableTuple<>(output.getName(), output.getOutputType()));
-                    });
-                } else {
-                    //render inputs
-                    listToRender.addAll(symbol.get().getInputs());
-                }
-                this.funcObject.set(symbol.get());
+                this.selectedFunction.set(null);
+                updateRenderList(chalk,symbol.get());
             }
 
             if(listToRender.size()<=0) return;
@@ -128,5 +119,24 @@ public class OverlayPopup extends Screen {
         }
 
 
+    }
+
+    public void updateRenderList(ItemStack chalk, IFunctionalObject symbol) {
+        listToRender.clear();
+        if(symbol==null) return;
+        if (chalk.getOrCreateTag().contains("linking_from")) {
+            //render outputs
+            symbol.getOutputs().forEach(output -> {
+                if (selectedFunction.get() != null && selectedFunction.get().getA().equals(output.getName()) && selectedFunction.get().getB() == output.getOutputType())
+                    listToRender.add(selectedFunction.get());
+                else
+                    listToRender.add(new HashableTuple<>(output.getName(), output.getOutputType()));
+
+            });
+        } else {
+            //render inputs
+            listToRender.addAll(symbol.getInputs());
+        }
+        this.funcObject.set(symbol);
     }
 }

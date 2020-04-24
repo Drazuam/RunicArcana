@@ -4,6 +4,8 @@ import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import net.minecraft.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.dispenser.Position;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -95,15 +97,23 @@ public class ExpulsionSymbol extends Symbol {
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 //default values
-                boolean enabled = true;
+                Boolean enabled = true;
+                Entity entity = null;
+
+                boolean gotEntityInput = false;
 
                 for(HashableTuple<String, Object> arg : args)
                 {
-                    if(arg.getA()=="Enabled")
-                        enabled = (Boolean)arg.getB();
+                    if(arg==null)continue;
+                    if(arg.getA().equals("Enabled"))
+                        enabled = (Boolean)arg.getB()!=null ? (Boolean)arg.getB() : enabled;
+                    if(arg.getA().equals(entityInput.getA())) {
+                        entity = (Entity) arg.getB();
+                        gotEntityInput = true;
+                    }
                 }
 
-                if(enabled)
+                if(enabled && !(gotEntityInput && entity == null))
                 {
                     DrawnSymbol symbol = (DrawnSymbol)object;
                     World world = chunk.getWorld();
@@ -127,7 +137,13 @@ public class ExpulsionSymbol extends Symbol {
 
                         //check for an inventory
                         IInventory inventory   = HopperTileEntity.getInventoryAtPosition(world,drawnOn);
-                        IInventory inventoryTo = HopperTileEntity.getInventoryAtPosition(world,drawnOn.offset(blockFace));
+                        IInventory inventoryTo = null;
+
+                        if(entity instanceof PlayerEntity)
+                            inventoryTo = ((PlayerEntity)entity).inventory;
+                        else
+                            inventoryTo = HopperTileEntity.getInventoryAtPosition(world,drawnOn.offset(blockFace));
+
 
                         //first handle inventory to inventory - this can easily support minecarts, etc
                         if(inventory!=null && inventoryTo!=null)

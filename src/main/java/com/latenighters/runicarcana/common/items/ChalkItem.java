@@ -101,6 +101,7 @@ public class ChalkItem extends Item {
                             chalk.getTag().remove("linking_from");
                             popup.funcObject.set(null);
                             popup.selectedFunction.set(null);
+                            popup.updateRenderList(chalk,null);
 
                         } catch (InstantiationException | IllegalAccessException e) {
                             e.printStackTrace();
@@ -143,9 +144,9 @@ public class ChalkItem extends Item {
                     Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND) : Minecraft.getInstance().player.getHeldItem(Hand.OFF_HAND);
             int indexMove = 0;
             if(event.getScrollDelta()>0)
-                indexMove = 1;
-            else
                 indexMove = -1;
+            else
+                indexMove = 1;
 
             if(popup.funcObject.get()==null)return;
             if(popup.selectedFunction.get()==null)return;
@@ -170,6 +171,8 @@ public class ChalkItem extends Item {
                 if (newInd<0) newInd += popup.funcObject.get().getInputs().size();
                 popup.selectedFunction.set(popup.funcObject.get().getInputs().get(newInd));
             }
+
+            popup.updateRenderList(chalk,popup.funcObject.get());
 
             event.setCanceled(true);
         }

@@ -165,13 +165,14 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         List<HashableTuple<String, Object>> args = new ArrayList<>();
         Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();
 
+        if(functionToRun.getB().getRequiredInputs()!=null)
         functionToRun.getB().getRequiredInputs().forEach( input -> {
             if(inputLinks.containsKey(input)) {
                 if(resolvedFunctions.containsKey(inputLinks.get(input)))
                     args.add(new HashableTuple<>(input.getA(), resolvedFunctions.get(inputLinks.get(input))));
                 else {
                     Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
-                    if(resolution==null)return;
+                    //if(resolution==null)return;
                     args.add(new HashableTuple<>(input.getA(),resolution));
                     resolvedFunctions.put(inputLinks.get(input),resolution);
                 }

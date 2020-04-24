@@ -40,6 +40,7 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
             //synchronize the inputs from all the functions
             for(HashableTuple<String,DataType> input : inputs) {
                 //check to see if inputs already has the same DataType and String registered
+                if(function.getRequiredInputs()==null)return;
                 function.getRequiredInputs().removeIf(finput ->
                 {
                     if (function.getRequiredInputs().contains(finput)) return false;
@@ -53,10 +54,38 @@ public abstract class Symbol extends net.minecraftforge.registries.ForgeRegistry
             }
 
             //add each input into the object inputs
-            function.getRequiredInputs().forEach(finput->{
-                if(!inputs.contains(finput))
-                    inputs.add(finput);
-            });
+            if(function.getRequiredInputs()!=null)
+                function.getRequiredInputs().forEach(finput->{
+                    if(!inputs.contains(finput))
+                        inputs.add(finput);
+                });
+        }
+
+        //repeat for outputs
+        for (IFunctional function : outputs)
+        {
+            //synchronize the inputs from all the functions
+            for(HashableTuple<String,DataType> input : inputs) {
+                //check to see if inputs already has the same DataType and String registered
+                if(function.getRequiredInputs()==null)return;
+                function.getRequiredInputs().removeIf(finput ->
+                {
+                    if (function.getRequiredInputs().contains(finput)) return false;
+                    if (input.getA().equals(finput.getA()) && input.getB().type.equals(finput.getB().type)) {
+                        //if we do, remove the input from the function and replace it with the already registered input
+                        function.getRequiredInputs().add(input);
+                        return true;
+                    }
+                    return false;
+                });
+            }
+
+            //add each input into the object inputs
+            if(function.getRequiredInputs()!=null)
+                function.getRequiredInputs().forEach(finput->{
+                    if(!inputs.contains(finput))
+                        inputs.add(finput);
+                });
         }
     }
 
