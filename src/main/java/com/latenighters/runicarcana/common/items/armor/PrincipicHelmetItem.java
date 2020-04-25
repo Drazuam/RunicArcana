@@ -94,7 +94,7 @@ public class PrincipicHelmetItem extends AbstractPrincipicArmor {
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        player.setAir(20);
+        player.setAir(300);
     }
 
     @SubscribeEvent
