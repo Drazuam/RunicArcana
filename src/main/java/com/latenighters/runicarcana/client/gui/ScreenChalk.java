@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.client.gui;
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.symbols.backend.Symbol;
@@ -43,17 +44,12 @@ public class ScreenChalk extends Screen {
         this.blit(xStart,yStart,0,0,guiWidth,guiHeight);
 
         super.render(mouseX, mouseY, partialTicks);
-
-
-
     }
-
-
 
     @Override
     public void init(){
         buttons.clear();
-        ClientPlayerEntity playerEntity = Minecraft.getInstance().player;
+        PlayerEntity playerEntity = RunicArcana.proxy.getPlayer();
         if(playerEntity.getHeldItem(Hand.MAIN_HAND)!=null&&playerEntity.getHeldItem(Hand.MAIN_HAND).getItem() instanceof ChalkItem)
         {
             ItemStack chalk = playerEntity.getHeldItem(Hand.MAIN_HAND);
@@ -155,7 +151,7 @@ public class ScreenChalk extends Screen {
 
         @Override
         public void onPress(Button p_onPress_1_) {
-            PlayerEntity playerEntity = Minecraft.getInstance().player;
+            PlayerEntity playerEntity = RunicArcana.proxy.getPlayer();
             ItemStack chalk;
             if(playerEntity.getHeldItem(Hand.MAIN_HAND)!=null&&playerEntity.getHeldItem(Hand.MAIN_HAND).getItem() instanceof ChalkItem) {
                 chalk = playerEntity.getHeldItem(Hand.MAIN_HAND);

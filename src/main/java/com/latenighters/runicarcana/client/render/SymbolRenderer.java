@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.chunk.Chunk;
@@ -28,7 +29,7 @@ public class SymbolRenderer {
     {
 
 
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        PlayerEntity player = RunicArcana.proxy.getPlayer();
         if(player == null) return;
         Chunk homeChunk = player.world.getChunkAt(player.getPosition());
 
@@ -102,7 +103,7 @@ public class SymbolRenderer {
 
     public static void renderSymbol(DrawnSymbol symbol, MatrixStack matrix)
     {
-        assert Minecraft.getInstance().world != null;
+        assert RunicArcana.proxy.getWorld() != null;
 
 
 //        IRenderTypeBuffer buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();

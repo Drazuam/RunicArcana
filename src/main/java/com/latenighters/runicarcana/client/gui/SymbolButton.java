@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.client.gui;
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
@@ -48,7 +49,7 @@ public class SymbolButton extends Button {
             //GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-            PlayerEntity playerEntity = Minecraft.getInstance().player;
+            PlayerEntity playerEntity = RunicArcana.proxy.getPlayer();
             ItemStack chalk;
             if(playerEntity.getHeldItem(Hand.MAIN_HAND)!=null&&playerEntity.getHeldItem(Hand.MAIN_HAND).getItem() instanceof ChalkItem) {
                 chalk = playerEntity.getHeldItem(Hand.MAIN_HAND);

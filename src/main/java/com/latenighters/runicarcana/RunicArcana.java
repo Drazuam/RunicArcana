@@ -2,6 +2,7 @@ package com.latenighters.runicarcana;
 
 import com.latenighters.runicarcana.client.event.ClientEventHandler;
 import com.latenighters.runicarcana.client.event.KeyEventHandler;
+import com.latenighters.runicarcana.common.items.armor.PrincipicArmorSubscriber;
 import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandlerStorage;
@@ -13,6 +14,9 @@ import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import com.latenighters.runicarcana.network.ClickableHandler;
 import com.latenighters.runicarcana.network.NetworkSync;
+import com.latenighters.runicarcana.proxy.ClientProxy;
+import com.latenighters.runicarcana.proxy.IProxy;
+import com.latenighters.runicarcana.proxy.ServerProxy;
 import net.minecraft.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -43,6 +47,8 @@ public class RunicArcana
     @CapabilityInject(ISymbolHandler.class)
     public static Capability<ISymbolHandler> SYMBOL_CAP = null;
 
+    public static IProxy proxy;
+
     public RunicArcana() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -53,13 +59,13 @@ public class RunicArcana
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         // Register the doClientStuff method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doServerStuff);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SymbolRegistryHandler::onCreateRegistryEvent);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SymbolRegistration::registerSymbols);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
-        MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
         MinecraftForge.EVENT_BUS.register(new SymbolSyncer());
         NetworkSync.registerPackets();
         ClickableHandler.registerPackets();
@@ -70,7 +76,6 @@ public class RunicArcana
 
     private void setup(final FMLCommonSetupEvent event)
     {
-
         SymbolHandlerStorage storage = new SymbolHandlerStorage();
         SymbolHandler.SymbolHandlerFactory factory = new SymbolHandler.SymbolHandlerFactory();
         CapabilityManager.INSTANCE.register(ISymbolHandler.class, storage, factory);
@@ -80,7 +85,12 @@ public class RunicArcana
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
+        proxy = new ClientProxy();
         KeyEventHandler.registerKeyBindings();
+    }
+
+    private void doServerStuff(final FMLDedicatedServerSetupEvent event) {
+         proxy = new ServerProxy();
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event)
@@ -102,6 +112,7 @@ public class RunicArcana
 
     private void onSetupComplete(final FMLLoadCompleteEvent event)
     {
+        PrincipicArmorSubscriber.onSetup(event);
         SymbolCategory.generateCategories();  //TODO remove this when static initialization is working
     }
 

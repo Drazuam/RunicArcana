@@ -1,13 +1,22 @@
 package com.latenighters.runicarcana.client.gui;
 
+import com.latenighters.runicarcana.RunicArcana;
+import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -16,7 +25,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class OverlayPopup extends Screen {
+
+    public static final OverlayPopup INSTANCE = new OverlayPopup();
 
     private final int guiHeight = 80;
     private final int guiWidth  = 40 + 20;
@@ -27,15 +39,15 @@ public class OverlayPopup extends Screen {
     private static final int X_OFFSET = 30 + 10;
     private static final int Y_OFFSET = -10;
 
-    public final AtomicReference<HashableTuple<String, DataType>> selectedFunction;
-    public AtomicReference<IFunctionalObject> funcObject = new AtomicReference<>();
-    private List<HashableTuple<String, DataType>> listToRender = new ArrayList<>();
+    public static AtomicReference<HashableTuple<String, DataType>> selectedFunction;
+    public static AtomicReference<IFunctionalObject> funcObject = new AtomicReference<>();
+    private static List<HashableTuple<String, DataType>> listToRender = new ArrayList<>();
 
-    public OverlayPopup(AtomicReference<HashableTuple<String, DataType>> selectedFunction) {
+    public OverlayPopup() {
         super(new TranslationTextComponent(MODID + ".popup_gui"));
-        this.selectedFunction = selectedFunction;
+        selectedFunction = new AtomicReference<>();
+        ChalkItem.selectedFunction = selectedFunction;
     }
-
 
     public void render(float partialTicks, ItemStack chalk) {
 
@@ -121,7 +133,62 @@ public class OverlayPopup extends Screen {
 
     }
 
-    public void updateRenderList(ItemStack chalk, IFunctionalObject symbol) {
+    @SubscribeEvent
+    public static void onScrollWheel(InputEvent.MouseScrollEvent event)
+    {
+        if((RunicArcana.proxy.getPlayer().getHeldItemMainhand().getItem() instanceof ChalkItem || RunicArcana.proxy.getPlayer().getHeldItemMainhand().getItem() instanceof ChalkItem)
+                && RunicArcana.proxy.getPlayer().isSteppingCarefully() && funcObject.get()!=null){
+
+            ItemStack chalk = RunicArcana.proxy.getPlayer().getHeldItemMainhand().getItem() instanceof ChalkItem ?
+                    RunicArcana.proxy.getPlayer().getHeldItem(Hand.MAIN_HAND) : RunicArcana.proxy.getPlayer().getHeldItem(Hand.OFF_HAND);
+            int indexMove = 0;
+            if(event.getScrollDelta()>0)
+                indexMove = -1;
+            else
+                indexMove = 1;
+
+            if(funcObject.get()==null)return;
+            if(selectedFunction.get()==null)return;
+
+            if(chalk.getOrCreateTag().contains("linking_from"))
+            {
+                int prevIndex = 0;
+                List<IFunctional> outputs = funcObject.get().getOutputs();
+                for(int i=0; i<outputs.size(); i++){
+                    if(outputs.get(i).getName().equals(selectedFunction.get().getA()) && outputs.get(i).getOutputType()==selectedFunction.get().getB())
+                        prevIndex=i;
+                }
+
+                int newInd = (prevIndex + indexMove)%funcObject.get().getOutputs().size();
+                if (newInd<0) newInd += funcObject.get().getOutputs().size();
+                selectedFunction.set(new HashableTuple<>(outputs.get(newInd).getName(), outputs.get(newInd).getOutputType()));
+            }
+            else
+            {
+                int prevIndex = funcObject.get().getInputs().indexOf(selectedFunction.get());
+                int newInd = (prevIndex + indexMove) % funcObject.get().getInputs().size();
+                if (newInd<0) newInd += funcObject.get().getInputs().size();
+                selectedFunction.set(funcObject.get().getInputs().get(newInd));
+            }
+
+            updateRenderList(chalk,funcObject.get());
+
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onRenderEvent(RenderGameOverlayEvent.Post event)
+    {
+        if(event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) return;
+        if(RunicArcana.proxy.getPlayer().getHeldItemMainhand().getItem() instanceof ChalkItem)
+            INSTANCE.render(event.getPartialTicks(), RunicArcana.proxy.getPlayer().getHeldItemMainhand());
+        else if(RunicArcana.proxy.getPlayer().getHeldItemOffhand().getItem() instanceof ChalkItem)
+            INSTANCE.render(event.getPartialTicks(), RunicArcana.proxy.getPlayer().getHeldItemOffhand());
+
+    }
+
+    public static void updateRenderList(ItemStack chalk, IFunctionalObject symbol) {
         listToRender.clear();
         if(symbol==null) return;
         if (chalk.getOrCreateTag().contains("linking_from")) {
@@ -137,6 +204,6 @@ public class OverlayPopup extends Screen {
             //render inputs
             listToRender.addAll(symbol.getInputs());
         }
-        this.funcObject.set(symbol);
+        funcObject.set(symbol);
     }
 }

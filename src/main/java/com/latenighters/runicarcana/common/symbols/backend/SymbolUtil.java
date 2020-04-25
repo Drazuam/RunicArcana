@@ -14,16 +14,16 @@ public class SymbolUtil {
 
     //client-side only
     public static IFunctionalObject getLookedFunctionalObject(){
-        if(Minecraft.getInstance().world==null)return null;
+        if(RunicArcana.proxy.getWorld()==null)return null;
         AtomicReference<IFunctionalObject> symbol = new AtomicReference<>();
         symbol.set(null);
 
         //first check for a symbol that the player is looking at
-        PlayerEntity player = Minecraft.getInstance().player;
-        //BlockPos blockPos = Minecraft.getInstance().world.rayTraceBlocks(new RayTraceContext(player.getEyePosition(partialTicks), player.getLook(partialTicks)*player.reach, ));
+        PlayerEntity player = RunicArcana.proxy.getPlayer();
+        //BlockPos blockPos = RunicArcana.proxy.getWorld().rayTraceBlocks(new RayTraceContext(player.getEyePosition(partialTicks), player.getLook(partialTicks)*player.reach, ));
         if (Minecraft.getInstance().objectMouseOver != null && Minecraft.getInstance().objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
             BlockRayTraceResult blockRayTrace = (BlockRayTraceResult)Minecraft.getInstance().objectMouseOver;
-            IChunk chunk = Minecraft.getInstance().world.getChunk(blockRayTrace.getPos());
+            IChunk chunk = RunicArcana.proxy.getWorld().getChunk(blockRayTrace.getPos());
 
             if(chunk instanceof Chunk)
                 ((Chunk)chunk).getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{

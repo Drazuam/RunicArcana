@@ -1,10 +1,12 @@
 package com.latenighters.runicarcana.network;
 
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.IClickable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.CreativeScreen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.ItemStack;
@@ -73,7 +75,7 @@ public class ClickableHandler
                     if(!msg.success)
                         return;
 
-                    final ClientPlayerEntity sender = Minecraft.getInstance().player;
+                    final PlayerEntity sender = RunicArcana.proxy.getPlayer();
                     if (sender == null) {
                         return;
                     }
