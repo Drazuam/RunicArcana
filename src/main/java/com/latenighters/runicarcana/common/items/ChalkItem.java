@@ -20,6 +20,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
@@ -33,12 +35,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber
 public class ChalkItem extends Item {
 
-    public static final AtomicReference<HashableTuple<String, DataType>> selectedFunction = new AtomicReference<>();
-
-    static OverlayPopup popup = new OverlayPopup(selectedFunction);
+    public static AtomicReference<HashableTuple<String, DataType>> selectedFunction;
 
     public ChalkItem() {
         super(new Properties().maxStackSize(1).group(ModSetup.ITEM_GROUP));
@@ -81,31 +80,14 @@ public class ChalkItem extends Item {
                     ItemStack chalk = context.getItem();
                     Chunk chunk = context.getWorld().getChunkAt(context.getPos());
 
-                    if (!chalk.getOrCreateTag().contains("linking_from")) {
+                    if (!chalk.getOrCreateTag().contains("linking_from") && selectedFunction!=null && selectedFunction.get()!=null) {
                         CompoundNBT nbt = symbol.basicSerializeNBT();
                         nbt.putString("func",selectedFunction.get().getA());
                         nbt.putString("type",selectedFunction.get().getB().name);
                         chalk.getTag().put("linking_from",nbt);
                     }else
                     {
-                        IFunctionalObject object;
-                        try {
-                            object = symbol.getClass().newInstance();
-                            object.deserializeNBT(chalk.getTag().getCompound("linking_from"));
-                            object = object.findReal(chunk);
-
-                            SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(object,symbol,
-                                    new HashableTuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
-                                    popup.selectedFunction.get().getA(),popup.selectedFunction.get().getB().name));
-
-                            chalk.getTag().remove("linking_from");
-                            popup.funcObject.set(null);
-                            popup.selectedFunction.set(null);
-                            popup.updateRenderList(chalk,null);
-
-                        } catch (InstantiationException | IllegalAccessException e) {
-                            e.printStackTrace();
-                        }
+                        sendNBTToServer(symbol,chalk,chunk);
                     }
                 }
 
@@ -116,66 +98,41 @@ public class ChalkItem extends Item {
         return ActionResultType.SUCCESS;
     }
 
+    @OnlyIn(Dist.CLIENT)
+    public void sendNBTToServer(IFunctionalObject symbol, ItemStack chalk, Chunk chunk)
+    {
+        if(OverlayPopup.selectedFunction.get()==null) return;
+        IFunctionalObject object = null;
+        try {
+            object = symbol.getClass().newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if(object==null)return;
+        if(!chalk.getOrCreateTag().contains("linking_from"))return;
+        if (chalk.getTag() != null) {
+            object.deserializeNBT(chalk.getTag().getCompound("linking_from"));
+        }
+        object = object.findReal(chunk);
+        if(object==null)return;
+
+        SymbolSyncer.INSTANCE.sendToServer(new SymbolSyncer.SymbolLinkMessage(object,symbol,
+                new HashableTuple<>(chalk.getTag().getCompound("linking_from").getString("func"),DataType.getDataType(chalk.getTag().getCompound("linking_from").getString("type"))),
+                OverlayPopup.selectedFunction.get().getA(),OverlayPopup.selectedFunction.get().getB().name));
+
+        chalk.getTag().remove("linking_from");
+        OverlayPopup.funcObject.set(null);
+        OverlayPopup.selectedFunction.set(null);
+        OverlayPopup.updateRenderList(chalk,null);
+    }
+
     @Override
     public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
         CompoundNBT nbt = stack.getOrCreateTag();
         nbt.putString("selected_symbol",Symbols.DEBUG.getRegistryName().toString());
         super.onCreated(stack, worldIn, playerIn);
-    }
-
-    @SubscribeEvent
-    public static void onRenderEvent(RenderGameOverlayEvent.Post event)
-    {
-        if(event.getType() != RenderGameOverlayEvent.ElementType.CROSSHAIRS) return;
-        if(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ChalkItem)
-            popup.render(event.getPartialTicks(), Minecraft.getInstance().player.getHeldItemMainhand());
-        else if(Minecraft.getInstance().player.getHeldItemOffhand().getItem() instanceof ChalkItem)
-            popup.render(event.getPartialTicks(), Minecraft.getInstance().player.getHeldItemOffhand());
-
-    }
-
-    @SubscribeEvent
-    public static void onScrollWheel(InputEvent.MouseScrollEvent event)
-    {
-        if((Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ChalkItem || Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ChalkItem)
-                && Minecraft.getInstance().player.isSteppingCarefully() && popup.funcObject.get()!=null){
-
-            ItemStack chalk = Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ChalkItem ?
-                    Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND) : Minecraft.getInstance().player.getHeldItem(Hand.OFF_HAND);
-            int indexMove = 0;
-            if(event.getScrollDelta()>0)
-                indexMove = -1;
-            else
-                indexMove = 1;
-
-            if(popup.funcObject.get()==null)return;
-            if(popup.selectedFunction.get()==null)return;
-
-            if(chalk.getOrCreateTag().contains("linking_from"))
-            {
-                int prevIndex = 0;
-                List<IFunctional> outputs = popup.funcObject.get().getOutputs();
-                for(int i=0; i<outputs.size(); i++){
-                    if(outputs.get(i).getName().equals(popup.selectedFunction.get().getA()) && outputs.get(i).getOutputType()==popup.selectedFunction.get().getB())
-                        prevIndex=i;
-                }
-
-                int newInd = (prevIndex + indexMove)%popup.funcObject.get().getOutputs().size();
-                if (newInd<0) newInd += popup.funcObject.get().getOutputs().size();
-                popup.selectedFunction.set(new HashableTuple<>(outputs.get(newInd).getName(), outputs.get(newInd).getOutputType()));
-            }
-            else
-            {
-                int prevIndex = popup.funcObject.get().getInputs().indexOf(popup.selectedFunction.get());
-                int newInd = (prevIndex + indexMove) % popup.funcObject.get().getInputs().size();
-                if (newInd<0) newInd += popup.funcObject.get().getInputs().size();
-                popup.selectedFunction.set(popup.funcObject.get().getInputs().get(newInd));
-            }
-
-            popup.updateRenderList(chalk,popup.funcObject.get());
-
-            event.setCanceled(true);
-        }
     }
 
     public static class ChalkSyncMessage
@@ -197,7 +154,7 @@ public class ChalkItem extends Item {
 
         public static ChalkSyncMessage decode(final PacketBuffer buf)
         {
-            Symbol symbol = RegistryManager.ACTIVE.getRegistry(Symbol.class).getValue(new ResourceLocation(buf.readString()));
+            Symbol symbol = RegistryManager.ACTIVE.getRegistry(Symbol.class).getValue(new ResourceLocation(buf.readString(128)));
             Hand hand = buf.readBoolean() ? Hand.MAIN_HAND : Hand.OFF_HAND;
 
             return new ChalkSyncMessage(symbol, hand);

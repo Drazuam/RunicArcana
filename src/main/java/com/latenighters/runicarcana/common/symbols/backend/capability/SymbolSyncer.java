@@ -12,8 +12,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -67,26 +70,12 @@ public class SymbolSyncer
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     public void onChunkTickEvent(TickEvent.ClientTickEvent evt) {
         int packets_per_tick = PACKETS_PER_TICK;
         while(messageQueue.size()>0 && packets_per_tick-->0)
             SymbolSyncer.INSTANCE.sendToServer(messageQueue.poll());
     }
-
-
-//    @SubscribeEvent
-//    public void onChunkLoad(ChunkWatchEvent.Watch evt)
-//    { Chunk chunk = evt.getWorld().getChunk(evt.getPos().x, evt.getPos().z);
-//        chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
-//            ArrayList<DrawnSymbol> symbols_ = null;
-//            symbols_ = symbolHandler.getSymbols();
-//            if(symbols_ == null || symbols_.size()==0)
-//                return;
-//            SymbolSyncMessage msg = new SymbolSyncMessage(chunk, symbols_);
-//
-//            INSTANCE.sendTo( msg, evt.getPlayer().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-//        });
-//    }
 
     public static void registerPackets()
     {
@@ -145,8 +134,8 @@ public class SymbolSyncer
             int work = buf.readInt();
             ChunkPos chunkPos = new ChunkPos(buf.readInt(),buf.readInt());
             DrawnSymbol symbol = null;
-            if(Minecraft.getInstance().world!=null)
-                symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()),Minecraft.getInstance().world.getChunk(chunkPos.x, chunkPos.z));
+            if(RunicArcana.proxy.getWorld()!=null)
+                symbol = new DrawnSymbol(Symbols.DEBUG, buf.readBlockPos(), Direction.byIndex(buf.readInt()),RunicArcana.proxy.getWorld().getChunk(chunkPos.x, chunkPos.z));
 
             return new AddWorkMessage(work, symbol, chunkPos);
         }
@@ -155,7 +144,7 @@ public class SymbolSyncer
             final NetworkEvent.Context context = contextSupplier.get();
             if (context.getDirection().equals(NetworkDirection.PLAY_TO_CLIENT)) {
                 context.enqueueWork(() -> {
-                    ClientWorld world = Minecraft.getInstance().world;
+                    World world = RunicArcana.proxy.getWorld();
                     Chunk chunk = world.getChunkProvider().getChunk(msg.chunkPos.x, msg.chunkPos.z, true);
 
                     chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler -> {
@@ -201,7 +190,7 @@ public class SymbolSyncer
             if (context.getDirection().equals(NetworkDirection.PLAY_TO_CLIENT))
             {
                 context.enqueueWork(() -> {
-                    ClientWorld world = Minecraft.getInstance().world;
+                    World world = RunicArcana.proxy.getWorld();
                     Chunk chunk = world.getChunkProvider().getChunk(msg.chunkPos.x, msg.chunkPos.z, true);
 
                     chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
@@ -256,14 +245,14 @@ public class SymbolSyncer
 
         public static SymbolLinkMessage decode(final PacketBuffer buf)
         {
-            IFunctionalObject linkingFrom = FunctionalTypeRegister.getFunctionalObject(buf.readString());
+            IFunctionalObject linkingFrom = FunctionalTypeRegister.getFunctionalObject(buf.readString(100));
             linkingFrom.deserializeNBT(buf.readCompoundTag());
-            IFunctionalObject linkingTo = FunctionalTypeRegister.getFunctionalObject(buf.readString());
+            IFunctionalObject linkingTo = FunctionalTypeRegister.getFunctionalObject(buf.readString(100));
             linkingTo.deserializeNBT(buf.readCompoundTag());
 
-            HashableTuple<String, DataType> input = new HashableTuple<>(buf.readString(),DataType.getDataType(buf.readString()));
-            String outputName = buf.readString();
-            String outputType = buf.readString();
+            HashableTuple<String, DataType> input = new HashableTuple<>(buf.readString(100),DataType.getDataType(buf.readString(100)));
+            String outputName = buf.readString(100);
+            String outputType = buf.readString(100);
 
             return new SymbolLinkMessage(linkingFrom,linkingTo,input,outputName,outputType);
         }
@@ -320,7 +309,7 @@ public class SymbolSyncer
             else if(context.getDirection().equals(NetworkDirection.PLAY_TO_CLIENT))
             {
                 context.setPacketHandled(true);
-                PlayerEntity sender = Minecraft.getInstance().player;
+                PlayerEntity sender = RunicArcana.proxy.getPlayer();
 
                 IFunctionalObject realLinkingFrom = null;
                 IFunctionalObject realLinkingTo = null;
@@ -408,7 +397,7 @@ public class SymbolSyncer
 
             for (int i=0; i<dictSize; i++)
             {
-                symbolDict.add(buf.readString());
+                symbolDict.add(buf.readString(100));
             }
 
             for(int i=0; i<size; i++)
@@ -429,7 +418,7 @@ public class SymbolSyncer
                 context.enqueueWork(() -> {
 
                     //Chunk chunk = sender.getEntityWorld().getChunk(msg.chunkPos.x,  msg.chunkPos.z);
-                    ClientWorld world = Minecraft.getInstance().world;
+                    World world = RunicArcana.proxy.getWorld();
                     Chunk chunk = world.getChunkProvider().getChunk(msg.chunkPos.x, msg.chunkPos.z, true);
 
                     chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{

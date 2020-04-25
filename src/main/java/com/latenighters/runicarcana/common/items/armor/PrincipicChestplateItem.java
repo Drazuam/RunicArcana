@@ -10,6 +10,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,17 +23,12 @@ import java.util.UUID;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
-@Mod.EventBusSubscriber
+
 public class PrincipicChestplateItem extends AbstractPrincipicArmor implements IClickable {
 
     public PrincipicChestplateItem() {
         super(EquipmentSlotType.CHEST);
     }
-
-    public static AttributeModifier FLIGHT_MODIFIER = new AttributeModifier(
-            UUID.fromString("1e59d018-c9b1-4152-a474-7d318cc41a00"), MODID + "flight_modifier", 1.0d,
-            AttributeModifier.Operation.ADDITION);
-
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
@@ -43,27 +39,6 @@ public class PrincipicChestplateItem extends AbstractPrincipicArmor implements I
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(Util.loreStyle("lore.runicarcana.principic_chestplate"));
 
-    }
-
-    @SubscribeEvent
-    public static void onLivingEquipmentChange(LivingEquipmentChangeEvent evt)
-    {
-
-        if (!(evt.getEntityLiving() instanceof PlayerEntity)) {
-            return;
-        }
-
-        if (evt.getSlot() != EquipmentSlotType.CHEST) {
-            return;
-        }
-        PlayerEntity playerEntity = (PlayerEntity) evt.getEntity();
-        ItemStack equipment = evt.getTo();
-        IAttributeInstance attributeInstance = playerEntity.getAttribute(CaelusAPI.ELYTRA_FLIGHT);
-        attributeInstance.removeModifier(FLIGHT_MODIFIER);
-
-        if (equipment.getItem() instanceof PrincipicChestplateItem && isEnabled(equipment)) {
-            attributeInstance.applyModifier(FLIGHT_MODIFIER);
-        }
     }
 
 }

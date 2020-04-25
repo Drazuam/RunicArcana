@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.client.event;
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.IClickable;
 import com.latenighters.runicarcana.network.ClickableHandler;
 import net.minecraft.client.Minecraft;
@@ -10,22 +11,25 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvents;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import static com.latenighters.runicarcana.client.render.SymbolRenderer.renderSymbols;
 
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientEventHandler {
 
     @SubscribeEvent
-    public void onRender(RenderWorldLastEvent evt)
+    public static void onRender(RenderWorldLastEvent evt)
     {
         renderSymbols(evt);
     }
 
     @SubscribeEvent
-    public void onMouseEvent(GuiScreenEvent.MouseClickedEvent event)
+    public static void onMouseEvent(GuiScreenEvent.MouseClickedEvent event)
     {
         if (event.getGui() == null || !(event.getGui() instanceof ContainerScreen)) {
             return;
@@ -49,7 +53,7 @@ public class ClientEventHandler {
                         if (item.getItem() instanceof IClickable)
                         {
                             ClickableHandler.INSTANCE.sendToServer(new ClickableHandler.ClickActionMessage(slot, true));
-                            Minecraft.getInstance().player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                            RunicArcana.proxy.getPlayer().playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
                             event.setCanceled(true);
                         }
 
@@ -63,7 +67,7 @@ public class ClientEventHandler {
                             if (item.getItem() instanceof IClickable) {
                                 //example: is a charm or something
                                 ClickableHandler.INSTANCE.sendToServer(new ClickableHandler.ClickActionMessage(slot, true));
-                                Minecraft.getInstance().player.playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
+                                RunicArcana.proxy.getPlayer().playSound(SoundEvents.UI_BUTTON_CLICK, 1, 1);
                                 event.setCanceled(true);
                             }
                         }

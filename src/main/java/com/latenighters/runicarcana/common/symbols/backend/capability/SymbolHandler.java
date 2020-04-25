@@ -124,8 +124,8 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     @SubscribeEvent
     public static void onChunkTickEvent(TickEvent.ClientTickEvent evt)
     {
-        if(Minecraft.getInstance().world == null) return;
-        resolvedFunctions.clear();
+        if(RunicArcana.proxy.getWorld() == null) return;
+
         if(evt.side.isClient())
         {
             //request updates to chunk data
@@ -137,7 +137,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
                 if(chunk == null)continue;
                 chunk.getCapability(RunicArcana.SYMBOL_CAP).ifPresent(symbolHandler ->{
                         symbolHandler.clientSync(chunk.getPos());
-                        symbolHandler.tick(Minecraft.getInstance().world, chunk);
+                        symbolHandler.tick(RunicArcana.proxy.getWorld(), chunk);
                 });
             }
         }
@@ -147,7 +147,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     public void tick(World world, Chunk chunk) {
 
         if(chunk instanceof EmptyChunk) return;
-
+        resolvedFunctions.clear();
         //tick each symbol individually
         for(DrawnSymbol symbol : symbols)
         {
