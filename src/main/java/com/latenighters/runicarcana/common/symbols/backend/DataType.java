@@ -2,6 +2,8 @@ package com.latenighters.runicarcana.common.symbols.backend;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ public class DataType {
 
     public static final DataType ENTITY = new DataType("Entity", Color.orange, Entity.class);
     public static final DataType BOOLEAN = new DataType("Boolean", Color.white, Boolean.class);
+    public static final DataType BLOCK_FACE = new DataType("Block Face", Color.cyan, Boolean.class);
 
     public final String name;
     public final Color color;
@@ -42,6 +45,16 @@ public class DataType {
     public static void registerDataType(DataType dataType)
     {
         dataTypes.put(dataType.name, dataType);
+    }
+
+    public static class SpecificBlockFace{
+        public final BlockPos blockPos;
+        public final Direction blockFace;
+
+        public SpecificBlockFace(BlockPos blockPos, Direction blockFace) {
+            this.blockPos = blockPos;
+            this.blockFace = blockFace;
+        }
     }
 
 
