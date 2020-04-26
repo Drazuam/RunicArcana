@@ -8,6 +8,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 
+import java.lang.ref.Reference;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class SymbolUtil {
@@ -31,5 +34,13 @@ public class SymbolUtil {
                 });
         }
         return symbol.get();
+    }
+
+    public static void parseArguments(List<HashableTuple<String, Object>> args, Map<String, AtomicReference<Object>> objectsToFill)
+    {
+        args.forEach(arg ->{
+            if(objectsToFill.containsKey(arg.getA()) && arg.getB().getClass().isAssignableFrom(objectsToFill.get(arg.getA()).getClass()))
+                objectsToFill.get(arg.getA()).set(arg.getB());
+        });
     }
 }

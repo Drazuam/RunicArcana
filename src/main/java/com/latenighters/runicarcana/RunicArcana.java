@@ -2,6 +2,9 @@ package com.latenighters.runicarcana;
 
 import com.latenighters.runicarcana.client.event.ClientEventHandler;
 import com.latenighters.runicarcana.client.event.KeyEventHandler;
+import com.latenighters.runicarcana.common.arcana.ArcanaHandler;
+import com.latenighters.runicarcana.common.arcana.ArcanaHandlerStorage;
+import com.latenighters.runicarcana.common.arcana.IArcanaHandler;
 import com.latenighters.runicarcana.common.items.armor.PrincipicArmorSubscriber;
 import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandler;
@@ -47,6 +50,9 @@ public class RunicArcana
     @CapabilityInject(ISymbolHandler.class)
     public static Capability<ISymbolHandler> SYMBOL_CAP = null;
 
+    @CapabilityInject(IArcanaHandler.class)
+    public static Capability<IArcanaHandler> ARCANA_CAP = null;
+
     public static IProxy proxy;
 
     public RunicArcana() {
@@ -79,6 +85,10 @@ public class RunicArcana
         SymbolHandlerStorage storage = new SymbolHandlerStorage();
         SymbolHandler.SymbolHandlerFactory factory = new SymbolHandler.SymbolHandlerFactory();
         CapabilityManager.INSTANCE.register(ISymbolHandler.class, storage, factory);
+
+        ArcanaHandlerStorage storage2 = new ArcanaHandlerStorage();
+        ArcanaHandler.ArcanaHandlerFactory factory2 = new ArcanaHandler.ArcanaHandlerFactory();
+        CapabilityManager.INSTANCE.register(IArcanaHandler.class, storage2, factory2);
 
         //TODO: register packets somewhere reasonable
         registerPackets();

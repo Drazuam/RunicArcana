@@ -19,7 +19,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ExpulsionSymbol extends Symbol {
     public ExpulsionSymbol() {
@@ -97,8 +100,12 @@ public class ExpulsionSymbol extends Symbol {
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 //default values
-                Boolean enabled = true;
+                Boolean enabled = new Boolean(true);
                 Entity entity = null;
+
+//                Map<String,Object> toFill = new HashMap<>();
+//                toFill.put(enableInput.getA(), new AtomicReference<>(enabled));
+//                toFill.put(entityInput.getA(), new AtomicReference<>(entity));
 
                 boolean gotEntityInput = false;
 

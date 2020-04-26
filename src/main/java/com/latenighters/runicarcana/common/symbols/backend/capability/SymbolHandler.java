@@ -27,10 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
@@ -47,6 +44,8 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     private static final int DIRTY_RANGE = 15;
 
     private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
+    private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> previousResolution = new HashMap<>();
+    private static Set<HashableTuple<IFunctionalObject,IFunctional>> resolvingFunctions = new HashSet<>();
 
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo)
     {
@@ -158,6 +157,11 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
             });
         }
 
+        resolvedFunctions.forEach((key, item)->{
+            previousResolution.put(key,item);
+        });
+
+
     }
 
     public static Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
@@ -171,10 +175,26 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
                 if(resolvedFunctions.containsKey(inputLinks.get(input)))
                     args.add(new HashableTuple<>(input.getA(), resolvedFunctions.get(inputLinks.get(input))));
                 else {
-                    Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
-                    //if(resolution==null)return;
-                    args.add(new HashableTuple<>(input.getA(),resolution));
-                    resolvedFunctions.put(inputLinks.get(input),resolution);
+                    if(!resolvingFunctions.contains(inputLinks.get(input))){
+                        resolvingFunctions.add(inputLinks.get(input));
+                        Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
+                        resolvingFunctions.remove(inputLinks.get(input));
+                        //if(resolution==null)return;
+                        args.add(new HashableTuple<>(input.getA(),resolution));
+                        resolvedFunctions.put(inputLinks.get(input),resolution);
+                    }
+                    else
+                    {
+                        if(previousResolution.containsKey(inputLinks.get(input))){
+                            Object resolution = previousResolution.get(inputLinks.get(input));
+                            args.add(new HashableTuple<>(input.getA(),resolution));
+                        }
+                        else
+                        {
+                            args.add(new HashableTuple<>(input.getA(),null));
+                        }
+                    }
+
                 }
             }
         });

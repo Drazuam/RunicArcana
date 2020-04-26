@@ -1,6 +1,10 @@
 package com.latenighters.runicarcana.common.setup;
 
+import com.latenighters.runicarcana.common.blocks.ArcanaCollector;
+import com.latenighters.runicarcana.common.blocks.ArcanaPylon;
 import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
+import com.latenighters.runicarcana.common.blocks.tile.TileArcanaCollector;
+import com.latenighters.runicarcana.common.blocks.tile.TileArcanaPylon;
 import com.latenighters.runicarcana.common.items.ChalkItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
@@ -55,5 +59,15 @@ public class Registration {
     // Block Registration
     public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);
     public static final RegistryObject<Item> PRINCIPIC_BLOCK_ITEM = ITEMS.register("principic_block", () -> new BlockItem(PRINCIPIC_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+
+//    public static final RegistryObject<ArcanaPylon> ARCANA_PYLON_BLOCK = BLOCKS.register("arcana_pylon_block", ArcanaPylon::new);
+//    public static final RegistryObject<Item> ARCANA_PYLON_BLOCK_ITEM = ITEMS.register("arcana_pylon_block", () -> new BlockItem(ARCANA_PYLON_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+
+//    public static final RegistryObject<ArcanaCollector> ARCANA_COLLECTOR_BLOCK = BLOCKS.register("arcana_collector_block", ArcanaCollector::new);
+//    public static final RegistryObject<Item> ARCANA_COLLECTOR_BLOCK_ITEM = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+
+    //Tile Entity Registration
+//    public static final RegistryObject<TileEntityType<TileArcanaCollector>> ARCANA_COLLECTOR_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaCollector::new, ARCANA_COLLECTOR_BLOCK.get()));
+//    public static final RegistryObject<TileArcanaPylon> ARCANA_PYLON_TILE = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
 }

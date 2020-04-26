@@ -1,5 +1,7 @@
 {
   "block.runicarcana.principic_block": "Principic Block",
+  "block.runicarcana.arcana_pylon_block": "Arcana Pylon",
+  "block.runicarcana.arcana_collector_block": "Arcana Collector",
   "block.runicarcana.dumpster_block": "Dumpster Block",
 
   "item.runicarcana.bio_mash_ingot": "Bio Mash Ingot",
