@@ -11,6 +11,12 @@ public class ArcanaMix{
     private final HashMap<ArcanaType,Integer> arcanaMixMap = new HashMap<>();
     private int totalArcana = 0;
 
+    public static final ArcanaMix COMMON = new ArcanaMix()
+            .add(ArcanaType.AIR,1000)
+            .add(ArcanaType.WATER, 400)
+            .add(ArcanaType.FIRE, 100)
+            .add(ArcanaType.EARTH, 100);
+
     public ArcanaMix() {
     }
 
@@ -41,23 +47,27 @@ public class ArcanaMix{
         return removeAmount;
     }
 
-    public void add(ArcanaType type, Integer amount)
+    public ArcanaMix add(ArcanaType type, Integer amount)
     {
         arcanaMixMap.put(type,arcanaMixMap.getOrDefault(type,0) + amount);
         totalArcana+=amount;
+        return this;
     }
 
     public void zeroize()
     {
-        this.arcanaMixMap.forEach((type,amount)->{
-            this.arcanaMixMap.remove(type);
-        });
+        this.arcanaMixMap.clear();
     }
 
     public void add(ArcanaMix mix)
     {
         mix.arcanaMixMap.forEach(this::add);
         mix.zeroize();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return this.mult(1f);
     }
 
     public ArcanaMix mult(Float scale)

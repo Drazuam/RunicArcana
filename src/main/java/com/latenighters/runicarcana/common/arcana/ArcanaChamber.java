@@ -6,9 +6,11 @@ public class ArcanaChamber {
     final protected ArcanaMix storedArcana = new ArcanaMix();
     public final int maxStorage;
     protected int currentArcanaTotal = 0;
+    private final int id;
 
-    public ArcanaChamber(int maxStorage) {
+    public ArcanaChamber(int maxStorage, int id) {
         this.maxStorage = maxStorage;
+        this.id = id;
     }
 
     public int getArcanaAmount()
@@ -19,6 +21,15 @@ public class ArcanaChamber {
     public ArcanaMix removeArcana(int amount)
     {
         return this.storedArcana.removeAmount(amount);
+    }
+
+    public void transferToArcanaChamber(ArcanaChamber chamber, int amount)
+    {
+        ArcanaMix toTransfer = this.removeArcana(amount);
+        chamber.addArcana(toTransfer);
+
+        //put the leftovers back in
+        this.addArcana(toTransfer);
     }
 
     //returns leftover after adding operation

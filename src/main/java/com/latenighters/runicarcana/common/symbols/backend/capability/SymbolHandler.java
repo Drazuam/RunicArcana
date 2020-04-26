@@ -3,6 +3,7 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
 import com.latenighters.runicarcana.common.symbols.backend.*;
+import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -29,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
@@ -43,9 +45,9 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     private static final int REQUEST_COOLDOWN = 20;
     private static final int DIRTY_RANGE = 15;
 
-    private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
-    private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> previousResolution = new HashMap<>();
-    private static Set<HashableTuple<IFunctionalObject,IFunctional>> resolvingFunctions = new HashSet<>();
+    private final HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
+    private final HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> previousResolution = new HashMap<>();
+    private final Set<HashableTuple<IFunctionalObject,IFunctional>> resolvingFunctions = new ConcurrentSet<>();
 
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo)
     {
@@ -164,7 +166,7 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
 
     }
 
-    public static Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
+    public Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
     {
         List<HashableTuple<String, Object>> args = new ArrayList<>();
         Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();

@@ -6,6 +6,7 @@ import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaCollector;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaPylon;
 import com.latenighters.runicarcana.common.items.ChalkItem;
+import com.latenighters.runicarcana.common.items.CrystalToolItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicChestplateItem;
@@ -58,6 +59,7 @@ public class Registration {
 
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
+    public static final RegistryObject<CrystalToolItem> CRYSTAL_TOOL = ITEMS.register("crystal_tool", CrystalToolItem::new);
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
     public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);
     public static final RegistryObject<EliminationRingItem> ELIMINATION_RING = ITEMS.register("elimination_ring", EliminationRingItem::new);
@@ -79,6 +81,6 @@ public class Registration {
 
     //Tile Entity Registration
     public static final RegistryObject<TileEntityType<TileArcanaCollector>> ARCANA_COLLECTOR_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaCollector::new,ARCANA_COLLECTOR_BLOCK.get()).build(null));
-    public static final RegistryObject<TileEntityType<TileArcanaPylon>> ARCANA_PYLON_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaPylon::new,ARCANA_PYLON_BLOCK.get()).build(null));
+    public static final RegistryObject<TileEntityType<TileArcanaPylon>> ARCANA_PYLON_TILE = TILES.register("arcana_pylon_tile", ()->TileEntityType.Builder.create(TileArcanaPylon::new,ARCANA_PYLON_BLOCK.get()).build(null));
 
 }
