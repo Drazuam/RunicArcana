@@ -14,9 +14,11 @@ import com.latenighters.runicarcana.common.items.armor.PrincipicLeggingsItem;
 import com.latenighters.runicarcana.common.items.trinkets.EliminationRingItem;
 import com.latenighters.runicarcana.common.items.trinkets.HearthstoneItem;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -45,6 +47,15 @@ public class Registration {
 
     }
 
+    //Common Properties
+    public static Block.Properties arcanaMachineProps = Block.Properties
+            .create(Material.ROCK)
+            .hardnessAndResistance(1.5f)
+            .harvestTool(ToolType.PICKAXE)
+            .lightValue(5)
+            .notSolid();
+
+
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
@@ -60,14 +71,14 @@ public class Registration {
     public static final RegistryObject<PrincipicBlock> PRINCIPIC_BLOCK = BLOCKS.register("principic_block", PrincipicBlock::new);
     public static final RegistryObject<Item> PRINCIPIC_BLOCK_ITEM = ITEMS.register("principic_block", () -> new BlockItem(PRINCIPIC_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
-//    public static final RegistryObject<ArcanaPylon> ARCANA_PYLON_BLOCK = BLOCKS.register("arcana_pylon_block", ArcanaPylon::new);
-//    public static final RegistryObject<Item> ARCANA_PYLON_BLOCK_ITEM = ITEMS.register("arcana_pylon_block", () -> new BlockItem(ARCANA_PYLON_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<ArcanaPylon> ARCANA_PYLON_BLOCK = BLOCKS.register("arcana_pylon_block", ()-> new ArcanaPylon(arcanaMachineProps));
+    public static final RegistryObject<Item> ARCANA_PYLON_BLOCK_ITEM = ITEMS.register("arcana_pylon_block", () -> new BlockItem(ARCANA_PYLON_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
-//    public static final RegistryObject<ArcanaCollector> ARCANA_COLLECTOR_BLOCK = BLOCKS.register("arcana_collector_block", ArcanaCollector::new);
-//    public static final RegistryObject<Item> ARCANA_COLLECTOR_BLOCK_ITEM = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<ArcanaCollector> ARCANA_COLLECTOR_BLOCK = BLOCKS.register("arcana_collector_block",() -> new ArcanaCollector(arcanaMachineProps));
+    public static final RegistryObject<Item> ARCANA_COLLECTOR_BLOCK_ITEM = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
     //Tile Entity Registration
-//    public static final RegistryObject<TileEntityType<TileArcanaCollector>> ARCANA_COLLECTOR_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaCollector::new, ARCANA_COLLECTOR_BLOCK.get()));
-//    public static final RegistryObject<TileArcanaPylon> ARCANA_PYLON_TILE = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
+    public static final RegistryObject<TileEntityType<TileArcanaCollector>> ARCANA_COLLECTOR_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaCollector::new,ARCANA_COLLECTOR_BLOCK.get()).build(null));
+    public static final RegistryObject<TileEntityType<TileArcanaPylon>> ARCANA_PYLON_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaPylon::new,ARCANA_PYLON_BLOCK.get()).build(null));
 
 }

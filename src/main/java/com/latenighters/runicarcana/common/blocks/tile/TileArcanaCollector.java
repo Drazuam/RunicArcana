@@ -1,17 +1,32 @@
 package com.latenighters.runicarcana.common.blocks.tile;
 
+import com.latenighters.runicarcana.RunicArcana;
+import com.latenighters.runicarcana.common.arcana.ArcanaMachine;
+import com.latenighters.runicarcana.common.setup.Registration;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
-public class TileArcanaCollector extends TileEntity implements ITickableTileEntity {
+import javax.annotation.Nonnull;
 
-    public TileArcanaCollector(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+public class TileArcanaCollector extends ArcanaMachine implements ITickableTileEntity {
+
+    public TileArcanaCollector() {
+        super(Registration.ARCANA_COLLECTOR_TILE.get());
     }
 
     @Override
     public void tick() {
 
+    }
+
+    @Override
+    public boolean canExport() {
+        return true;
+    }
+
+    @Override
+    public boolean canImport() {
+        return false;
     }
 }
