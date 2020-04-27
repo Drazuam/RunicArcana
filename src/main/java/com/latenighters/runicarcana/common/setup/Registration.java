@@ -6,6 +6,7 @@ import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaCollector;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaPylon;
 import com.latenighters.runicarcana.common.items.ChalkItem;
+import com.latenighters.runicarcana.common.items.LensOfSoothItem;
 import com.latenighters.runicarcana.common.items.CrystalToolItem;
 import com.latenighters.runicarcana.common.items.TransportRodItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
@@ -59,6 +60,7 @@ public class Registration {
 
     // Item Registration
     public static final RegistryObject<ChalkItem> CHALK = ITEMS.register("chalk", ChalkItem::new);
+    public static final RegistryObject<LensOfSoothItem> LENS_OF_SOOTH = ITEMS.register("lens_of_sooth", LensOfSoothItem::new);
     public static final RegistryObject<CrystalToolItem> CRYSTAL_TOOL = ITEMS.register("crystal_tool", CrystalToolItem::new);
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
     public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);

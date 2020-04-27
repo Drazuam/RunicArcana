@@ -24,6 +24,11 @@ public class DummyFunction implements IFunctional {
     }
 
     @Override
+    public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
+        return "!!!not implemented!!!";
+    }
+
+    @Override
     public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
         return null;
     }

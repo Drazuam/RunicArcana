@@ -14,7 +14,7 @@ public class DataType {
 
     public static final DataType ENTITY = new DataType("Entity", Color.orange, Entity.class);
     public static final DataType BOOLEAN = new DataType("Boolean", Color.white, Boolean.class);
-    public static final DataType BLOCK_FACE = new DataType("Block Face", Color.cyan, Boolean.class);
+    public static final DataType BLOCK_FACE = new DataType("Block Face", Color.cyan, SpecificBlockFace.class);
 
     public final String name;
     public final Color color;
@@ -31,6 +31,7 @@ public class DataType {
     {
         registerDataType(ENTITY);
         registerDataType(BOOLEAN);
+        registerDataType(BLOCK_FACE);
     }
 
     public String getShortName(){

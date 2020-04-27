@@ -75,6 +75,8 @@ public class DrawnSymbol implements INBTSerializable<CompoundNBT>, IFunctionalOb
         return this.symbol.texture;
     }
 
+    public Chunk getChunk(){ return this.chunk; }
+
     @Override
     public List<IFunctional> getOutputs() {
         return symbol.getOutputs();
