@@ -5,6 +5,7 @@ import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import com.sun.javafx.geom.Vec3f;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -34,6 +35,20 @@ public class DetectSymbol extends Symbol {
             @Override
             public List<HashableTuple<String, DataType>> getRequiredInputs() {
                 return null;
+            }
+
+            @Override
+            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
+                Object res = executeInWorld(object, chunk, args);
+                if (res == null) return "null";
+
+                if (res instanceof PlayerEntity){
+                    return "Detected Player";
+                }else if (res instanceof LivingEntity){
+                    return "Detected Mob";
+                }else{
+                    return "Detected Other";
+                }
             }
 
             @Override

@@ -1,10 +1,13 @@
 {
   "block.runicarcana.principic_block": "Principic Block",
+  "block.runicarcana.arcana_pylon_block": "Arcana Pylon",
+  "block.runicarcana.arcana_collector_block": "Arcana Collector",
   "block.runicarcana.dumpster_block": "Dumpster Block",
 
   "item.runicarcana.bio_mash_ingot": "Bio Mash Ingot",
 
   "item.runicarcana.chalk": "Primitive Chalk",
+  "item.runicarcana.crystal_tool": "Crystal Multi-tool",
 
   "tooltip.runicarcana.principic_armor": "Full set: Immunity to all damage.",
 

@@ -3,6 +3,7 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
 import com.latenighters.runicarcana.common.symbols.backend.*;
+import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -27,11 +28,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 
@@ -46,7 +45,9 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
     private static final int REQUEST_COOLDOWN = 20;
     private static final int DIRTY_RANGE = 15;
 
-    private static HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
+    private final HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> resolvedFunctions = new HashMap<>();
+    private final HashMap<HashableTuple<IFunctionalObject,IFunctional>, Object> previousResolution = new HashMap<>();
+    private final Set<HashableTuple<IFunctionalObject,IFunctional>> resolvingFunctions = new ConcurrentSet<>();
 
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo)
     {
@@ -152,15 +153,19 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
         for(DrawnSymbol symbol : symbols)
         {
             symbol.tick(world,chunk);
-
             symbol.getFunctions().forEach(function ->{
                 resolveOutputInWorld(new HashableTuple<>(symbol, function), chunk);
             });
         }
 
+        resolvedFunctions.forEach((key, item)->{
+            previousResolution.put(key,item);
+        });
+
+
     }
 
-    public static Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
+    public Object resolveOutputInWorld(HashableTuple<IFunctionalObject,IFunctional> functionToRun, Chunk chunk)
     {
         List<HashableTuple<String, Object>> args = new ArrayList<>();
         Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject,IFunctional>> inputLinks = functionToRun.getA().getInputLinks();
@@ -171,14 +176,29 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
                 if(resolvedFunctions.containsKey(inputLinks.get(input)))
                     args.add(new HashableTuple<>(input.getA(), resolvedFunctions.get(inputLinks.get(input))));
                 else {
-                    Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
-                    //if(resolution==null)return;
-                    args.add(new HashableTuple<>(input.getA(),resolution));
-                    resolvedFunctions.put(inputLinks.get(input),resolution);
+                    if(!resolvingFunctions.contains(inputLinks.get(input))){
+                        resolvingFunctions.add(inputLinks.get(input));
+                        Object resolution =  resolveOutputInWorld(inputLinks.get(input), chunk);
+                        resolvingFunctions.remove(inputLinks.get(input));
+                        //if(resolution==null)return;
+                        args.add(new HashableTuple<>(input.getA(),resolution));
+                        resolvedFunctions.put(inputLinks.get(input),resolution);
+                    }
+                    else
+                    {
+                        if(previousResolution.containsKey(inputLinks.get(input))){
+                            Object resolution = previousResolution.get(inputLinks.get(input));
+                            args.add(new HashableTuple<>(input.getA(),resolution));
+                        }
+                        else
+                        {
+                            args.add(new HashableTuple<>(input.getA(),null));
+                        }
+                    }
+
                 }
             }
         });
-
         return functionToRun.getB().executeInWorld(functionToRun.getA(), chunk, args);
     }
 
@@ -231,6 +251,60 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
             }
         }
         return ret;
+    }
+
+    private List<HashableTuple<String, Object>> getPreviousArgResolution(HashableTuple<IFunctionalObject,IFunctional> function)
+    {
+        List<HashableTuple<String, Object>> args = new ArrayList<>();
+        Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject,IFunctional>> inputLinks = function.getA().getInputLinks();
+
+        if(function.getB().getRequiredInputs()!=null){
+            function.getB().getRequiredInputs().forEach( input -> {
+                if(inputLinks.containsKey(input)) {
+                    if(previousResolution.containsKey(inputLinks.get(input))){
+                        Object resolution = previousResolution.get(inputLinks.get(input));
+                        args.add(new HashableTuple<>(input.getA(),resolution));
+                    }
+                    else
+                    {
+                        args.add(new HashableTuple<>(input.getA(),null));
+                    }
+                }
+            });
+        }
+
+        return args;
+    }
+
+    public HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>> getPreviousResolution(DrawnSymbol _symbol, Chunk chunk) {
+        DrawnSymbol symbol = this.getSymbolAt(_symbol.getBlockPos(),_symbol.getBlockFace());
+        Map<HashableTuple<String, DataType>, HashableTuple<IFunctionalObject, IFunctional>> linkedInputs = symbol.getInputLinks();
+        List<HashableTuple<String, Object>> args = new ArrayList<HashableTuple<String, Object>>();
+        List<HashableTuple<String, Object>> outputs = new ArrayList<HashableTuple<String, Object>>();
+
+        symbol.getInputs().forEach(input -> {
+            args.add(new HashableTuple<String,Object>(input.getA(), previousResolution.get(linkedInputs.get(input))));
+
+        });
+
+        symbol.getOutputs().forEach(out->{
+            outputs.add(new HashableTuple<>(out.getName(), out.getOutputString(symbol,  chunk, args)));
+        });
+
+        return new HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>>(args, outputs);
+    }
+
+    public DrawnSymbol getSymbolAt2(BlockPos position, Direction blockFace)
+    {
+        ArrayList<DrawnSymbol> filtered = this.getSymbolsAt(position);
+        for(DrawnSymbol symbol : filtered)
+        {
+            if (symbol.getBlockFace().getIndex() == blockFace.getIndex())
+            {
+                return symbol;
+            }
+        }
+        return null;
     }
 
     public DrawnSymbol getSymbolAt(BlockPos position, Direction blockFace)
@@ -329,4 +403,5 @@ public class SymbolHandler implements ISymbolHandler, ICapabilitySerializable<Co
 //        }
 //
 //    }
+
 }
