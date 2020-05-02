@@ -16,8 +16,7 @@ public class TileArcanaCollector extends ArcanaMachine {
     @Override
     public void tick() {
         super.tick();
-
-        this.chambers.get(0).addArcana(ArcanaMix.COMMON.mult(0.2f));
+        this.chambers.get(0).addArcana(ArcanaMix.COMMON.mult(0.02f));
     }
 
     @Override

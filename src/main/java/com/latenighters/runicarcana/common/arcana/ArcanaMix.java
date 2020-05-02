@@ -1,5 +1,6 @@
 package com.latenighters.runicarcana.common.arcana;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,7 +22,8 @@ public class ArcanaMix{
     }
 
     public ArcanaMix(ArcanaMix mix) {
-        this.add(mix);
+        mix.arcanaMixMap.forEach(this.arcanaMixMap::put);
+        this.totalArcana = mix.totalArcana;
     }
 
     public Integer getTotal()
@@ -40,8 +42,7 @@ public class ArcanaMix{
         int typeAmount = this.arcanaMixMap.getOrDefault(type,0);
         int removeAmount = max(amount,typeAmount);
 
-        if (amount >= typeAmount) this.arcanaMixMap.remove(type);
-        else this.arcanaMixMap.put(type,typeAmount-removeAmount);
+        this.arcanaMixMap.put(type,typeAmount-removeAmount);
 
         this.totalArcana-=removeAmount;
         return removeAmount;
@@ -57,6 +58,7 @@ public class ArcanaMix{
     public void zeroize()
     {
         this.arcanaMixMap.clear();
+        this.totalArcana = 0;
     }
 
     public void add(ArcanaMix mix)
@@ -73,7 +75,7 @@ public class ArcanaMix{
     public ArcanaMix mult(Float scale)
     {
         ArcanaMix scaledMix = new ArcanaMix(this);
-        scaledMix.arcanaMixMap.forEach((type,amount)->{
+        this.arcanaMixMap.forEach((type,amount)->{
             scaledMix.arcanaMixMap.put(type,(int)(amount*scale));
         });
         return scaledMix;
@@ -102,6 +104,14 @@ public class ArcanaMix{
             amountRemoved.addAndGet(typeAmountRemoved);
             newMix.add(type,typeAmountRemoved);
         });
+
+        //remove keys if they are now zero
+        ArrayList<ArcanaType> keysToRemove = new ArrayList<>();
+        this.arcanaMixMap.forEach((type,typeAmount)-> {
+            if(typeAmount<=0)
+                keysToRemove.add(type);
+        });
+        keysToRemove.forEach(this.arcanaMixMap::remove);
 
         //now just keep removing random bits until we've removed enough
         //this is just to compensate for rounding errors

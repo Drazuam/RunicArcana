@@ -58,7 +58,8 @@ public class CrystalToolItem extends Item {
             else {
 
                 if (context.getItem().getOrCreateTag().contains("linking_from")) {
-                    TileEntity tileFrom = context.getWorld().getTileEntity(context.getPos());
+                    TileEntity tileFrom = context.getWorld().getTileEntity(NBTUtil.readBlockPos((CompoundNBT)
+                            context.getItem().getTag().get("linking_from")));
                     if (tileFrom instanceof ArcanaMachine) {
                         ((ArcanaMachine) tileFrom).addExportLink(context.getItem().getTag().getInt("slot"),
                                 context.getPos(), ((ArcanaMachine) tile).getChamberSlotFromHitVec(context.getHitVec()));
@@ -67,8 +68,7 @@ public class CrystalToolItem extends Item {
                     context.getItem().getTag().remove("linking_from");
 
                 } else {
-                    CompoundNBT nbt = new CompoundNBT();
-                    NBTUtil.writeBlockPos(context.getPos());
+                    CompoundNBT nbt = NBTUtil.writeBlockPos(context.getPos());
                     nbt.putString("world", context.getWorld().dimension.toString());
                     nbt.putInt("slot", ((ArcanaMachine) tile).getChamberSlotFromHitVec(context.getHitVec()));
 

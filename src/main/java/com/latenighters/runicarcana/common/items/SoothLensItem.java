@@ -23,10 +23,10 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
-public class LensOfSoothItem extends Item {
+public class SoothLensItem extends Item {
 
 
-    public LensOfSoothItem() {
+    public SoothLensItem() {
         super(new Properties().maxStackSize(1).group(ModSetup.ITEM_GROUP));
     }
 
