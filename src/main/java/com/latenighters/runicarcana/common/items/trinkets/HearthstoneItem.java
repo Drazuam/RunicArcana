@@ -75,7 +75,8 @@ public class HearthstoneItem extends Item implements IClickable {
 
     @Override
     public boolean onClick(PlayerEntity player, ItemStack itemStack, Container container, int slot) {
-        teleportHome(player.world, player,itemStack);
+        if (player.getCooldownTracker().getCooldown(itemStack.getItem(), 0.0f) == 0)
+            teleportHome(player.world, player,itemStack);
         return true;
     }
 
@@ -130,7 +131,10 @@ public class HearthstoneItem extends Item implements IClickable {
                         new TranslationTextComponent("status.runicarcana.hearthstone.wrong_dimension"), true
                 );
             }
-        } else if (pos.getY() >= 0 && Util.checkHeadspace(world, pos.up())) {
+        } else if (pos.getY() >= 0 && !world.getBlockState(pos.up().up()).isSolid()) {
+            if (livingEntity instanceof PlayerEntity){
+                ((PlayerEntity)livingEntity).getCooldownTracker().setCooldown(this, 20);
+            }
             Util.setPositionAndRotationAndUpdate(livingEntity, pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);
         }
     }
