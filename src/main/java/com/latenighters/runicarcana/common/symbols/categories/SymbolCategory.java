@@ -1,7 +1,7 @@
 package com.latenighters.runicarcana.common.symbols.categories;
 
-import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 

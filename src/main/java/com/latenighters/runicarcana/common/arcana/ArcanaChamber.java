@@ -1,7 +1,5 @@
 package com.latenighters.runicarcana.common.arcana;
 
-import java.util.HashMap;
-
 public class ArcanaChamber {
     final protected ArcanaMix storedArcana = new ArcanaMix();
     public final int maxStorage;

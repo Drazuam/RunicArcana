@@ -4,7 +4,6 @@ import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.event.ClientChunks;
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import io.netty.util.internal.ConcurrentSet;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -26,11 +25,11 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.NetworkDirection;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;
 

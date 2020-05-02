@@ -8,7 +8,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunk;
 
-import java.lang.ref.Reference;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;

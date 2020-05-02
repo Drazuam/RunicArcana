@@ -1,6 +1,5 @@
 package com.latenighters.runicarcana.common.symbols.backend;
 
-import javax.xml.ws.Provider;
 import java.util.HashMap;
 import java.util.function.Supplier;
 

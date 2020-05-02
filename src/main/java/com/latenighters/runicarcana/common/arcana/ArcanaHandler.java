@@ -1,7 +1,6 @@
 package com.latenighters.runicarcana.common.arcana;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -11,10 +10,8 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import static com.latenighters.runicarcana.RunicArcana.MODID;

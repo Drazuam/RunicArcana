@@ -2,8 +2,8 @@ package com.latenighters.runicarcana.client.gui;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;

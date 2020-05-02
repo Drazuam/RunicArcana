@@ -1,16 +1,10 @@
 package com.latenighters.runicarcana.common.blocks.tile;
 
-import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.arcana.ArcanaChamber;
 import com.latenighters.runicarcana.common.arcana.ArcanaMachine;
 import com.latenighters.runicarcana.common.arcana.ArcanaMix;
 import com.latenighters.runicarcana.common.setup.Registration;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-
-import javax.annotation.Nonnull;
 
 public class TileArcanaCollector extends ArcanaMachine {
 

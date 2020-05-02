@@ -1,42 +1,27 @@
 package com.latenighters.runicarcana.common.items;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.client.gui.OverlayPopup;
-import com.latenighters.runicarcana.common.symbols.backend.*;
-import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
-import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.setup.ModSetup;
 import com.latenighters.runicarcana.common.symbols.Symbols;
-import net.minecraft.client.Minecraft;
+import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
+import com.latenighters.runicarcana.common.symbols.backend.HashableTuple;
+import com.latenighters.runicarcana.common.symbols.backend.IFunctionalObject;
+import com.latenighters.runicarcana.common.symbols.backend.SymbolUtil;
+import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.registries.RegistryManager;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Supplier;
 
 public class LensOfSoothItem extends Item {
 

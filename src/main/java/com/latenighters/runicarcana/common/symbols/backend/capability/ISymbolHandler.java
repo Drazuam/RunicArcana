@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public interface ISymbolHandler {

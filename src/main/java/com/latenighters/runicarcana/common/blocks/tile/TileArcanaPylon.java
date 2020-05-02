@@ -3,7 +3,6 @@ package com.latenighters.runicarcana.common.blocks.tile;
 import com.latenighters.runicarcana.common.arcana.ArcanaChamber;
 import com.latenighters.runicarcana.common.arcana.ArcanaMachine;
 import com.latenighters.runicarcana.common.setup.Registration;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.math.Vec3d;
 
 public class TileArcanaPylon extends ArcanaMachine {

@@ -1,14 +1,13 @@
 package com.latenighters.runicarcana.client.gui;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.symbols.backend.Symbol;
 import com.latenighters.runicarcana.common.symbols.Symbols;
+import com.latenighters.runicarcana.common.symbols.backend.Symbol;
+import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.texture.AtlasTexture;

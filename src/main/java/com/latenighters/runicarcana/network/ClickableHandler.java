@@ -3,8 +3,6 @@ package com.latenighters.runicarcana.network;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.IClickable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
