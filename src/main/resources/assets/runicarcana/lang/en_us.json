@@ -24,7 +24,6 @@
   "lore.runicarcana.principic_chestplate": "The Ultimate Chestplate",
   "tooltip.runicarcana.principic_chestplate.effect_enabled": "Right click to toggle Elytra: Active",
   "tooltip.runicarcana.principic_chestplate.effect_disabled": "Right click to toggle Elytra: Inactive",
-  "tooltip.runicarcana.principic_chestplate.boost": "Sneak in mid-air to get rocket boost during Elytra flight.",
 
   "item.runicarcana.principic_leggings": "Principic Waistband",
   "lore.runicarcana.principic_leggings": "The Ultimate Leggings",
@@ -37,6 +36,7 @@
   "tooltip.runicarcana.principic_boots": "Provides fall damage negation",
   "tooltip.runicarcana.principic_boots.effect_enabled": "Right click to toggle Step-Assist: Active",
   "tooltip.runicarcana.principic_boots.effect_disabled": "Right click to toggle Step-Assist: Inactive",
+  "tooltip.runicarcana.principic_boots.boost": "Sneak in mid-air to get rocket boost during Elytra flight.",
 
 
   "item.runicarcana.transport_rod": "Transport Rod",
