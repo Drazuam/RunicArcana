@@ -12,13 +12,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public abstract class ArcanaMachine extends TileEntity implements ITickableTileEntity {
 
-    public final ArrayList<ArcanaChamber> chambers = new ArrayList<>();
+    //public final ArrayList<ArcanaChamber> chambers = new ArrayList<>();
 
     public abstract boolean canExport();
 
@@ -70,17 +69,14 @@ public abstract class ArcanaMachine extends TileEntity implements ITickableTileE
 
     public ArcanaMix addMix(ArcanaChamber chamber, ArcanaMix mix)
     {
-        if(chambers.contains(chamber))
-        {
-            return chamber.addArcana(mix);
-        }
+        this.getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap->{
+            if(cap.getChambers().contains(chamber))
+            {
+                chamber.addArcana(mix);
+            }
+        });
         return mix;
     }
-
-//    public ArcanaMix removeMix(ArcanaChamber chamber, int amount)
-//    {
-//
-//    }
 
     @Nonnull
     @Override

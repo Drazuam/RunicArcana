@@ -1,16 +1,22 @@
 package com.latenighters.runicarcana.common.blocks.tile;
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.arcana.ArcanaChamber;
 import com.latenighters.runicarcana.common.arcana.ArcanaMachine;
 import com.latenighters.runicarcana.common.setup.Registration;
 import net.minecraft.util.math.Vec3d;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TileArcanaPylon extends ArcanaMachine {
 
     public TileArcanaPylon() {
         super(Registration.ARCANA_PYLON_TILE.get());
         //TODO maybe pull this out
-        this.chambers.add(new ArcanaChamber(1000000,1));
+
+        this.getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap->{
+            cap.getChambers().add(new ArcanaChamber(1000000,1));
+        });
     }
 
     @Override
@@ -25,7 +31,12 @@ public class TileArcanaPylon extends ArcanaMachine {
 
     @Override
     public ArcanaChamber getChamberFromSlot(int slot) {
-        return this.chambers.get(slot);
+        AtomicReference<ArcanaChamber> arcanaChamber = new AtomicReference<>();
+        getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap->{
+            arcanaChamber.set(cap.getChambers().get(slot));
+        });
+
+        return arcanaChamber.get();
     }
 
     @Override

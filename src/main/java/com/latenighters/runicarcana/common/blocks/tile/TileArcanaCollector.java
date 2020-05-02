@@ -1,22 +1,30 @@
 package com.latenighters.runicarcana.common.blocks.tile;
 
+import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.arcana.ArcanaChamber;
 import com.latenighters.runicarcana.common.arcana.ArcanaMachine;
 import com.latenighters.runicarcana.common.arcana.ArcanaMix;
 import com.latenighters.runicarcana.common.setup.Registration;
 import net.minecraft.util.math.Vec3d;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class TileArcanaCollector extends ArcanaMachine {
 
     public TileArcanaCollector() {
         super(Registration.ARCANA_COLLECTOR_TILE.get());
-        this.chambers.add(new ArcanaChamber(10000, 1));
+        this.getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap->{
+            cap.getChambers().add(new ArcanaChamber(10000, 1));
+        });
+
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.chambers.get(0).addArcana(ArcanaMix.COMMON.mult(0.02f));
+        this.getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap-> {
+            cap.getChambers().get(0).addArcana(ArcanaMix.COMMON.mult(0.02f));
+        });
     }
 
     @Override
@@ -26,7 +34,13 @@ public class TileArcanaCollector extends ArcanaMachine {
 
     @Override
     public ArcanaChamber getChamberFromSlot(int slot) {
-        return this.chambers.get(slot);
+
+        AtomicReference<ArcanaChamber> arcanaChamber = new AtomicReference<>();
+        getCapability(RunicArcana.ARCANA_CAP).ifPresent(cap->{
+            arcanaChamber.set(cap.getChambers().get(slot));
+        });
+
+        return arcanaChamber.get();
     }
 
     @Override

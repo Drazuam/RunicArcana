@@ -1,6 +1,7 @@
 package com.latenighters.runicarcana.common.symbols.backend;
 
 
+import com.latenighters.runicarcana.common.arcana.ArcanaType;
 import com.latenighters.runicarcana.common.symbols.*;
 import net.minecraftforge.event.RegistryEvent;
 
@@ -27,6 +28,7 @@ public class SymbolRegistration {
         FunctionalObjects.putObject("DrawnSymbol",DrawnSymbol.class);
         registerDataTypes();
         registerBaseProviders();
+        ArcanaType.registerArcanaTypes();
 
         SymbolTextures.consolidateTextures(evt);
     }

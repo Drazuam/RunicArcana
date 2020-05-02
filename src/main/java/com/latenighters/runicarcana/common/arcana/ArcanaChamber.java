@@ -1,14 +1,21 @@
 package com.latenighters.runicarcana.common.arcana;
 
-public class ArcanaChamber {
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraftforge.common.util.INBTSerializable;
+
+public class ArcanaChamber implements INBTSerializable<CompoundNBT> {
     final protected ArcanaMix storedArcana = new ArcanaMix();
-    public final int maxStorage;
+    private int maxStorage;
     protected int currentArcanaTotal = 0;
-    private final int id;
+    public int id;
 
     public ArcanaChamber(int maxStorage, int id) {
         this.maxStorage = maxStorage;
         this.id = id;
+    }
+
+    public ArcanaChamber(CompoundNBT nbt) {
+        this.deserializeNBT(nbt);
     }
 
     public int getArcanaAmount()
@@ -56,5 +63,23 @@ public class ArcanaChamber {
         this.currentArcanaTotal = this.storedArcana.getTotal();
 
         return mix;
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putInt("id",id);
+        nbt.putInt("max_arcana",this.maxStorage);
+        nbt.put("arcana",this.storedArcana.serializeNBT());
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        this.maxStorage = nbt.getInt("max_arcana");
+        this.id = nbt.getInt("id");
+        this.storedArcana.zeroize();
+        this.storedArcana.deserializeNBT(nbt.getList("arcana",10));
+        this.currentArcanaTotal = this.storedArcana.getTotal();
     }
 }

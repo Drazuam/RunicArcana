@@ -1,5 +1,9 @@
 package com.latenighters.runicarcana.common.arcana;
 
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraftforge.common.util.INBTSerializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -8,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.lang.Integer.min;
 import static java.lang.Math.max;
 
-public class ArcanaMix{
+public class ArcanaMix implements INBTSerializable<ListNBT> {
     private final HashMap<ArcanaType,Integer> arcanaMixMap = new HashMap<>();
     private int totalArcana = 0;
 
@@ -24,6 +28,32 @@ public class ArcanaMix{
     public ArcanaMix(ArcanaMix mix) {
         mix.arcanaMixMap.forEach(this.arcanaMixMap::put);
         this.totalArcana = mix.totalArcana;
+    }
+
+    @Override
+    public ListNBT serializeNBT() {
+        ListNBT list = new ListNBT();
+        this.arcanaMixMap.forEach((type,amount)->{
+            CompoundNBT nbt = new CompoundNBT();
+            nbt.putString("type", type.name);
+            nbt.putInt("amount",amount);
+            list.add(nbt);
+        });
+
+        return list;
+    }
+
+    @Override
+    public void deserializeNBT(ListNBT nbt) {
+        nbt.forEach(nbtVal -> {
+            if(nbtVal instanceof CompoundNBT)
+            {
+                CompoundNBT cnbt = (CompoundNBT)nbtVal;
+                ArcanaType type = ArcanaType.getArcanaType(cnbt.getString("type"));
+                int amount = cnbt.getInt("amount");
+                this.add(type,amount);
+            }
+        });
     }
 
     public Integer getTotal()
