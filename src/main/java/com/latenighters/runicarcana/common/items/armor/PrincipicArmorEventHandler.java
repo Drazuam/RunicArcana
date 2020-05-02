@@ -37,7 +37,7 @@ import static com.latenighters.runicarcana.RunicArcana.MODID;
 import static com.latenighters.runicarcana.common.items.armor.AbstractPrincipicArmor.isEnabled;
 
 @Mod.EventBusSubscriber
-public class PrincipicArmorSubscriber {
+public class PrincipicArmorEventHandler {
 
     private static final float STEP_ASSIST_HEIGHT  = 1.0f;
     private static final float DEFAULT_STEP_HEIGHT = 0.6f;
