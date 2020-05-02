@@ -5,10 +5,7 @@ import com.latenighters.runicarcana.common.blocks.ArcanaPylon;
 import com.latenighters.runicarcana.common.blocks.PrincipicBlock;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaCollector;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaPylon;
-import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.items.CrystalToolItem;
-import com.latenighters.runicarcana.common.items.SoothLensItem;
-import com.latenighters.runicarcana.common.items.TransportRodItem;
+import com.latenighters.runicarcana.common.items.*;
 import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicChestplateItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicHelmetItem;
@@ -65,6 +62,7 @@ public class Registration {
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
     public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);
     public static final RegistryObject<EliminationRingItem> ELIMINATION_RING = ITEMS.register("elimination_ring", EliminationRingItem::new);
+    public static final RegistryObject<DebugItem> DEBUG_ITEM = ITEMS.register("debug_item", DebugItem::new);
 
     public static final RegistryObject<PrincipicHelmetItem> PRINCIPIC_HELMET = ITEMS.register("principic_helmet", PrincipicHelmetItem::new);
     public static final RegistryObject<PrincipicChestplateItem> PRINCIPIC_CHESTPLATE = ITEMS.register("principic_chestplate", PrincipicChestplateItem::new);
@@ -81,7 +79,7 @@ public class Registration {
     public static final RegistryObject<ArcanaCollector> ARCANA_COLLECTOR_BLOCK = BLOCKS.register("arcana_collector_block",() -> new ArcanaCollector(arcanaMachineProps));
     public static final RegistryObject<Item> ARCANA_COLLECTOR_BLOCK_ITEM = ITEMS.register("arcana_collector_block", () -> new BlockItem(ARCANA_COLLECTOR_BLOCK.get(), new Item.Properties().group(ModSetup.ITEM_GROUP)));
 
-    //Tile Entity Registration
+    // Tile Entity Registration
     public static final RegistryObject<TileEntityType<TileArcanaCollector>> ARCANA_COLLECTOR_TILE = TILES.register("arcana_collector_tile", ()->TileEntityType.Builder.create(TileArcanaCollector::new,ARCANA_COLLECTOR_BLOCK.get()).build(null));
     public static final RegistryObject<TileEntityType<TileArcanaPylon>> ARCANA_PYLON_TILE = TILES.register("arcana_pylon_tile", ()->TileEntityType.Builder.create(TileArcanaPylon::new,ARCANA_PYLON_BLOCK.get()).build(null));
 

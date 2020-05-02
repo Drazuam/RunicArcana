@@ -21,6 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -37,7 +38,7 @@ import static com.latenighters.runicarcana.RunicArcana.MODID;
 import static com.latenighters.runicarcana.common.items.armor.AbstractPrincipicArmor.isEnabled;
 
 @Mod.EventBusSubscriber
-public class PrincipicArmorSubscriber {
+public class PrincipicArmorEventHandler {
 
     private static final float STEP_ASSIST_HEIGHT  = 1.0f;
     private static final float DEFAULT_STEP_HEIGHT = 0.6f;
@@ -136,21 +137,6 @@ public class PrincipicArmorSubscriber {
 
     }
 
-    public static void onSetup(FMLLoadCompleteEvent event)
-    {
-        //Grab LivingEntity.POTION_EFFECTS
-        Field potionEffectsField = ObfuscationReflectionHelper.findField(LivingEntity.class,"field_184633_f");
-        if(potionEffectsField!=null)
-        {
-            potionEffectsField.setAccessible(true);
-            try {
-                potionEffects = (DataParameter<Integer>)potionEffectsField.get(null);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public static void onClientTickEvent(TickEvent.ClientTickEvent event)
@@ -202,6 +188,47 @@ public class PrincipicArmorSubscriber {
         }
 
     }
+
+    public static void onSetup(FMLLoadCompleteEvent event)
+    {
+        //Grab LivingEntity.POTION_EFFECTS
+        Field potionEffectsField = ObfuscationReflectionHelper.findField(LivingEntity.class,"field_184633_f");
+        if(potionEffectsField!=null)
+        {
+            potionEffectsField.setAccessible(true);
+            try {
+                potionEffects = (DataParameter<Integer>)potionEffectsField.get(null);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void livingDamage(LivingDamageEvent event) {
+        if (event.getEntityLiving() instanceof PlayerEntity){
+            PlayerEntity playerEntity = (PlayerEntity) event.getEntityLiving();
+            boolean fullPrin = true;
+            for (ItemStack item: playerEntity.getArmorInventoryList()){
+                if (!(item.getItem() instanceof AbstractPrincipicArmor)) {
+                    fullPrin = false;
+                }
+
+                if (item.getItem() instanceof PrincipicLeggingsItem
+                        && event.getSource().damageType.equals("outOfWorld")
+                        && event.getEntityLiving().getPosY() < 0 // Prevents triggering this protection from /kill
+                ) {
+                    playerEntity.setPositionAndUpdate(playerEntity.getPosX(), 260, playerEntity.getPosZ());
+                }
+
+                if (item.getItem() instanceof PrincipicBootsItem && event.getSource().damageType.equals("fall")) {
+                    event.setCanceled(true);
+                }
+            }
+            if (fullPrin){ event.setCanceled(true); }
+        }
+    }
+
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)

@@ -11,11 +11,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-//import top.theillusivec4.caelus.api.event.RenderElytraEvent;
-
-
 public class PrincipicChestplateItem extends AbstractPrincipicArmor implements IClickable {
-
     public PrincipicChestplateItem() {
         super(EquipmentSlotType.CHEST);
     }
@@ -28,7 +24,7 @@ public class PrincipicChestplateItem extends AbstractPrincipicArmor implements I
             tooltip.add(Util.tooltipStyle("tooltip.runicarcana.principic_chestplate.effect_disabled"));
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(Util.loreStyle("lore.runicarcana.principic_chestplate"));
-
     }
+
 
 }

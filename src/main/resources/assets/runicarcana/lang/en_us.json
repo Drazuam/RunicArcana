@@ -11,6 +11,7 @@
 
   "tooltip.runicarcana.linking_from": "Linking From: ",
 
+
   "tooltip.runicarcana.principic_armor": "Full set: Immunity to all damage.",
 
   "item.runicarcana.principic_helmet": "Principic Circlet",
@@ -18,7 +19,6 @@
   "tooltip.runicarcana.principic_helmet": "Provides water breathing.",
   "tooltip.runicarcana.principic_helmet.effect_enabled": "Right click to toggle Night Vision: Active",
   "tooltip.runicarcana.principic_helmet.effect_disabled": "Right click to toggle Night Vision: Inactive",
-
 
   "item.runicarcana.principic_chestplate": "Principic Shoulder Pads",
   "lore.runicarcana.principic_chestplate": "The Ultimate Chestplate",
@@ -31,12 +31,12 @@
   "tooltip.runicarcana.principic_leggings.effect_enabled": "Right click to toggle Speed Boost: Active",
   "tooltip.runicarcana.principic_leggings.effect_disabled": "Right click to toggle Speed Boost: Inactive",
 
-
-  "item.runicarcana.principic_boots": "Principic Ankle Bracelets",
+  "item.runicarcana.principic_boots": "Principic Anklets",
   "lore.runicarcana.principic_boots": "The Ultimate Boots",
   "tooltip.runicarcana.principic_boots": "Provides fall damage negation",
   "tooltip.runicarcana.principic_boots.effect_enabled": "Right click to toggle Step-Assist: Active",
   "tooltip.runicarcana.principic_boots.effect_disabled": "Right click to toggle Step-Assist: Inactive",
+  "tooltip.runicarcana.principic_boots.boost": "Sneak in mid-air to get rocket boost during Elytra flight.",
 
 
   "item.runicarcana.transport_rod": "Transport Rod",

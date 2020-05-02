@@ -5,7 +5,7 @@ import com.latenighters.runicarcana.common.arcana.ArcanaHandler;
 import com.latenighters.runicarcana.common.arcana.ArcanaHandlerStorage;
 import com.latenighters.runicarcana.common.arcana.IArcanaHandler;
 import com.latenighters.runicarcana.common.event.CommonEventHandler;
-import com.latenighters.runicarcana.common.items.armor.PrincipicArmorSubscriber;
+import com.latenighters.runicarcana.common.items.armor.PrincipicArmorEventHandler;
 import com.latenighters.runicarcana.common.setup.Registration;
 import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistration;
 import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler;
@@ -121,7 +121,7 @@ public class RunicArcana
 
     private void onSetupComplete(final FMLLoadCompleteEvent event)
     {
-        PrincipicArmorSubscriber.onSetup(event);
+        PrincipicArmorEventHandler.onSetup(event);
         SymbolCategory.generateCategories();  //TODO remove this when static initialization is working
     }
 
