@@ -9,6 +9,8 @@
   "item.runicarcana.chalk": "Primitive Chalk",
   "item.runicarcana.crystal_tool": "Crystal Multi-tool",
 
+  "tooltip.runicarcana.linking_from": "Linking From: ",
+
   "tooltip.runicarcana.principic_armor": "Full set: Immunity to all damage.",
 
   "item.runicarcana.principic_helmet": "Principic Circlet",
