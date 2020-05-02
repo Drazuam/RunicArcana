@@ -6,8 +6,9 @@ import com.latenighters.runicarcana.util.Util;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -54,10 +55,10 @@ public class EliminationRingItem extends Item {
                             livingEntity.getPosX()-range,livingEntity.getPosY()-range, livingEntity.getPosZ()-range));
 
                     for (Entity e:toKill) {
-                        if (e instanceof IMob){
+                        if (e instanceof IMob && !(e instanceof EnderDragonEntity)){
                             e.setFire(1);
-                            ((MonsterEntity)e).setHealth(0);
-                            ((MonsterEntity)e).spawnExplosionParticle();
+                            ((MobEntity)e).setHealth(0);
+                            ((MobEntity)e).spawnExplosionParticle();
                         }
                     }
                 }
