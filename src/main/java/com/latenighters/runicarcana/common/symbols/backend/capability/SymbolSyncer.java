@@ -2,10 +2,8 @@ package com.latenighters.runicarcana.common.symbols.backend.capability;
 
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.ChalkItem;
-import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.Symbols;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
+import com.latenighters.runicarcana.common.symbols.backend.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

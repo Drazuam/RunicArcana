@@ -1,10 +1,8 @@
 package com.latenighters.runicarcana.common.blocks;
 
-import com.latenighters.runicarcana.common.blocks.tile.TileArcanaCollector;
 import com.latenighters.runicarcana.common.blocks.tile.TileArcanaPylon;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
 

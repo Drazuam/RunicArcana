@@ -2,16 +2,10 @@ package com.latenighters.runicarcana.common.symbols;
 
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import com.sun.javafx.geom.Vec3f;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;

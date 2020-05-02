@@ -3,7 +3,6 @@ package com.latenighters.runicarcana.client.event;
 import com.latenighters.runicarcana.RunicArcana;
 import com.latenighters.runicarcana.common.items.IClickable;
 import com.latenighters.runicarcana.network.ClickableHandler;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.entity.player.PlayerInventory;

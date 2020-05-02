@@ -2,7 +2,6 @@ package com.latenighters.runicarcana.common.symbols;
 
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.chunk.Chunk;
 
 import java.util.ArrayList;

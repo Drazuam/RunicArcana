@@ -1,14 +1,15 @@
 package com.latenighters.runicarcana.client.render;
 
 import com.latenighters.runicarcana.RunicArcana;
-import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.DrawnSymbol;
+import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;

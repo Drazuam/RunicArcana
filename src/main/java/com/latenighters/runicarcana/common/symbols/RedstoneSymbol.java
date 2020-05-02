@@ -2,9 +2,7 @@ package com.latenighters.runicarcana.common.symbols;
 
 import com.latenighters.runicarcana.common.symbols.backend.*;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
-import net.minecraft.block.BlockState;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.world.chunk.Chunk;
 

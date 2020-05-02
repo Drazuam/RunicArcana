@@ -1,19 +1,18 @@
 package com.latenighters.runicarcana;
 
-import com.latenighters.runicarcana.client.event.ClientEventHandler;
 import com.latenighters.runicarcana.client.event.KeyEventHandler;
 import com.latenighters.runicarcana.common.arcana.ArcanaHandler;
 import com.latenighters.runicarcana.common.arcana.ArcanaHandlerStorage;
 import com.latenighters.runicarcana.common.arcana.IArcanaHandler;
+import com.latenighters.runicarcana.common.event.CommonEventHandler;
 import com.latenighters.runicarcana.common.items.armor.PrincipicArmorSubscriber;
+import com.latenighters.runicarcana.common.setup.Registration;
+import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistration;
+import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.ISymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandler;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolHandlerStorage;
 import com.latenighters.runicarcana.common.symbols.backend.capability.SymbolSyncer;
-import com.latenighters.runicarcana.common.event.CommonEventHandler;
-import com.latenighters.runicarcana.common.setup.Registration;
-import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistration;
-import com.latenighters.runicarcana.common.symbols.backend.SymbolRegistryHandler;
 import com.latenighters.runicarcana.common.symbols.categories.SymbolCategory;
 import com.latenighters.runicarcana.network.ClickableHandler;
 import com.latenighters.runicarcana.network.NetworkSync;
