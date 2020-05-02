@@ -18,7 +18,9 @@ public class ArcanaChamber {
 
     public ArcanaMix removeArcana(int amount)
     {
-        return this.storedArcana.removeAmount(amount);
+        ArcanaMix retval = this.storedArcana.removeAmount(amount);
+        this.currentArcanaTotal = this.storedArcana.getTotal();
+        return retval;
     }
 
     public void transferToArcanaChamber(ArcanaChamber chamber, int amount)
@@ -50,6 +52,8 @@ public class ArcanaChamber {
         {
             this.storedArcana.add(mix);
         }
+
+        this.currentArcanaTotal = this.storedArcana.getTotal();
 
         return mix;
     }
