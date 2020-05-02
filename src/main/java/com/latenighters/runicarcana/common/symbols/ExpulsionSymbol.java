@@ -97,33 +97,6 @@ public class ExpulsionSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-
-                Boolean enabled = new Boolean(true);
-                Entity entity = null;
-
-                boolean gotEntityInput = false;
-                boolean gotInventoryInput = false;
-
-                for(HashableTuple<String, Object> arg : args)
-                {
-                    if(arg==null)continue;
-                    if(arg.getA().equals("Enabled"))
-                        enabled = (Boolean)arg.getB()!=null ? (Boolean)arg.getB() : enabled;
-                    else if(arg.getA().equals(entityInput.getA())) {
-                        entity = (Entity) arg.getB();
-                        gotEntityInput = true;
-                    }
-                    else if(arg.getA().equals(blockFaceInput.getA())){
-
-                    }
-                }
-                if (enabled) return "Enabled";
-
-                return "Disabled";
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 //default values

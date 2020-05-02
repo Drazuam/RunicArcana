@@ -8,8 +8,8 @@ import java.util.List;
 public interface IFunctional {
     public String getName();
     public List<HashableTuple<String,DataType>> getRequiredInputs();
-    public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args);
     public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args);
     public DataType getOutputType();
     public List<HashableTuple<String,DataType>> getTriggers();
+
 }

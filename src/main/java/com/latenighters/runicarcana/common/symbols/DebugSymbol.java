@@ -35,11 +35,6 @@ public class DebugSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                return "...";
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
                 DrawnSymbol symbol = (DrawnSymbol)object;
                 if(symbol.getTicksAlive()%20==0)

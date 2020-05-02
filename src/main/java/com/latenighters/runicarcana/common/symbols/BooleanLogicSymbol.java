@@ -32,16 +32,6 @@ public class BooleanLogicSymbol extends Symbol {
                 return requiredInputs;
             }
 
-            @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                Object res = executeInWorld(object, chunk, args);
-                if (res == null) return new String("null");
-                if ((Boolean) res){
-                    return new String("True");
-                }else{
-                    return new String("False");
-                }
-            }
 
             @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
@@ -63,7 +53,7 @@ public class BooleanLogicSymbol extends Symbol {
                     }
                 }
 
-                if(A==null||B==null) return null;
+                if(A==null||B==null) return false;
 
                 return A&&B;
 
@@ -89,17 +79,6 @@ public class BooleanLogicSymbol extends Symbol {
             @Override
             public List<HashableTuple<String, DataType>> getRequiredInputs() {
                 return requiredInputs;
-            }
-
-            @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                Object res = executeInWorld(object, chunk, args);
-                if (res == null) return new String("null");
-                if ((Boolean) res){
-                    return new String("True");
-                }else{
-                    return new String("False");
-                }
             }
 
             @Override
@@ -152,17 +131,6 @@ public class BooleanLogicSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                Object res = executeInWorld(object, chunk, args);
-                if (res == null) return new String("null");
-                if ((Boolean) res){
-                    return new String("True");
-                }else{
-                    return new String("False");
-                }
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 Boolean A = null;
@@ -178,7 +146,7 @@ public class BooleanLogicSymbol extends Symbol {
                     }
                 }
 
-                if(A==null)return null;
+                if(A==null)return false;
 
 
                 return !A;
@@ -208,17 +176,6 @@ public class BooleanLogicSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                Object res = executeInWorld(object, chunk, args);
-                if (res == null) return new String("null");
-                if ((Boolean) res){
-                    return new String("True");
-                }else{
-                    return new String("False");
-                }
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 Boolean A = null;
@@ -238,8 +195,8 @@ public class BooleanLogicSymbol extends Symbol {
                     }
                 }
 
-                if(A==null)return null;
-                if(B==null)return null;
+                if(A==null)A=false;
+                if(B==null)B=false;
 
                 return A^B;
 

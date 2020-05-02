@@ -36,11 +36,6 @@ public class InsertionSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
-                return "...";
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 return null;

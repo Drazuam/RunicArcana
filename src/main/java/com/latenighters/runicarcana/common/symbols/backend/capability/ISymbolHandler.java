@@ -19,7 +19,7 @@ public interface ISymbolHandler {
     public boolean addSymbol(DrawnSymbol toadd, Chunk addingTo);
     public ArrayList<DrawnSymbol> getSymbolsAt(BlockPos position);
     public DrawnSymbol getSymbolAt(BlockPos position, Direction blockFace);
-    public HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>> getPreviousResolution(DrawnSymbol _symbol, Chunk chunk);
+    public HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>> getPrintableResolution(DrawnSymbol _symbol, Chunk chunk);
     public boolean isSymbolAt(BlockPos position);
     public boolean isSymbolAt(BlockPos position, Direction blockFace);
     public void addSymbol(DrawnSymbol symbol);
