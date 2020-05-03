@@ -82,33 +82,32 @@ public class PrincipicBootsItem extends AbstractPrincipicArmor {
         if(nbt==null)
             nbt = new CompoundNBT();
         if(!nbt.contains("timer"))
-            nbt.putInt("timer", 0);
+            nbt.putLong("timer", 0L);
         stack.setTag(nbt);
     }
 
-    public static int getTimer(ItemStack stack){
+    public static long getTimer(ItemStack stack){
         checkNBT(stack);
-        return stack.getTag().getInt("timer");
+        return stack.getTag().getLong("timer");
     }
 
-    public static void setTimer(ItemStack stack, Integer time){
+    public static void setTimer(ItemStack stack, Long time){
         checkNBT(stack);
         CompoundNBT nbt = stack.getTag();
-        nbt.putInt("timer", time);
+        nbt.putLong("timer", time);
         stack.setTag(nbt);
     }
 
     @Override
     public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-        // TODO: This breaks when you save the world until you land.
-        if (player.isSteppingCarefully() && getTimer(stack) < player.ticksExisted && player.isElytraFlying()) {
+        if (player.isSteppingCarefully() && getTimer(stack) < world.getGameTime() && player.isElytraFlying()) {
             if (!world.isRemote){
                 world.addEntity(new FireworkRocketEntity(world, rocketStack, player));
             }
-            setTimer(stack, player.ticksExisted + boostCooldown);
+            setTimer(stack, world.getGameTime() + boostCooldown);
         }
         if (!player.isElytraFlying() && player.onGround && getTimer(stack) != 0)
-            setTimer(stack, 0);
+            setTimer(stack, 0L);
     }
 
 }
