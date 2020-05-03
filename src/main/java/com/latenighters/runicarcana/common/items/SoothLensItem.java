@@ -40,7 +40,7 @@ public class SoothLensItem extends Item {
                 IFunctionalObject symbol = SymbolUtil.getLookedFunctionalObject();
 
                 if (symbol != null) {
-                    HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>> prevResolution = symbols.getPreviousResolution((DrawnSymbol) symbol, chunk);
+                    HashableTuple<List<HashableTuple<String, Object>>, List<HashableTuple<String, Object>>> prevResolution = symbols.getPrintableResolution((DrawnSymbol) symbol, chunk);
                     List<HashableTuple<String, Object>> args = prevResolution.getA();
                     List<HashableTuple<String, Object>> outputs = prevResolution.getB();
 

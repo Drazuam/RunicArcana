@@ -38,11 +38,6 @@ public class RedstoneSymbol extends Symbol {
             }
 
             @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                return "null";
-            }
-
-            @Override
             public Object executeInWorld(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args) {
 
                 if(chunk.getWorld().isRemote) return null;
@@ -98,15 +93,6 @@ public class RedstoneSymbol extends Symbol {
                 int redstoneLevel =  chunk.getWorld().getRedstonePower(symbol.getDrawnOn(), symbol.getBlockFace());
                 Boolean retval = redstoneLevel > 0;
                 return retval;
-            }
-
-            @Override
-            public String getOutputString(IFunctionalObject object, Chunk chunk, List<HashableTuple<String, Object>> args){
-                if ((Boolean) executeInWorld(object,chunk,args)){
-                    return "On";
-                }else{
-                    return "Off";
-                }
             }
 
             @Override
