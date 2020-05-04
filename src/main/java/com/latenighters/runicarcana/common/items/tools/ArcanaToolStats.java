@@ -5,13 +5,12 @@ import net.minecraft.nbt.CompoundNBT;
 public class ArcanaToolStats {
     private float attackDamage;
     private float attackSpeed;
-    private int harvestLevel;
+//    private int harvestLevel; // canHarvestBlock only provides a block state, so you can't check the NBT to determine harvest level.
     private float destroySpeed;
 
     public ArcanaToolStats(float attackDamage, float attackSpeed, int harvestLevel, float destroySpeed) {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
-        this.harvestLevel = harvestLevel;
         this.destroySpeed = destroySpeed;
     }
 
@@ -23,7 +22,6 @@ public class ArcanaToolStats {
 
         this.attackDamage = atkDamage;
         this.attackSpeed = atkSpeed;
-        this.harvestLevel = harvestLvl;
         this.destroySpeed = destroySpd;
     }
 
@@ -32,7 +30,6 @@ public class ArcanaToolStats {
         // Could be changed to float array to save packet bytes.
         tag.putFloat("atkDamage", this.attackDamage);
         tag.putFloat("atkSpeed", this.attackSpeed);
-        tag.putInt("harvestLvl", this.harvestLevel);
         tag.putFloat("destroySpd", this.destroySpeed);
         return tag;
     }
@@ -51,14 +48,6 @@ public class ArcanaToolStats {
 
     public void setAttackSpeed(float attackSpeed) {
         this.attackSpeed = attackSpeed;
-    }
-
-    public int getHarvestLevel() {
-        return harvestLevel;
-    }
-
-    public void setHarvestLevel(int harvestLevel) {
-        this.harvestLevel = harvestLevel;
     }
 
     public float getDestroySpeed() {
