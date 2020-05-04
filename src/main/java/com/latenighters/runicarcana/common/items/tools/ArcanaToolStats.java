@@ -7,22 +7,20 @@ public class ArcanaToolStats {
     private float attackSpeed;
 //    private int harvestLevel; // canHarvestBlock only provides a block state, so you can't check the NBT to determine harvest level.
     private float destroySpeed;
+    private float toolRange; // <= 0 is default.
 
-    public ArcanaToolStats(float attackDamage, float attackSpeed, int harvestLevel, float destroySpeed) {
+    public ArcanaToolStats(float attackDamage, float attackSpeed, float destroySpeed, float toolRange) {
         this.attackDamage = attackDamage;
         this.attackSpeed = attackSpeed;
         this.destroySpeed = destroySpeed;
+        this.toolRange = toolRange;
     }
 
     public ArcanaToolStats(CompoundNBT statsNBT){
-        float atkDamage = statsNBT.getFloat("atkDamage");
-        float atkSpeed = statsNBT.getFloat("atkSpeed");
-        int harvestLvl = statsNBT.getInt("harvestLvl");
-        float destroySpd = statsNBT.getFloat("destroySpd");
-
-        this.attackDamage = atkDamage;
-        this.attackSpeed = atkSpeed;
-        this.destroySpeed = destroySpd;
+        this.attackDamage = statsNBT.getFloat("atkDamage");
+        this.attackSpeed = statsNBT.getFloat("atkSpeed");
+        this.destroySpeed = statsNBT.getFloat("destroySpd");
+        this.toolRange = statsNBT.getFloat("toolRange");
     }
 
     public CompoundNBT makeNBT(){
@@ -31,6 +29,7 @@ public class ArcanaToolStats {
         tag.putFloat("atkDamage", this.attackDamage);
         tag.putFloat("atkSpeed", this.attackSpeed);
         tag.putFloat("destroySpd", this.destroySpeed);
+        tag.putFloat("toolRange", this.toolRange);
         return tag;
     }
 
@@ -56,5 +55,13 @@ public class ArcanaToolStats {
 
     public void setDestroySpeed(float destroySpeed) {
         this.destroySpeed = destroySpeed;
+    }
+
+    public float getToolRange() {
+        return toolRange;
+    }
+
+    public void setToolRange(float toolRange) {
+        this.toolRange = toolRange;
     }
 }
