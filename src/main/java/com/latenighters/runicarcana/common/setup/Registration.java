@@ -10,6 +10,7 @@ import com.latenighters.runicarcana.common.items.armor.PrincipicBootsItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicChestplateItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicHelmetItem;
 import com.latenighters.runicarcana.common.items.armor.PrincipicLeggingsItem;
+import com.latenighters.runicarcana.common.items.tools.MiningToolItem;
 import com.latenighters.runicarcana.common.items.trinkets.EliminationRingItem;
 import com.latenighters.runicarcana.common.items.trinkets.HearthstoneItem;
 import net.minecraft.block.Block;
@@ -62,6 +63,7 @@ public class Registration {
     public static final RegistryObject<TransportRodItem> TRANSPORT_ROD = ITEMS.register("transport_rod", TransportRodItem::new);
     public static final RegistryObject<HearthstoneItem> HEARTHSTONE = ITEMS.register("hearthstone", HearthstoneItem::new);
     public static final RegistryObject<EliminationRingItem> ELIMINATION_RING = ITEMS.register("elimination_ring", EliminationRingItem::new);
+    public static final RegistryObject<MiningToolItem> MINING_TOOL = ITEMS.register("mining_tool", MiningToolItem::new);
     public static final RegistryObject<DebugItem> DEBUG_ITEM = ITEMS.register("debug_item", DebugItem::new);
 
     public static final RegistryObject<PrincipicHelmetItem> PRINCIPIC_HELMET = ITEMS.register("principic_helmet", PrincipicHelmetItem::new);

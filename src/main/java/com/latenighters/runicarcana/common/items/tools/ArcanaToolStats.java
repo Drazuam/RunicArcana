@@ -53,6 +53,10 @@ public class ArcanaToolStats {
         return destroySpeed;
     }
 
+    public ArcanaToolStats withDestroySpeed(float speed) {
+        return new ArcanaToolStats(this.attackDamage, this.attackSpeed, speed, this.toolRange);
+    }
+
     public void setDestroySpeed(float destroySpeed) {
         this.destroySpeed = destroySpeed;
     }
@@ -64,4 +68,5 @@ public class ArcanaToolStats {
     public void setToolRange(float toolRange) {
         this.toolRange = toolRange;
     }
+
 }

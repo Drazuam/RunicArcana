@@ -45,6 +45,13 @@
   "tooltip.runicarcana.transport_rod.3": "Sneak + right click a block to teleport through it.",
   "lore.runicarcana.transport_rod": "Zzzvoop!",
 
+  "item.runicarcana.mining_tool": "Mining Tool [WIP]",
+
+  "tooltip.runicarcana.tool_items.attack_damage": "%f Damage",
+  "tooltip.runicarcana.tool_items.attack_speed": "%f Attack Speed",
+  "tooltip.runicarcana.tool_items.destroy_speed": "%f Mining Speed",
+  "tooltip.runicarcana.tool_items.range": "%f Block Range",
+
   "item.runicarcana.elimination_ring": "Elimination Ring",
   "tooltip.runicarcana.elimination_ring": "Eliminates mobs in a %d block range.",
   "lore.runicarcana.elimination_ring": "Dump 'Em",
